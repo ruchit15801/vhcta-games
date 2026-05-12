@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Deep Space Background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020814"/>
+      <stop offset="60%" stop-color="#051530"/>
+      <stop offset="100%" stop-color="#0a2345"/>
+    </linearGradient>
+    
+    <!-- Metallic Train Base -->
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c0392b"/>
+      <stop offset="30%" stop-color="#e74c3c"/>
+      <stop offset="60%" stop-color="#96281b"/>
+      <stop offset="100%" stop-color="#4d110a"/>
+    </linearGradient>
+    
+    <!-- Glass Reflection -->
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#85c1e9" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#3498db" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#2c3e50" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Neon Glows -->
+    <filter id="neonBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    
+    <radialGradient id="cyanSpread" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base App Icon Shape -->
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  
+  <!-- Atmospheric Depth (Mist) -->
+  <ellipse cx="256" cy="480" rx="400" ry="120" fill="url(#cyanSpread)" opacity="0.15"/>
+  <ellipse cx="512" cy="512" rx="300" ry="150" fill="#0c2a4d" opacity="0.3"/>
+  <ellipse cx="0" cy="512" rx="300" ry="150" fill="#0c2a4d" opacity="0.3"/>
+
+  <!-- Tech Grid Background -->
+  <g opacity="0.08" stroke="#00e5ff" stroke-width="1.5">
+    <path d="M0 64 H512 M0 128 H512 M0 192 H512 M0 256 H512 M0 320 H512 M0 384 H512 M0 448 H512"/>
+    <path d="M64 0 V512 M128 0 V512 M192 0 V512 M256 0 V512 M320 0 V512 M384 0 V512 M448 0 V512"/>
+  </g>
+
+  <!-- Cinematic Track Silhouette -->
+  <g transform="translate(0, 360)">
+    <rect x="0" y="20" width="512" height="40" fill="rgba(0,0,0,0.6)"/>
+    <path d="M0 25 H512 M0 45 H512" stroke="#4b5563" stroke-width="6" opacity="0.8"/>
+    <path d="M0 25 H512 M0 45 H512" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+    <!-- Sleepers -->
+    <g opacity="0.3" fill="#333">
+      <rect x="20" y="22" width="12" height="30" rx="2"/>
+      <rect x="120" y="22" width="12" height="30" rx="2"/>
+      <rect x="220" y="22" width="12" height="30" rx="2"/>
+      <rect x="320" y="22" width="12" height="30" rx="2"/>
+      <rect x="420" y="22" width="12" height="30" rx="2"/>
+    </g>
+  </g>
+
+  <!-- THE JOR DAR TRAIN (Locomotive Close-up) -->
+  <g transform="translate(45, 180)">
+    <!-- Main Body Chassis -->
+    <rect x="15" y="20" width="380" height="150" rx="20" fill="url(#metal)" style="filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));"/>
+    
+    <!-- Roof with Vent detail -->
+    <rect x="15" y="20" width="380" height="40" rx="20" fill="rgba(0,0,0,0.3)"/>
+    <rect x="50" y="28" width="60" height="10" rx="5" fill="rgba(255,255,255,0.1)"/>
+    <rect x="130" y="28" width="80" height="10" rx="5" fill="rgba(255,255,255,0.1)"/>
+    
+    <!-- Nose / Front Impact -->
+    <path d="M340 20 H395 Q395 170 340 170 Z" fill="#2c100a"/>
+    <rect x="365" y="40" width="20" height="90" rx="5" fill="url(#glass)"/> <!-- Front side window -->
+    
+    <!-- Main Cab Window (Reflective) -->
+    <rect x="40" y="50" width="120" height="60" rx="10" fill="url(#glass)"/>
+    <rect x="180" y="50" width="120" height="60" rx="10" fill="url(#glass)"/>
+    
+    <!-- Side Stripes (Speed lines) -->
+    <rect x="15" y="125" width="325" height="12" fill="#ffd700" opacity="0.8"/>
+    <rect x="15" y="140" width="325" height="4" fill="#ffd700" opacity="0.4"/>
+
+    <!-- High-Intensity Headlight -->
+    <g transform="translate(360, 110)" filter="url(#neonBlur)">
+      <circle cx="20" cy="0" r="28" fill="rgba(255,255,200,0.3)"/>
+      <circle cx="20" cy="0" r="12" fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- Floating Text Branding -->
+  <g transform="translate(256, 120)" text-anchor="middle" font-family="Orbitron, Arial, sans-serif" font-weight="900">
+    <text y="0" font-size="72" fill="#fff" letter-spacing="15" style="filter: drop-shadow(0 0 20px rgba(0,229,255,0.9));">TCM</text>
+    <text y="40" font-size="16" fill="#00e5ff" letter-spacing="8" opacity="0.8">COMMAND CENTER</text>
+  </g>
+  
+  <!-- Outer Frame Glow -->
+  <rect width="492" height="492" x="10" y="10" rx="105" fill="none" stroke="#00e5ff" stroke-width="4" opacity="0.2"/>
+  <rect width="502" height="502" x="5" y="5" rx="108" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.4"/>
+</svg>

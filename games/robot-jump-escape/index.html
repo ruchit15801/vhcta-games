@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Robot Jump Escape</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <span id="scoreDisplay">DIST: 0M</span>
+                <span id="coinDisplay">⚡ 0</span>
+            </div>
+
+            <div id="startScreen" class="screen active">
+                <h1>🤖 ROBOT ESCAPE</h1>
+                <p>Tap once to jump.</p>
+                <p>Tap while airborne to double-jump.</p>
+                <button id="startBtn">RUN!</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>SHUT DOWN!</h1>
+                <p>DISTANCE: <span id="finalDist">0</span>M</p>
+                <p>ENERGY: <span id="finalCoins">0</span> ⚡</p>
+                <button id="restartBtn">REBOOT</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

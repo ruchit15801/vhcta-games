@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Space Colony Manager</title>
+    <!-- Favicon / Open Graph -->
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <meta property="og:image" content="assets/images/thumbnail.png">
+    <!-- Premium Sci-Fi Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Game Canvas -->
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Holographic UI Layer -->
+    <div id="ui-layer" class="hidden">
+        
+        <!-- Top Resource Dashboard -->
+        <header class="top-dashboard holo-panel">
+            <div class="resource-group">
+                <div class="res-icon oxy-glow">O₂</div>
+                <div class="res-info">
+                    <span class="res-label">OXYGEN</span>
+                    <span id="res-oxy" class="res-value">100%</span>
+                </div>
+                <div class="flow-indicator oxy-flow" id="flow-oxy">+0.0</div>
+            </div>
+            
+            <div class="resource-group">
+                <div class="res-icon food-glow">🍽</div>
+                <div class="res-info">
+                    <span class="res-label">FOOD</span>
+                    <span id="res-food" class="res-value">100%</span>
+                </div>
+                <div class="flow-indicator food-flow" id="flow-food">+0.0</div>
+            </div>
+
+            <div class="resource-group">
+                <div class="res-icon energy-glow">⚡</div>
+                <div class="res-info">
+                    <span class="res-label">ENERGY</span>
+                    <span id="res-energy" class="res-value">100%</span>
+                </div>
+                <div class="flow-indicator energy-flow" id="flow-energy">+0.0</div>
+            </div>
+            
+            <div class="resource-group pop-group">
+                <div class="res-icon pop-glow">👨‍🚀</div>
+                <div class="res-info">
+                    <span class="res-label">CITIZENS</span>
+                    <span id="res-pop" class="res-value">0 / 0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Level & Progression Info -->
+        <aside class="level-panel holo-panel">
+            <div class="level-header">SECTOR <span id="current-level">1</span></div>
+            <div class="planet-info">
+                <span id="planet-name" class="holo-text">MARS-ALPHA</span>
+                <div class="planet-weather" id="planet-weather">Condition: Optimal</div>
+            </div>
+            <div class="goal-box">
+                <div class="goal-label">CURRENT DIRECTIVE:</div>
+                <div id="level-goal" class="goal-text">Survive for 60 cycles</div>
+                <div class="progress-bar-container">
+                    <div id="goal-progress" class="progress-bar-fill"></div>
+                </div>
+                <div id="time-survived">0 / 60 c</div>
+            </div>
+        </aside>
+
+        <!-- Build Menu -->
+        <nav class="build-menu holo-panel">
+            <div class="menu-title">CONSTRUCTION BAY</div>
+            <div class="build-grid">
+                <button class="build-btn" data-type="habitat">
+                    <img src="assets/images/bldg-habitat.png" alt="Habitat">
+                    <div class="btn-info">
+                        <span class="bldg-name">HABITAT</span>
+                        <span class="bldg-cost">Energy: 10</span>
+                    </div>
+                </button>
+                <button class="build-btn" data-type="oxy">
+                    <img src="assets/images/bldg-oxy.png" alt="O2 Gen">
+                    <div class="btn-info">
+                        <span class="bldg-name">O2 GEN</span>
+                        <span class="bldg-cost">Energy: 15</span>
+                    </div>
+                </button>
+                <button class="build-btn" data-type="farm">
+                    <img src="assets/images/bldg-farm.png" alt="Farm">
+                    <div class="btn-info">
+                        <span class="bldg-name">BIODOME</span>
+                        <span class="bldg-cost">Energy: 20 | O2: 5</span>
+                    </div>
+                </button>
+                <button class="build-btn" data-type="power">
+                    <!-- Intentionally using habitat here as a fallback, will be styled as power in canvas -->
+                    <img src="assets/images/bldg-habitat.png" style="filter: hue-rotate(180deg) sepia(1);" alt="Power">
+                    <div class="btn-info">
+                        <span class="bldg-name">REACTOR</span>
+                        <span class="bldg-cost">Provides +50</span>
+                    </div>
+                </button>
+            </div>
+            <div class="cancel-build hidden" id="cancel-build-btn">CANCEL CONSTRUCTION</div>
+        </nav>
+
+        <!-- Upgrade / Info Panel (Appears when building clicked) -->
+        <div id="upgrade-panel" class="holo-panel hidden">
+            <div class="upgrade-header">SYSTEM OVERRIDE</div>
+            <div id="upgrade-bldg-name" class="holo-text">HABITAT</div>
+            <div id="upgrade-stats" class="upgrade-stats">
+                Output: +0<br>
+                Level: 1
+            </div>
+            <button id="btn-upgrade" class="holo-btn action-btn">UPGRADE EFFICIENCY</button>
+            <button id="btn-dismantle" class="holo-btn danger-btn">DISMANTLE</button>
+            <button id="btn-close-upgrade" class="holo-btn">CLOSE</button>
+        </div>
+
+        <!-- Alert System -->
+        <div id="alert-system" class="alert-container"></div>
+    </div>
+
+    <!-- Start / Tutorial Screen -->
+    <div id="start-screen" class="full-overlay">
+        <div class="start-content holo-modal">
+            <div class="game-logo">
+                <img src="assets/images/thumbnail.png" alt="Space Colony Manager" class="promo-image">
+                <h1 class="glitch" data-text="SPACE COLONY">SPACE COLONY</h1>
+                <h2 class="subtitle">M A N A G E R</h2>
+            </div>
+            <div class="tutorial-box">
+                <h3>MISSION BRIEFING</h3>
+                <p>Welcome Commander. Your objective is to build and manage off-world colonies.</p>
+                <ul class="tut-list">
+                    <li><span class="highlight cyan">CONSTRUCT</span> Biodomes, Reactors, and Habitats.</li>
+                    <li><span class="highlight orange">BALANCE</span> your resources (O2, Food, Energy).</li>
+                    <li><span class="highlight red">SURVIVE</span> planetary hazards and reach population milestones.</li>
+                </ul>
+            </div>
+            <div class="settings-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-sound" checked>
+                    <span class="slider round"></span>
+                </label>
+                <span class="setting-label">AUDIO SYSTEMS EXTRALINK</span>
+            </div>
+            <button id="btn-start" class="ultra-btn">INITIALIZE LAUNCH</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="full-overlay hidden">
+        <div class="holo-modal danger-modal">
+            <h1 class="critical-alert">COLONY LOST</h1>
+            <p id="game-over-reason">Critical resources depleted. Population plummeted.</p>
+            <div class="stats-recap">
+                Survived: <span id="recap-time">0</span> cycles<br>
+                Sectors Cleared: <span id="recap-sectors">0</span>
+            </div>
+            <button id="btn-restart" class="ultra-btn danger">REBOOT SIMULATION</button>
+        </div>
+    </div>
+
+    <!-- Level Complete Screen -->
+    <div id="level-complete-screen" class="full-overlay hidden">
+        <div class="holo-modal success-modal">
+            <h1 class="success-alert">SECTOR SECURED</h1>
+            <p>Milestone achieved. Colony stabilized.</p>
+            <div class="rewards-box">
+                New Tech Unlocked!
+            </div>
+            <button id="btn-next-level" class="ultra-btn success">PROCEED TO NEXT SECTOR</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

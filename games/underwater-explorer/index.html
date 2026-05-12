@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Underwater Explorer</title>
+    <meta name="description" content="A premium 3D HTML5 adventure and survival game inspired by Subnautica. Explore the deep ocean, manage oxygen, and survive the depths.">
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Game Container -->
+    <div id="game-container">
+        
+        <!-- Game Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Layer -->
+        <div id="ui-layer">
+            
+            <!-- Loading Screen -->
+            <div id="loading-screen" class="screen active">
+                <div class="loader-content">
+                    <img src="assets/icons/icon.png" alt="Underwater Explorer Icon" class="game-icon pulse">
+                    <h1 class="glow-text">Underwater Explorer</h1>
+                    <div class="loading-bar-container">
+                        <div id="loading-bar"></div>
+                    </div>
+                    <p id="loading-text">Generating Ocean Depths...</p>
+                </div>
+            </div>
+
+            <!-- Main Menu Screen -->
+            <div id="main-menu" class="screen hidden">
+                <div class="menu-background">
+                    <img src="assets/images/thumbnail.png" alt="Thumbnail Background" class="menu-bg-img">
+                    <div class="vignette"></div>
+                </div>
+                <div class="menu-content">
+                    <h1 class="title-3d">UNDERWATER<br><span>EXPLORER</span></h1>
+                    <div class="menu-buttons">
+                        <button id="btn-play" class="btn primary-btn"><span class="btn-text">DIVE IN</span></button>
+                        <button id="btn-guide" class="btn secondary-btn"><span class="btn-text">SURVIVAL GUIDE</span></button>
+                        <button id="btn-settings" class="btn secondary-btn"><span class="btn-text">SETTINGS</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide / Instructions Screen -->
+            <div id="guide-screen" class="screen hidden">
+                <div class="panel glass-panel">
+                    <h2>Survival Guide</h2>
+                    <div class="guide-content">
+                        <div class="guide-section">
+                            <h3>🎮 Controls</h3>
+                            <p><strong>Desktop:</strong> WASD / Arrows to swim.</p>
+                            <p><strong>Mobile:</strong> Virtual Joystick.</p>
+                        </div>
+                        <div class="guide-section">
+                            <h3>🌬️ Oxygen System</h3>
+                            <p>Oxygen depletes continuously. Surface or collect <span class="text-blue">O2 Tanks</span> to breathe.</p>
+                        </div>
+                        <div class="guide-section">
+                            <h3>⚠️ Pressure</h3>
+                            <p>Going too deep causes damage. Upgrade your suit to survive extreme depths.</p>
+                        </div>
+                        <div class="guide-section">
+                            <h3>💎 Exploration</h3>
+                            <p>Collect treasures to afford upgrades. Beware of deep-sea predators!</p>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btn-close-guide" class="btn primary-btn">Understood</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Screen -->
+            <div id="settings-screen" class="screen hidden">
+                <div class="panel glass-panel">
+                    <h2>Settings</h2>
+                    <div class="settings-content">
+                        <div class="setting-row">
+                            <span>Master Volume</span>
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+                        </div>
+                        <div class="setting-row">
+                            <span>Sound Effects</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="sfx-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span>Music</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="music-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btn-close-settings" class="btn primary-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In-Game HUD -->
+            <div id="hud" class="hidden">
+                <div class="hud-top">
+                    <!-- Health & Oxygen -->
+                    <div class="status-bars">
+                        <div class="bar-container health-container">
+                            <div class="bar-icon">❤️</div>
+                            <div class="bar-track">
+                                <div id="health-bar" class="bar-fill health-fill"></div>
+                            </div>
+                        </div>
+                        <div class="bar-container oxygen-container">
+                            <div class="bar-icon">🫧</div>
+                            <div class="bar-track">
+                                <div id="oxygen-bar" class="bar-fill oxygen-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Depth Indicator -->
+                    <div class="depth-meter glass-card">
+                        <span class="depth-label">DEPTH</span>
+                        <div class="depth-value"><span id="current-depth">0</span>m</div>
+                    </div>
+                    
+                    <!-- Resources -->
+                    <div class="resource-counter glass-card">
+                        <span class="resource-icon">💎</span>
+                        <span id="treasure-count">0</span>
+                    </div>
+                </div>
+
+                <!-- Warning Message Area -->
+                <div id="warning-message" class="hidden">
+                    CRITICAL OXYGEN LEVEL
+                </div>
+
+                <!-- Mobile Controls (Virtual Joystick) -->
+                <div id="mobile-controls" class="hidden">
+                    <div id="joystick-zone">
+                        <div id="joystick-base">
+                            <div id="joystick-stick"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div id="game-over-screen" class="screen hidden">
+                <div class="panel glass-panel danger-panel">
+                    <h2 class="text-red">YOU DIED</h2>
+                    <p id="death-reason" class="death-reason">You ran out of oxygen.</p>
+                    <div class="stats-box">
+                        <p>Max Depth: <span id="go-max-depth">0</span>m</p>
+                        <p>Treasures Collected: <span id="go-treasures">0</span></p>
+                    </div>
+                    <div class="menu-buttons">
+                        <button id="btn-upgrade" class="btn secondary-btn">UPGRADE SHOP</button>
+                        <button id="btn-restart" class="btn primary-btn">DIVE AGAIN</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shop / Upgrade Screen -->
+            <div id="shop-screen" class="screen hidden">
+                <div class="panel glass-panel shop-panel">
+                    <h2>Upgrade Equipment</h2>
+                    <div class="shop-header">
+                        <span>Treasures available: <strong id="shop-treasure-count" class="text-gold">0</strong> 💎</span>
+                    </div>
+                    <div class="shop-items">
+                        <div class="shop-item">
+                            <div class="item-info">
+                                <h4>O2 Tank Capacity</h4>
+                                <p>Hold breath longer</p>
+                                <div class="upgrade-level">Lvl <span id="lvl-o2">1</span></div>
+                            </div>
+                            <button class="btn buy-btn" id="buy-o2" data-cost="10">10 💎</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info">
+                                <h4>Dive Suit</h4>
+                                <p>Resist deeper pressure</p>
+                                <div class="upgrade-level">Lvl <span id="lvl-suit">1</span></div>
+                            </div>
+                            <button class="btn buy-btn" id="buy-suit" data-cost="15">15 💎</button>
+                        </div>
+                        <div class="shop-item">
+                            <div class="item-info">
+                                <h4>Flippers</h4>
+                                <p>Swim faster</p>
+                                <div class="upgrade-level">Lvl <span id="lvl-speed">1</span></div>
+                            </div>
+                            <button class="btn buy-btn" id="buy-speed" data-cost="20">20 💎</button>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="btn-close-shop" class="btn primary-btn">Back to Surface</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Audio Elements (Synthesized or minimal base64 in JS, so we'll just handle it in JS) -->
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

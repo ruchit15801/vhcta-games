@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Royal Gems - Match 3 Puzzle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="backdrop">
+        <div class="glow-orb" style="top: 20%; left: 10%;"></div>
+        <div class="glow-orb" style="bottom: 10%; right: 10%; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%);"></div>
+    </div>
+    
+    <div id="ui-layer">
+        <div id="top-bar">
+            <div class="stat-box">Level <span id="level">1</span></div>
+            <div class="stat-box">Score <span id="score">0</span></div>
+            <div class="stat-box gold-border">Target <span id="target">2500</span></div>
+            <div class="stat-box">Moves <span id="moves">25</span></div>
+            <div class="controls-right">
+                <button id="btn-pause">⏸</button>
+                <button id="btn-sound">🔊</button>
+            </div>
+        </div>
+        
+        <div id="popups"></div>
+
+        <!-- HOW TO PLAY -->
+        <div id="tutorial" class="overlay">
+            <div class="panel luxury-panel tutorial-panel">
+                <div class="logo">Royal Gems</div>
+                <h2>How to Play</h2>
+                <div class="guide-steps">
+                    <div class="guide-step">
+                        <div class="guide-icon">👆</div>
+                        <div class="guide-text">
+                            <strong>Tap & Swipe</strong>
+                            <p>Tap a gem, then swipe to swap with its neighbor</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-icon">💎</div>
+                        <div class="guide-text">
+                            <strong>Match 3+</strong>
+                            <p>Align 3 or more same gems in a row or column</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-icon">🔥</div>
+                        <div class="guide-text">
+                            <strong>Chain Combos</strong>
+                            <p>Cascading matches give multiplied bonus points!</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-icon">🎯</div>
+                        <div class="guide-text">
+                            <strong>Reach Target</strong>
+                            <p>Hit the target score before moves run out</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-start" class="btn-primary"><span>START GAME</span></button>
+            </div>
+        </div>
+
+        <!-- GAME OVER / LEVEL COMPLETE -->
+        <div id="game-over" class="overlay hidden">
+            <div class="panel luxury-panel">
+                <h2 id="end-title">Game Over</h2>
+                <div id="level-stars" class="stars-container"></div>
+                <div class="desc">
+                    <p id="end-message"></p>
+                </div>
+                <button id="btn-restart" class="btn-primary"><span>Next Level</span></button>
+            </div>
+        </div>
+
+        <!-- PAUSE -->
+        <div id="pause-menu" class="overlay hidden">
+            <div class="panel luxury-panel">
+                <h2>Paused</h2>
+                <button id="btn-resume" class="btn-primary"><span>Resume</span></button>
+                <button id="btn-quit" class="btn-secondary">Restart Level</button>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="game-canvas"></canvas>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

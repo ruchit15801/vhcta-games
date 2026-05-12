@@ -1,0 +1,300 @@
+:root {
+    --bg-color: #020205;
+    --primary: #00ffcc;
+    --secondary: #7b00ff;
+    --danger: #ff0055;
+    --text-main: #ffffff;
+    --ui-bg: rgba(2, 2, 5, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    touch-action: none;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #050015 0%, #020205 50%, #050015 100%);
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+    /* Adding subtle motion blur effect for fast pace feel */
+    filter: drop-shadow(0 0 10px rgba(0,255,204,0.2));
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    display: none;
+}
+
+#top-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.stat-box {
+    background: rgba(0, 255, 204, 0.1);
+    border: 1px solid var(--primary);
+    padding: 5px 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+}
+
+.stat-box .label {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+.stat-box .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-shadow: 0 0 5px var(--primary);
+}
+
+#score-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 15px #fff;
+}
+
+.icon-btn {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 5px;
+    background: rgba(123, 0, 255, 0.1);
+    border: 1px solid var(--secondary);
+    color: var(--text-main);
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background: rgba(123, 0, 255, 0.4);
+    box-shadow: 0 0 15px var(--secondary);
+}
+
+#pause-btn { top: 20px; right: 20px; }
+#sound-toggle { top: 20px; right: 75px; }
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--ui-bg);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.game-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--primary);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 56px;
+    color: var(--text-main);
+    text-shadow: 0 0 10px var(--primary), 2px 2px 0px var(--secondary);
+    margin-bottom: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 40px;
+    color: var(--danger);
+    text-shadow: 0 0 15px var(--danger);
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #ccc;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.btn {
+    padding: 15px 50px;
+    font-size: 22px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-btn {
+    background: rgba(0, 255, 204, 0.1);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+}
+
+.primary-btn:hover {
+    background: var(--primary);
+    color: var(--bg-color);
+    box-shadow: 0 0 25px var(--primary);
+}
+
+.secondary-btn {
+    background: rgba(123, 0, 255, 0.1);
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
+}
+
+.secondary-btn:hover {
+    background: var(--secondary);
+    color: var(--text-main);
+    box-shadow: 0 0 20px var(--secondary);
+}
+
+.instruction-content {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    margin-bottom: 40px;
+    max-width: 500px;
+    width: 90%;
+}
+
+.instruction-content p {
+    margin: 15px 0;
+    font-size: 20px;
+}
+
+.final-score, .best-score {
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+.final-score span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+.best-score span { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
+
+@media (max-width: 768px) {
+    h1 { font-size: 40px; }
+    h2 { font-size: 32px; }
+    .btn { padding: 12px 30px; font-size: 18px; }
+    #score-container { font-size: 36px; top: 15px; }
+    #top-bar { transform: scale(0.8); transform-origin: top left; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

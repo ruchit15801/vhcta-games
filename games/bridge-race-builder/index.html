@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BRIDGE RACE BUILDER</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="start-screen" class="screen active">
+                <h1>BRIDGE RACE BUILDER</h1>
+                <p>Tap to play</p>
+                <button id="start-btn">TAP TO START</button>
+            </div>
+            <div id="game-ui" class="screen">
+                <div class="top-bar">
+                    <div class="score-box">SCORE: <span id="score">0</span></div>
+                    <button id="pause-btn">⏸</button>
+                </div>
+            </div>
+            <div id="pause-screen" class="screen">
+                <h2>PAUSED</h2>
+                <button id="resume-btn">RESUME</button>
+            </div>
+            <div id="gameover-screen" class="screen">
+                <h2>GAME OVER</h2>
+                <p>Score: <span id="final-score">0</span></p>
+                <button id="retry-btn">TRY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

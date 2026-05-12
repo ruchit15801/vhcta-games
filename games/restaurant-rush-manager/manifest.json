@@ -1,0 +1,22 @@
+{
+  "name": "Restaurant Rush Manager",
+  "short_name": "RestRush",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#12121A",
+  "theme_color": "#FF3366",
+  "description": "Premium Time-Management Restaurant Simulator",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "assets/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/thumbnail.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

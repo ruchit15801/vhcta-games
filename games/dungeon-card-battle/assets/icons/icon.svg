@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2c3e50" />
+            <stop offset="50%" stop-color="#0f0c29" />
+            <stop offset="100%" stop-color="#000000" />
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8e44ad" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#8e44ad" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="shadow" dx="0" dy="10" stdDeviation="10">
+            <feDropShadow dx="0" dy="15" stdDeviation="15" flood-color="#000" flood-opacity="0.8"/>
+        </filter>
+    </defs>
+    <rect width="512" height="512" fill="url(#bg)" rx="100"/>
+    <circle cx="256" cy="256" r="200" fill="url(#glow)"/>
+    
+    <g filter="url(#shadow)" transform="translate(150, 100) rotate(-15)">
+        <rect width="160" height="230" fill="#34495e" rx="15" stroke="#d4af37" stroke-width="8"/>
+        <rect x="15" y="15" width="130" height="200" fill="#2c3e50" rx="5"/>
+        <circle cx="80" cy="115" r="40" fill="#e74c3c"/>
+    </g>
+    
+    <g filter="url(#shadow)" transform="translate(200, 150) rotate(10)">
+        <rect width="180" height="260" fill="#2c3e50" rx="15" stroke="#d4af37" stroke-width="10"/>
+        <rect x="15" y="15" width="150" height="230" fill="#1a252f" rx="5"/>
+        <path d="M90 60 L120 180 L60 180 Z" fill="#3498db"/>
+        <path d="M50 40 L130 40 L90 102 Z" fill="#9b59b6"/>
+    </g>
+    
+    <path d="M256 50 L270 400 L242 400 Z" fill="#ecf0f1" filter="url(#shadow)"/>
+    <path d="M220 380 L292 380 L292 410 L220 410 Z" fill="#d4af37"/>
+    <circle cx="256" cy="395" r="8" fill="#e74c3c"/>
+</svg>

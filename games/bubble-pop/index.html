@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<title>🫧 Neon Bubble Pop!</title>
+<meta name="description" content="A gorgeous neon-styled bubble popping puzzle game.">
+<meta property="og:title" content="Neon Bubble Pop!">
+<meta property="og:description" content="Match bubbles and score high in this beautiful cosmic puzzle challenge!">
+<meta property="og:image" content="thumbnail.png">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div id="bgBubbles"></div>
+
+<div class="game-wrapper">
+  <div class="score-bar">
+    <div class="score-item">
+      <div class="score-label">Score</div>
+      <div class="score-value" id="scoreEl">0</div>
+    </div>
+    <div class="score-item">
+      <div class="score-label">Level</div>
+      <div class="score-value" id="levelEl">1</div>
+    </div>
+    <div class="score-item">
+      <div class="score-label">Lives</div>
+      <div class="score-value" id="livesEl">❤️❤️❤️</div>
+    </div>
+    <div class="score-item">
+      <div class="score-label">Best</div>
+      <div class="score-value" id="bestEl">0</div>
+    </div>
+  </div>
+
+  <div class="canvas-container">
+    <canvas id="gameCanvas" width="400" height="572"></canvas>
+    
+    <!-- START SCREEN / GAMEPLAY GUIDE -->
+    <div class="overlay" id="startScreen">
+      <h1>🫧 Bubble Pop!</h1>
+      
+      <div class="guide-container" id="guideContainer">
+        <!-- Step 1: Objective -->
+        <div class="guide-step active" data-step="1">
+          <p class="subtitle">Welcome to the cosmic popping challenge!</p>
+          <div class="guide-visual">
+            <div class="inst-item large"><div class="inst-icon">🎯</div><div class="inst-text">AIM & SHOOT</div></div>
+          </div>
+          <p class="guide-desc">Move your mouse or touch to aim.<br>Click or tap to shoot your bubble!</p>
+        </div>
+
+        <!-- Step 2: Match 3 -->
+        <div class="guide-step" data-step="2">
+          <p class="subtitle">The Power of Three</p>
+          <div class="guide-visual">
+            <div class="inst-item large"><div class="inst-icon">💥</div><div class="inst-text">MATCH 3+</div></div>
+          </div>
+          <p class="guide-desc">Stick your bubble to others.<br>Connect 3 or more of the same color to pop them!</p>
+        </div>
+
+        <!-- Step 3: Combos -->
+        <div class="guide-step" data-step="3">
+          <p class="subtitle">Score Big with Combos</p>
+          <div class="guide-visual">
+            <div class="inst-item large"><div class="inst-icon">⚡</div><div class="inst-text">COMBO POWER</div></div>
+          </div>
+          <p class="guide-desc">Popping larger clusters or<br>dropping floating bubbles earns massive bonus points!</p>
+        </div>
+      </div>
+
+      <div class="guide-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <button class="btn" id="nextBtn" onclick="nextGuideStep()">NEXT ➔</button>
+      <button class="btn" id="playBtn" onclick="startGame()" style="display:none">▶ PLAY NOW</button>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div class="overlay" id="gameOverScreen" style="display:none">
+      <h1>Game Over!</h1>
+      <div class="final-score-label">Your Score</div>
+      <div class="final-score-val" id="finalScoreEl">0</div>
+      <p class="subtitle" id="gameOverMsg">Keep practicing, bubble master!</p>
+      <button class="btn" onclick="startGame()">🔄 PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="hint">🖱️ Move to aim &nbsp;|&nbsp; Click / Tap to shoot</div>
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

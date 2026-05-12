@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Crowd Runner Clash - Ultra Premium</title>
+<link rel="icon" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#000;font-family:'Poppins',sans-serif;overflow:hidden;height:100vh;color:#fff;}
+#splash{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg, #1e3c72, #2a5298);z-index:100;transition:opacity .5s;}
+#splash.hidden{opacity:0;pointer-events:none;}
+#splash img.thumb{width:min(340px,85vw);border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.5);margin-bottom:20px;}
+#btnPlay{background:linear-gradient(to right, #00d2ff, #3a7bd5);color:#fff;border:none;padding:15px 60px;border-radius:40px;font-size:24px;font-weight:900;cursor:pointer;box-shadow:0 10px 20px rgba(58,123,213,0.4);transition:0.3s;}
+#btnPlay:hover{transform:scale(1.1);}
+
+#hud{position:fixed;top:0;left:0;width:100%;padding:20px;display:flex;justify-content:space-between;z-index:20;pointer-events:none;}
+.stat-box{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);padding:10px 25px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);font-size:22px;font-weight:900;}
+#count{color:#00d2ff;}
+
+canvas{display:block;touch-action:none;}
+
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50;}
+#overlay.show{display:flex;}
+.ov-btn{background:#3a7bd5;color:#fff;border:none;padding:12px 50px;border-radius:30px;font-size:20px;font-weight:700;cursor:pointer;margin:10px;}
+
+.controls-hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:14px;color:rgba(255,255,255,0.5);pointer-events:none;}
+</style>
+</head>
+<body>
+<div id="splash">
+    <img class="thumb" src="thumbnail.png" alt="Crowd Runner">
+    <h1>Crowd Runner Clash</h1>
+    <button id="btnPlay">RUN & CLASH</button>
+</div>
+<div id="hud">
+    <div class="stat-box">Crowd: <span id="count">1</span></div>
+    <div class="stat-box">Score: <span id="score">0</span></div>
+</div>
+<canvas id="c"></canvas>
+<div id="overlay">
+    <h2 id="ovTitle">YOU LOST!</h2>
+    <button class="ov-btn" onclick="location.reload()">RETRY</button>
+</div>
+<div class="controls-hint">Use Arrow Keys or Swipe to Move</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const countEl = document.getElementById('count');
+const scoreEl = document.getElementById('score');
+
+let W, H, score = 0, crowdCount = 1, gameActive = false;
+let playerX = 0, targetX = 0;
+let gates = [], enemies = [], roadOffset = 0;
+
+function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    playerX = W / 2;
+    targetX = W / 2;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function createLevel() {
+    gates = []; enemies = [];
+    for (let i = 0; i < 20; i++) {
+        gates.push({
+            y: -i * 600 - 800,
+            left: { op: '+', val: Math.floor(Math.random() * 10) + 5 },
+            right: { op: 'x', val: 2 },
+            passed: false
+        });
+        if (i % 5 === 0 && i > 0) {
+            enemies.push({ y: -i * 600 - 1100, count: i * 10, alive: true });
+        }
+    }
+}
+
+function drawPlayer() {
+    ctx.save();
+    // Simplified crowd rendering for performance & look
+    const rows = Math.ceil(Math.sqrt(crowdCount));
+    const spacing = 20;
+    ctx.translate(playerX, H - 150);
+    
+    for (let i = 0; i < Math.min(crowdCount, 100); i++) {
+        let r = Math.floor(i / rows);
+        let c = i % rows;
+        let x = (c - rows / 2) * spacing;
+        let y = r * spacing;
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = '#00d2ff';
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.stroke();
+    }
+    ctx.restore();
+}
+
+function drawRoad() {
+    ctx.fillStyle = '#2c3e50';
+    ctx.beginPath();
+    ctx.moveTo(W * 0.1, 0);
+    ctx.lineTo(W * 0.9, 0);
+    ctx.lineTo(W, H);
+    ctx.lineTo(0, H);
+    ctx.fill();
+    
+    // Road Markings
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 5;
+    ctx.setLineDash([40, 40]);
+    ctx.lineDashOffset = -roadOffset;
+    ctx.beginPath();
+    ctx.moveTo(W / 2, 0); ctx.lineTo(W / 2, H);
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+function drawGates() {
+    gates.forEach(g => {
+        if (g.passed) return;
+        let screenY = g.y + roadOffset;
+        if (screenY < -100 || screenY > H) return;
+        
+        // Left Gate
+        ctx.fillStyle = 'rgba(0,255,100,0.6)';
+        ctx.fillRect(0, screenY, W / 2, 80);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 30px Poppins';
+        ctx.textAlign = 'center';
+        ctx.fillText(g.left.op + g.left.val, W * 0.25, screenY + 50);
+        
+        // Right Gate
+        ctx.fillStyle = 'rgba(0,210,255,0.6)';
+        ctx.fillRect(W / 2, screenY, W / 2, 80);
+        ctx.fillText(g.right.op + g.right.val, W * 0.75, screenY + 50);
+    });
+}
+
+function update() {
+    if (!gameActive) return;
+    
+    roadOffset += 8; // Constant run speed
+    playerX += (targetX - playerX) * 0.15;
+    
+    // Collision Gates
+    gates.forEach(g => {
+        let screenY = g.y + roadOffset;
+        if (!g.passed && screenY > H - 180 && screenY < H - 100) {
+            g.passed = true;
+            let choice = playerX < W / 2 ? g.left : g.right;
+            if (choice.op === '+') crowdCount += choice.val;
+            else if (choice.op === 'x') crowdCount *= choice.val;
+            countEl.innerText = crowdCount;
+            score += 100;
+            scoreEl.innerText = score;
+        }
+    });
+
+    // Collision Enemies
+    enemies.forEach(e => {
+        let screenY = e.y + roadOffset;
+        if (e.alive && screenY > H - 200 && screenY < H - 100) {
+            if (crowdCount > e.count) {
+                crowdCount -= e.count;
+                e.alive = false;
+                countEl.innerText = crowdCount;
+                score += 500;
+                scoreEl.innerText = score;
+            } else {
+                gameOver();
+            }
+        }
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // Sky
+    ctx.fillStyle = '#1e272e';
+    ctx.fillRect(0, 0, W, H);
+    
+    drawRoad();
+    drawGates();
+    
+    // Draw Enemies
+    enemies.forEach(e => {
+        if (!e.alive) return;
+        let screenY = e.y + roadOffset;
+        if (screenY < -100 || screenY > H) return;
+        ctx.fillStyle = '#ff4757';
+        ctx.beginPath();
+        ctx.arc(W / 2, screenY, 40, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.fillText(e.count, W / 2, screenY + 10);
+    });
+
+    drawPlayer();
+    update();
+    requestAnimationFrame(draw);
+}
+
+// Controls
+window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') targetX = Math.max(50, targetX - 100);
+    if (e.key === 'ArrowRight') targetX = Math.min(W - 50, targetX + 100);
+});
+
+canvas.addEventListener('mousemove', e => {
+    targetX = e.clientX;
+});
+canvas.addEventListener('touchmove', e => {
+    targetX = e.touches[0].clientX;
+});
+
+document.getElementById('btnPlay').onclick = () => {
+    document.getElementById('splash').classList.add('hidden');
+    gameActive = true;
+    createLevel();
+    draw();
+};
+
+function gameOver() {
+    gameActive = false;
+    document.getElementById('overlay').classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+:root {
+    --primary: #1e293b;
+    --accent: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --bg-dark: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --danger: #ef4444;
+    --success: #10b981;
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+body, html {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden;
+    touch-action: none;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.screen.hidden {
+    display: none !important;
+}
+
+h1, h2, h3 {
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 2px;
+}
+
+/* --- UI COMPONENTS --- */
+.btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid transparent;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+}
+
+.secondary-btn {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--text-main);
+    border-color: var(--glass-border);
+}
+.retry-btn {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    color: white;
+}
+
+/* HUD */
+.hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0));
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+    z-index: 100;
+}
+
+.hud-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(5px);
+    padding: 8px 20px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.hud-item .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.hud-item span:not(.label) {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    font-family: 'Share Tech Mono', monospace;
+}
+.strikes.warning { color: orange; }
+.strikes.danger { color: var(--danger); }
+
+/* Main Desk Layout */
+.desk {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.booth-window {
+    height: 30%;
+    width: 100%;
+    background: #000 url('../assets/images/airport_bg.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-bottom: 5px solid #111;
+    overflow: hidden;
+}
+
+.glass-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.1); 
+    box-shadow: inset 0 -20px 30px rgba(0,0,0,0.8);
+    pointer-events: none;
+}
+
+#passenger-container {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    transition: opacity 0.5s;
+    opacity: 0;
+    z-index: 5;
+}
+
+.passenger-backlight {
+    position: absolute;
+    bottom: 20px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(230,240,255,0.9) 0%, rgba(200,220,255,0.4) 40%, rgba(0,0,0,0) 70%);
+    z-index: 1;
+    border-radius: 50%;
+    animation: flickerSoft 6s infinite alternate;
+}
+
+.passenger-figure {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 10%;
+    mix-blend-mode: multiply; /* Removes the white AI background seamlessly */
+    z-index: 2;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    animation: breathing 4s ease-in-out infinite, lookAround 12s ease-in-out infinite;
+}
+
+/* Desk Surface */
+.desk-surface {
+    height: 70%;
+    width: 100%;
+    background: #2b1f18 url('../assets/images/desk_texture.png') repeat center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    box-shadow: inset 0 20px 50px rgba(0,0,0,0.8);
+}
+
+.drag-hint {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    color: rgba(255,255,255,0.2);
+    font-size: 1.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    pointer-events: none;
+}
+
+.doc-area {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Documents */
+.document {
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    cursor: grab;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+    will-change: transform;
+    background: #fff;
+}
+.document:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+}
+
+.passport-doc {
+    width: 250px;
+    height: 350px;
+    background: #fff url('../assets/images/passport_template.png') no-repeat center;
+    background-size: cover;
+    padding: 20px;
+    top: 50px;
+    left: 50px;
+}
+.passport-photo {
+    width: 80px; height: 100px;
+    margin-bottom: 15px;
+    mix-blend-mode: multiply; /* Eliminates white borders and looks like printed ink */
+    filter: sepia(0.3) contrast(1.1); /* Adds an official document ink look */
+    border: 2px solid rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+.passport-data {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-family: 'Share Tech Mono', monospace;
+}
+.passport-data .field { color: #555; font-size: 0.6rem; }
+.passport-data .val { font-weight: bold; margin-bottom: 5px; color: #111; }
+
+.ticket-doc {
+    width: 350px;
+    height: 150px;
+    background: #fff url('../assets/images/ticket_template.png') no-repeat center;
+    background-size: cover;
+    top: 60px;
+    left: 320px;
+    padding: 15px 20px;
+    border-radius: 12px;
+}
+.ticket-data {
+    font-size: 0.8rem;
+    font-family: 'Share Tech Mono', monospace;
+}
+.ticket-data .field { color: #555;}
+.ticket-data .val { font-weight: bold; font-size: 1rem; color: #111;}
+
+
+/* Scanner Panel */
+.scanner-monitor {
+    width: 400px;
+    height: 100%;
+    background: linear-gradient(to right, #111, #1e293b);
+    border-left: 5px solid #000;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+    z-index: 100;
+}
+
+.monitor-bezel {
+    width: 100%;
+    height: 300px;
+    background: #000;
+    border-radius: 12px;
+    border: 4px solid #334155;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+#scanner-canvas {
+    width: 100%;
+    height: 100%;
+    background: #020617;
+}
+
+.scan-line {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 3px;
+    background: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 1);
+    animation: scanPulse 1.5s linear infinite;
+    display: none;
+}
+
+.scanner-status {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+}
+.scanner-status.alert { color: var(--danger); }
+
+.control-btn {
+    padding: 15px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    transition: transform 0.1s;
+    box-shadow: 0 5px 0 #1e40af;
+    margin-bottom: 10px;
+}
+.control-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #1e40af;
+}
+
+.call-next {
+    background: #10b981;
+    box-shadow: 0 5px 0 #059669;
+    display: none;
+}
+.call-next:active { box-shadow: 0 0 0 #059669; }
+
+
+/* Action Panel (Approval/Rejection Stamps) */
+.action-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 20px;
+    z-index: 1000; /* Ensure on top */
+}
+
+.stamp-pad {
+    width: 120px;
+    height: 120px;
+    background: #1e293b;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.1);
+    border: 3px solid #334155;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.stamp-pad.approve { border-bottom: 8px solid var(--success); }
+.stamp-pad.reject { border-bottom: 8px solid var(--danger); }
+
+.stamp-pad:active {
+    transform: scale(0.95) translateY(8px);
+    border-bottom-width: 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+}
+
+.btn-inner { text-align: center; }
+.btn-inner .icon { font-size: 3rem; font-weight: bold; }
+.btn-inner .text { font-size: 1rem; font-family: 'Share Tech Mono', monospace; font-weight:bold;}
+.approve .icon, .approve .text { color: var(--success); }
+.reject .icon, .reject .text { color: var(--danger); }
+
+/* Warning Alert */
+.alert-banner {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(220, 38, 38, 0.95);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(220, 38, 38, 0.5);
+    border: 3px solid #f87171;
+    z-index: 9999;
+    text-align: center;
+}
+
+/* Timer */
+.time-pressure-bar {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 10px;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+}
+.time-pressure-bar .fill {
+    height: 100%; width: 100%;
+    background: var(--success);
+    transition: width 1s linear, background-color 0.3s;
+}
+.time-pressure-bar .fill.warning { background: orange; }
+.time-pressure-bar .fill.danger { background: var(--danger); box-shadow: 0 0 15px red; }
+
+/* Stamps on Docs */
+.stamp-mark {
+    position: absolute;
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: 'Share Tech Mono', monospace;
+    text-transform: uppercase;
+    border: 6px solid;
+    padding: 5px 15px;
+    border-radius: 8px;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 200;
+}
+.stamp-approved { color: #10b981; border-color: #10b981; }
+.stamp-denied { color: #ef4444; border-color: #ef4444; }
+
+/* Modal */
+.result-modal, .gameover-modal, .tutorial-modal, .start-content {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+}
+.logo-area img { width: 120px; border-radius: 20px; margin-bottom: 20px;}
+.stats { margin: 30px 0; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 8px; }
+.stat-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-family: 'Share Tech Mono', monospace; font-size: 1.3rem; }
+.stat-row:last-child { border-top: 2px dashed #444; padding-top:15px; font-weight:bold; }
+
+.start-content { z-index: 20; position: relative;}
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('../assets/images/game_thumbnail.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1;
+    filter: brightness(0.6) contrast(1.1);
+}
+
+/* Animations */
+@keyframes scanPulse { 0% { top: 0; } 100% { top: 100%; opacity: 0; } }
+@keyframes flashRed { 0%, 100% { background: transparent; } 50% { background: rgba(255,0,0,0.3); } }
+.screen-flash { animation: flashRed 0.5s ease; pointer-events: none; }
+@keyframes dropIn { from { transform: translateY(-50px) scale(1.1); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.anim-drop { animation: dropIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; opacity: 0; }
+@keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+.anim-pulse { animation: pulseBtn 1s infinite; }
+
+/* Breathing & Moving for Real Avatar */
+@keyframes breathing {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.02) translateY(-2px); }
+}
+@keyframes lookAround {
+    0%, 20%, 80%, 100% { background-position: center 10%; }
+    30%, 40% { background-position: calc(50% + 5px) 10%; }
+    60%, 70% { background-position: calc(50% - 5px) 10%; }
+}
+@keyframes flickerSoft {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+/* Toggle */
+.toggle-container { margin-top: 15px; font-family: 'Share Tech Mono', monospace; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.toggle-container input { display: none; }
+.checkmark { width: 50px; height: 26px; background: #333; border-radius: 15px; position: relative; transition: 0.3s; }
+.checkmark::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: 0.3s; }
+input:checked ~ .checkmark { background: var(--success); }
+input:checked ~ .checkmark::after { left: 27px; }
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    .hud-item { padding: 5px 10px; min-width: 70px; }
+    .hud-item span:not(.label) { font-size: 1rem; }
+    
+    .booth-window { height: 25%; }
+    .desk-surface { height: 75%; flex-direction: column; overflow: hidden; }
+    
+    .doc-area { height: 50%; width: 100%; padding: 10px; flex-shrink: 0; }
+    
+    .scanner-monitor { height: 50%; width: 100%; flex-direction: row; border-left: none; border-top: 4px solid #000; padding: 10px; gap: 15px; }
+    .monitor-bezel { flex: 1; height: 100%; margin-bottom: 0; }
+    .monitor-controls { display: flex; flex-direction: column; justify-content: center; gap: 10px; width: 120px; }
+    .control-btn { padding: 10px; font-size: 0.9rem; margin-bottom: 0; }
+    
+    .action-panel { bottom: auto; top: calc(50% - 45px); right: 10px; left: auto; transform: none; flex-direction: column; gap: 10px; }
+    .stamp-pad { width: 70px; height: 70px; border-radius: 12px; }
+    .btn-inner .icon { font-size: 1.8rem; }
+    .btn-inner .text { font-size: 0.7rem; }
+    
+    /* Smaller Documents for Tablets */
+    .passport-doc { width: 200px; height: 280px; left: 10px; top: 10px; padding: 15px; }
+    .passport-photo { width: 60px; height: 80px; }
+    .passport-data { font-size: 0.7rem; }
+    
+    .ticket-doc { width: 250px; height: 120px; left: 220px; top: 10px; padding: 10px; }
+    .ticket-data { font-size: 0.7rem; }
+}
+
+@media (max-width: 600px) {
+    .scanner-monitor { flex-direction: column; gap: 10px; }
+    .monitor-controls { flex-direction: row; width: 100%; }
+    .control-btn { flex: 1; }
+    
+    .action-panel { top: auto; bottom: calc(50% - 40px); left: 50%; right: auto; transform: translateX(-50%); flex-direction: row; z-index: 1000; }
+    .stamp-pad { width: 60px; height: 60px; }
+    .btn-inner .icon { font-size: 1.5rem; }
+    .btn-inner .text { font-size: 0.6rem; }
+    
+    /* Stagger Documents for Phones */
+    .passport-doc { left: 10px; top: 10px; width: 180px; height: 250px; padding: 10px; }
+    .passport-photo { width: 50px; height: 70px; }
+    .passport-data { font-size: 0.6rem; }
+    
+    .ticket-doc { left: 100px; top: 90px; width: 230px; height: 110px; padding: 10px; }
+    .ticket-data { font-size: 0.6rem; line-height: 1.2; }
+    .ticket-data .val { font-size: 0.9rem; }
+    .timer-pressure-bar { bottom: 0; }
+}
+
+@media (max-height: 600px) {
+    /* Safe fallback for horizontal mobile */
+    .booth-window { display: none; }
+    .desk-surface { height: 100%; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

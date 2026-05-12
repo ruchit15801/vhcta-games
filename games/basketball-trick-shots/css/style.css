@@ -1,0 +1,401 @@
+/* ==========================================================================
+   CSS Variables & Resets
+   ========================================================================== */
+:root {
+    --primary-color: #ff6a00; /* Vibrant Orange */
+    --primary-glow: rgba(255, 106, 0, 0.6);
+    --secondary-color: #00f0ff; /* Neon Cyan */
+    --secondary-glow: rgba(0, 240, 255, 0.6);
+    --bg-dark: #0a0a12;
+    --text-light: #ffffff;
+    --text-muted: #a0a0b0;
+    --glass-bg: rgba(20, 20, 30, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Prevent text selection during gameplay */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    touch-action: none; /* Prevent browser scrolling/zooming on mobile */
+}
+
+/* ==========================================================================
+   Main Layout & Canvas
+   ========================================================================== */
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   UI Screens & Glassmorphism
+   ========================================================================== */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Let clicks pass through if hidden */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.screen.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+    max-width: 90%;
+    width: 400px;
+    transform: translateY(20px);
+    animation: floatUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Typography & Menu Elements
+   ========================================================================== */
+.menu-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.game-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px var(--primary-glow);
+    letter-spacing: 2px;
+}
+
+.game-title span {
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.title-success {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--secondary-color);
+    text-shadow: 0 0 20px var(--secondary-glow);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Tutorial Box
+   ========================================================================== */
+.tutorial-box {
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.tutorial-box h3 {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.instruction {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.instruction:last-child {
+    margin-bottom: 0;
+}
+
+.icon-drag, .icon-release, .icon-star {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.icon-drag { background: radial-gradient(circle, var(--text-light) 30%, transparent 70%); border: 2px dashed var(--text-muted); }
+.icon-release { background: var(--primary-color); box-shadow: 0 0 10px var(--primary-glow); }
+.icon-star { background: var(--secondary-color); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn-primary {
+    background: linear-gradient(135deg, #ff8a00 0%, #e52e71 100%);
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(229, 46, 113, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 15px 25px rgba(229, 46, 113, 0.6);
+}
+
+/* ==========================================================================
+   In-Game HUD
+   ========================================================================== */
+#screen-hud {
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px;
+    pointer-events: none; /* Only buttons should be clickable */
+}
+
+.hud-top {
+    display: flex;
+    gap: 15px;
+    pointer-events: auto;
+}
+
+.hud-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 90px;
+}
+
+.hud-box .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.hud-box span:not(.label) {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-light);
+}
+
+.hud-controls {
+    display: flex;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-icon:active {
+    transform: scale(0.9);
+    background: rgba(255,255,255,0.2);
+}
+
+/* ==========================================================================
+   Level Complete & Floating Text
+   ========================================================================== */
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.highlight {
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+}
+
+.stars-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    height: 50px;
+}
+
+.star {
+    width: 40px;
+    height: 40px;
+    background: var(--text-muted);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    transition: background 0.3s, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scale(0);
+}
+
+.star.earned {
+    background: #ffcc00; /* Gold */
+    transform: scale(1);
+}
+
+/* Floating Points Feedback */
+.floating-text {
+    position: absolute;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-glow);
+    pointer-events: none;
+    z-index: 20;
+    animation: floatUpFade 1.2s ease-out forwards;
+}
+
+.floating-text.perfect {
+    color: var(--secondary-color);
+    text-shadow: 0 0 15px var(--secondary-glow);
+    font-size: 2rem !important;
+}
+
+@keyframes floatUpFade {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    20% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+    80% { transform: translateY(-60px) scale(1); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1); opacity: 0; }
+}
+
+/* ==========================================================================
+   Responsive Queries
+   ========================================================================== */
+@media (max-width: 768px) {
+    .game-title { font-size: 2rem; }
+    .game-title span { font-size: 1.6rem; }
+    .glass-panel { padding: 30px 20px; width: 90%; }
+    .hud-box span:not(.label) { font-size: 1.2rem; }
+    .hud-box { min-width: 70px; padding: 8px 15px; }
+}
+
+@media (max-width: 480px) {
+    .menu-icon { width: 80px; height: 80px; }
+    .btn-primary { font-size: 1rem; padding: 12px 30px; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

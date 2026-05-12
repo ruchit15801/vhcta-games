@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+    <defs>
+        <radialGradient id="sky" cx="50%" cy="100%" r="100%" fx="50%" fy="100%">
+            <stop offset="0%" stop-color="#3d0c6a" />
+            <stop offset="50%" stop-color="#14052a" />
+            <stop offset="100%" stop-color="#05010a" />
+        </radialGradient>
+        <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1e0836" />
+            <stop offset="100%" stop-color="#0b0217" />
+        </linearGradient>
+        <radialGradient id="moon1" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#00f3ff" />
+            <stop offset="100%" stop-color="#0055ff" />
+        </radialGradient>
+        <radialGradient id="moon2" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#bc13fe" />
+            <stop offset="100%" stop-color="#ff007c" />
+        </radialGradient>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="15" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <filter id="superGlow">
+            <feGaussianBlur stdDeviation="30" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- Sky -->
+    <rect width="1280" height="720" fill="url(#sky)" />
+    
+    <!-- Stars -->
+    <circle cx="200" cy="150" r="2" fill="#fff" opacity="0.8"/>
+    <circle cx="450" cy="80" r="3" fill="#00f3ff" opacity="0.9" filter="url(#glow)"/>
+    <circle cx="800" cy="200" r="1.5" fill="#fff" opacity="0.6"/>
+    <circle cx="1100" cy="120" r="4" fill="#bc13fe" opacity="0.8" filter="url(#glow)"/>
+    <circle cx="950" cy="50" r="2" fill="#fff" opacity="0.9"/>
+    
+    <!-- Moons -->
+    <circle cx="1000" cy="250" r="120" fill="url(#moon1)" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="250" cy="200" r="60" fill="url(#moon2)" filter="url(#glow)" opacity="0.8"/>
+    
+    <!-- Mountains -->
+    <path d="M0 500 L150 350 L350 450 L600 250 L850 400 L1100 280 L1280 450 L1280 720 L0 720 Z" fill="#0f031f" opacity="0.7"/>
+    <path d="M0 550 L200 420 L450 500 L700 350 L950 480 L1200 380 L1280 480 L1280 720 L0 720 Z" fill="#16052b" opacity="0.9"/>
+    
+    <!-- Ground Base -->
+    <rect y="480" width="1280" height="240" fill="url(#ground)" />
+    
+    <!-- Perspective Grid Lines -->
+    <g stroke="#bc13fe" stroke-width="2" opacity="0.3" filter="url(#glow)">
+        <line x1="640" y1="480" x2="-200" y2="720" />
+        <line x1="640" y1="480" x2="100" y2="720" />
+        <line x1="640" y1="480" x2="400" y2="720" />
+        <line x1="640" y1="480" x2="700" y2="720" />
+        <line x1="640" y1="480" x2="1000" y2="720" />
+        <line x1="640" y1="480" x2="1300" y2="720" />
+        <line x1="640" y1="480" x2="1600" y2="720" />
+        
+        <line x1="0" y1="500" x2="1280" y2="500" />
+        <line x1="0" y1="530" x2="1280" y2="530" />
+        <line x1="0" y1="570" x2="1280" y2="570" />
+        <line x1="0" y1="630" x2="1280" y2="630" />
+    </g>
+    
+    <!-- Farming Plots -->
+    <path d="M300 650 L500 650 L450 550 L350 550 Z" fill="#2d0f47" stroke="#bc13fe" stroke-width="3" filter="url(#glow)"/>
+    <path d="M550 650 L750 650 L650 550 L580 550 Z" fill="#2d0f47" stroke="#00f3ff" stroke-width="3" filter="url(#glow)"/>
+    <path d="M800 650 L1000 650 L850 550 L780 550 Z" fill="#2d0f47" stroke="#ff007c" stroke-width="3" filter="url(#glow)"/>
+    
+    <!-- Glowing Plants (Left) -->
+    <path d="M400 600 C400 550, 370 500, 400 450 C430 500, 400 550, 400 600" fill="#bc13fe" filter="url(#superGlow)" opacity="0.9"/>
+    <circle cx="400" cy="450" r="15" fill="#fff" filter="url(#glow)"/>
+    
+    <!-- Glowing Plants (Center) -->
+    <path d="M650 580 C650 500, 600 450, 650 380 C700 450, 650 500, 650 580" fill="#00f3ff" filter="url(#superGlow)" opacity="0.9"/>
+    <circle cx="650" cy="380" r="20" fill="#fff" filter="url(#glow)"/>
+    
+    <!-- Glowing Plants (Right) -->
+    <path d="M890 610 C890 560, 870 520, 890 480 C910 520, 890 560, 890 610" fill="#ff007c" filter="url(#superGlow)" opacity="0.9"/>
+    <circle cx="890" cy="480" r="12" fill="#fff" filter="url(#glow)"/>
+    
+    <!-- Silhouette Farm Structure -->
+    <path d="M100 480 L150 400 L250 400 L300 480 Z" fill="#080210" stroke="#00f3ff" stroke-width="2" opacity="0.8"/>
+    <rect x="175" y="420" width="50" height="30" fill="#00f3ff" filter="url(#glow)" opacity="0.6"/>
+</svg>

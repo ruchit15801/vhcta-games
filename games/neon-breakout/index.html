@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Breakout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <span id="scoreDisplay">SCORE: 0</span>
+                <span id="levelDisplay">LEVEL: 1</span>
+                <span id="livesDisplay">❤️❤️❤️</span>
+            </div>
+
+            <div id="startScreen" class="screen active">
+                <h1>⚡ NEON BREAKOUT</h1>
+                <p>Move mouse or drag to control the paddle.</p>
+                <p>Don't let the ball fall!</p>
+                <button id="startBtn">LAUNCH</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1 id="resultTitle">GAME OVER</h1>
+                <p>SCORE: <span id="finalScore">0</span></p>
+                <p>LEVEL: <span id="finalLevel">1</span></p>
+                <button id="restartBtn">PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

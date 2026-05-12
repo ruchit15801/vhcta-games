@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bike Stunt Master</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/icon.svg">
+    <meta property="og:image" content="assets/images/thumbnail.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;0,900;1,400;1,700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer">
+            <!-- Top HUD -->
+            <div id="hud" class="hidden">
+                <div class="hud-left">
+                    <div class="score-box">
+                        <span class="label">SCORE</span>
+                        <span id="score-display">0</span>
+                    </div>
+                    <div class="level-box">
+                        <span class="label">LEVEL</span>
+                        <span id="level-display">1</span>
+                    </div>
+                </div>
+                
+                <div class="hud-center">
+                    <div id="combo-display" class="hidden">
+                        <span id="combo-text">WHEELIE!</span>
+                        <span id="combo-multiplier">x2</span>
+                    </div>
+                </div>
+
+                <div class="hud-right">
+                    <div class="speedometer">
+                        <div class="speed-ring"></div>
+                        <div class="speed-value" id="speed-display">0</div>
+                        <div class="speed-label">KM/H</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menus -->
+            
+            <!-- Main Menu -->
+            <div id="main-menu" class="menu-screen active">
+                <div class="logo-container">
+                    <h1>BIKE <span class="highlight">STUNT</span> MASTER</h1>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-play" class="btn-primary">PLAY NOW</button>
+                    <button id="btn-garage" class="btn-secondary">GARAGE</button>
+                </div>
+            </div>
+
+            <!-- Level Select Menu -->
+            <div id="level-menu" class="menu-screen hidden">
+                <h2>SELECT TRACK</h2>
+                <div id="level-grid" class="level-grid">
+                    <!-- Levels injected via JS -->
+                </div>
+                <button id="btn-back-main" class="btn-secondary btn-back">BACK</button>
+            </div>
+
+            <!-- Gameplay Guide / Tutorial -->
+            <div id="tutorial-screen" class="menu-screen hidden">
+                <h2>HOW TO RIDE</h2>
+                <div class="tutorial-content">
+                    <div class="tut-item">
+                        <div class="key-icon">↑ / W</div>
+                        <div class="tut-text">Accelerate</div>
+                    </div>
+                    <div class="tut-item">
+                        <div class="key-icon">↓ / S</div>
+                        <div class="tut-text">Brake / Reverse</div>
+                    </div>
+                    <div class="tut-item">
+                        <div class="key-icon">← / A</div>
+                        <div class="tut-text">Lean Back</div>
+                    </div>
+                    <div class="tut-item">
+                        <div class="key-icon">→ / D</div>
+                        <div class="tut-text">Lean Forward</div>
+                    </div>
+                    <div class="tut-item stunts-tut">
+                        Perform Wheelies, Flips, and land smoothly for Combos!
+                    </div>
+                </div>
+                <button id="btn-start-game" class="btn-primary">START ENGINE</button>
+            </div>
+
+            <!-- Game Over / Level Complete -->
+            <div id="end-screen" class="menu-screen hidden">
+                <h2 id="end-title">CRASHED!</h2>
+                <div class="stats-box">
+                    <div class="stat-row"><span>Score:</span> <span id="end-score">0</span></div>
+                    <div class="stat-row"><span>Time:</span> <span id="end-time">0:00</span></div>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-restart" class="btn-primary">RETRY</button>
+                    <button id="btn-next" class="btn-primary hidden">NEXT LEVEL</button>
+                    <button id="btn-menu" class="btn-secondary">MENU</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Mobile Controls Overlay -->
+        <div id="mobile-controls" class="hidden">
+            <div class="controls-left">
+                <button id="btn-lean-back" class="control-btn tilt-btn">↻</button>
+                <button id="btn-lean-fwd" class="control-btn tilt-btn">↺</button>
+            </div>
+            <div class="controls-right">
+                <button id="btn-brake" class="control-btn pedal-btn">BRAKE</button>
+                <button id="btn-accel" class="control-btn pedal-btn">GAS</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/physics.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

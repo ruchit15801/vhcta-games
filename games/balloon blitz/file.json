@@ -1,0 +1,12 @@
+{
+  "game": {
+    "gameName": "Balloon Blitz",
+    "description": "Click the arrow to destroy the correct balloon and test your speed and accuracy in this fast-paced arcade game.",
+    "size": {
+      "width": 1920,
+      "height": 1080,
+      "orientation": "landscape"
+    },
+    "tags": ["arcade", "casual", "balloon", "click", "skill", "html5"]
+  }
+}

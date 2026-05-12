@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Word Connect Master</title>
+    <link rel="icon" href="assets/icons/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Background Layer with Transition -->
+    <div id="bg-layer"></div>
+
+    <!-- Instruction Screen -->
+    <div id="instruction-screen" class="overlay active">
+        <div class="modal">
+            <img src="assets/icons/thumbnail.png" alt="Game Thumbnail" class="modal-thumbnail">
+            <h1>Word Connect Master</h1>
+            <p>Connect letters to form valid words and fill the board.</p>
+            <div class="tutorial-anim">
+                <div class="tut-letter">W</div>
+                <div class="tut-letter">O</div>
+                <div class="tut-letter">R</div>
+                <div class="tut-letter">D</div>
+            </div>
+            <p>Relax, take your time, and enjoy the scenery!</p>
+            <button id="start-btn" class="btn-primary">Play Now</button>
+        </div>
+    </div>
+
+    <!-- Main Game UI -->
+    <div id="game-ui">
+        
+        <!-- Header -->
+        <header>
+            <div class="level-indicator">Level <span id="level-display">1</span></div>
+            <div class="top-controls">
+                <button id="sound-btn" class="icon-btn">🔊</button>
+            </div>
+            <div class="coin-container">
+                <div class="coin-icon">💰</div>
+                <span id="coin-display">100</span>
+            </div>
+        </header>
+
+        <!-- Notification Banner -->
+        <div id="toast-msg">Awesome!</div>
+
+        <!-- Crossword Area -->
+        <div id="board-container">
+            <!-- Grid cells injected here -->
+        </div>
+
+        <!-- Controls & Letter Wheel -->
+        <div id="bottom-section">
+            <div class="powerups">
+                <button id="shuffle-btn" class="powerup-btn">
+                    <span class="p-icon">🔀</span>
+                </button>
+                <div class="current-word-display" id="current-word"></div>
+                <button id="hint-btn" class="powerup-btn">
+                    <span class="p-icon">💡</span>
+                    <span class="cost">25</span>
+                </button>
+            </div>
+
+            <div id="wheel-container">
+                <svg id="swipe-layer" width="100%" height="100%"></svg>
+                <div id="letters-wrapper">
+                    <!-- Letter buttons injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Level Complete Screen -->
+    <div id="level-complete" class="overlay">
+        <div class="modal">
+            <h2>Level Complete!</h2>
+            <div class="reward-box">
+                <div class="coin-icon big">💰</div>
+                <span>+<span id="reward-amount">10</span></span>
+            </div>
+            <button id="next-level-btn" class="btn-primary">Next Level</button>
+        </div>
+    </div>
+
+    <script src="js/levels.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

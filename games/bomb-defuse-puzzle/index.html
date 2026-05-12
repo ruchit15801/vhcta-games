@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bomb Defuse Puzzle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="startScreen" class="screen active">
+                <h1>⚡ BOMB DEFUSE</h1>
+                <p>Cut the correct wire sequence to defuse the bomb.</p>
+                <p>Wrong cut = BOOM. Timer runs out = BOOM.</p>
+                <button id="startBtn">DEFUSE</button>
+            </div>
+            <div id="gameOverScreen" class="screen">
+                <h1 id="resultTitle">BOOM!</h1>
+                <p id="resultMsg">You cut the wrong wire.</p>
+                <p>LEVEL: <span id="finalLevel">0</span></p>
+                <button id="restartBtn">TRY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

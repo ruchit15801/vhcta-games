@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <radialGradient id="bg" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" stop-color="#2a0a4a" />
+            <stop offset="100%" stop-color="#0a0216" />
+        </radialGradient>
+        <linearGradient id="glow" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#00f3ff" />
+            <stop offset="100%" stop-color="#bc13fe" />
+        </linearGradient>
+        <filter id="neon">
+            <feGaussianBlur stdDeviation="15" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="15" stdDeviation="10" flood-color="#000" flood-opacity="0.8"/>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="512" height="512" rx="120" fill="url(#bg)" />
+    <!-- Border -->
+    <rect width="492" height="492" x="10" y="10" rx="110" fill="none" stroke="url(#glow)" stroke-width="8" opacity="0.5" />
+    
+    <!-- Soil -->
+    <ellipse cx="256" cy="380" rx="160" ry="60" fill="#150524" filter="url(#shadow)" />
+    <ellipse cx="256" cy="370" rx="140" ry="50" fill="#2d0f47" />
+    <path d="M180 370 Q256 420 332 370" fill="none" stroke="#bc13fe" stroke-width="4" filter="url(#neon)"/>
+
+    <!-- Plant -->
+    <path d="M256 360 C256 360, 220 250, 256 160 C256 160, 292 250, 256 360" fill="url(#glow)" filter="url(#shadow)"/>
+    <path d="M256 330 C200 300, 150 250, 180 200 C220 250, 256 330, 256 330" fill="#00f3ff" opacity="0.8"/>
+    <path d="M256 330 C312 300, 362 250, 332 200 C292 250, 256 330, 256 330" fill="#bc13fe" opacity="0.8"/>
+    
+    <!-- Energy Fruit -->
+    <circle cx="256" cy="140" r="30" fill="#fff" filter="url(#neon)"/>
+    <circle cx="256" cy="140" r="20" fill="#00f3ff" />
+    
+    <!-- Stars/Particles -->
+    <circle cx="150" cy="150" r="8" fill="#bc13fe" filter="url(#neon)"/>
+    <circle cx="380" cy="180" r="12" fill="#00f3ff" filter="url(#neon)"/>
+    <circle cx="200" cy="80" r="6" fill="#fff" filter="url(#neon)"/>
+    <circle cx="320" cy="100" r="10" fill="#ff007c" filter="url(#neon)"/>
+</svg>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coin Rush Adventure</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <div class="hud-item">COINS: <span id="scoreDisplay">0</span></div>
+                <div class="hud-item">DIST: <span id="distDisplay">0</span>m</div>
+            </div>
+            
+            <div id="start-screen" class="screen active">
+                <div class="logo">
+                    <div class="coin-text">COIN RUSH</div>
+                    <div class="sub-text">ADVENTURE</div>
+                </div>
+                <button id="startBtn" class="premium-btn">RUN NOW</button>
+                <p class="instructions">Tap to JUMP. Tap again to DOUBLE JUMP.<br>Collect coins and avoid the obstacles!</p>
+            </div>
+            
+            <div id="game-over-screen" class="screen">
+                <h2 id="gameOverTitle">TEMPLE TRAPPED!</h2>
+                <div class="stats">
+                    <p>COINS COLLECTED: <span id="finalScore">0</span></p>
+                    <p>DISTANCE: <span id="finalDist">0</span>m</p>
+                </div>
+                <button id="restartBtn" class="premium-btn">RETRY RUN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

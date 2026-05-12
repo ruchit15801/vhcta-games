@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Planet Defense Orbit</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Defend your planet from alien invasions in this premium 3D space arcade game.">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Icon -->
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+</head>
+<body>
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- UI Overlay Layer -->
+    <div id="ui-layer">
+        
+        <!-- Main Menu -->
+        <div id="main-menu" class="screen active">
+            <div class="logo-container">
+                <h1 class="game-title" data-text="PLANET DEFENSE">PLANET DEFENSE</h1>
+                <h2 class="game-subtitle">ORBIT</h2>
+            </div>
+            <div class="menu-buttons">
+                <button id="btn-start" class="cyber-button">START GAME <span class="glitch-effect"></span></button>
+            </div>
+            <div class="sound-toggle-container">
+                <button id="btn-sound" class="icon-button">🔊</button>
+            </div>
+        </div>
+
+        <!-- Tutorial Screen -->
+        <div id="tutorial-screen" class="screen hidden">
+            <h2 class="section-title">HOW TO PLAY</h2>
+            <div class="tutorial-content">
+                <div class="tut-step">
+                    <div class="tut-icon">🔄</div>
+                    <p>Tap Left/Right or use A/D to Rotate Orbit</p>
+                </div>
+                <div class="tut-step">
+                    <div class="tut-icon">💥</div>
+                    <p>Defend the Planet from incoming alien waves</p>
+                </div>
+                <div class="tut-step">
+                    <div class="tut-icon">💎</div>
+                    <p>Collect energy to upgrade your weapons</p>
+                </div>
+            </div>
+            <div class="menu-buttons">
+                <button id="btn-play-now" class="cyber-button">PLAY NOW <span class="glitch-effect"></span></button>
+            </div>
+        </div>
+
+        <!-- Game HUD -->
+        <div id="game-hud" class="screen hidden">
+            <div class="top-hud">
+                <div class="health-container">
+                    <div class="health-label">CORE INTEGRITY</div>
+                    <div class="health-bar-bg">
+                        <div id="health-bar-fill"></div>
+                    </div>
+                </div>
+                <div class="wave-container">
+                    <span>WAVE</span>
+                    <div id="wave-display">1</div>
+                </div>
+                <div class="score-container">
+                    <span>SCORE</span>
+                    <div id="score-display">0</div>
+                </div>
+            </div>
+            
+            <div class="bottom-hud">
+                <div class="energy-container">
+                    <span class="energy-icon">💎</span>
+                    <span id="energy-display">0</span>
+                </div>
+                <button id="btn-open-upgrades" class="cyber-button small">UPGRADES</button>
+            </div>
+            
+            <!-- Floating Text Container for hit points, points, etc. -->
+            <div id="floating-text-container"></div>
+        </div>
+
+        <!-- Upgrades Menu -->
+        <div id="upgrade-menu" class="screen hidden glass-panel">
+            <div class="panel-header">
+                <h2>ARMORY UPGRADES</h2>
+                <div class="energy-container">
+                    <span class="energy-icon">💎</span>
+                    <span id="upgrade-energy-display">0</span>
+                </div>
+                <button id="btn-close-upgrades" class="close-button">✕</button>
+            </div>
+            
+            <div class="upgrades-list">
+                <!-- Upgrade Item: Damage -->
+                <div class="upgrade-item" id="upg-damage">
+                    <div class="upg-icon">⚔️</div>
+                    <div class="upg-info">
+                        <h3>WEAPON DAMAGE</h3>
+                        <div class="upg-level">Lvl <span class="lvl-val">1</span></div>
+                    </div>
+                    <button class="btn-buy" data-type="damage">
+                        <span class="cost">50</span> 💎
+                    </button>
+                </div>
+                
+                <!-- Upgrade Item: Fire Rate -->
+                <div class="upgrade-item" id="upg-firerate">
+                    <div class="upg-icon">⚡</div>
+                    <div class="upg-info">
+                        <h3>FIRE RATE</h3>
+                        <div class="upg-level">Lvl <span class="lvl-val">1</span></div>
+                    </div>
+                    <button class="btn-buy" data-type="firerate">
+                        <span class="cost">75</span> 💎
+                    </button>
+                </div>
+
+                <!-- Upgrade Item: Orbit Speed -->
+                <div class="upgrade-item" id="upg-speed">
+                    <div class="upg-icon">🚀</div>
+                    <div class="upg-info">
+                        <h3>ORBIT SPEED</h3>
+                        <div class="upg-level">Lvl <span class="lvl-val">1</span></div>
+                    </div>
+                    <button class="btn-buy" data-type="speed">
+                        <span class="cost">100</span> 💎
+                    </button>
+                </div>
+                
+                <!-- Weapon Unlock -->
+                <div class="upgrade-item special" id="upg-newweapon">
+                    <div class="upg-icon">🔫</div>
+                    <div class="upg-info">
+                        <h3>ADD TURRET</h3>
+                        <div class="upg-level">Max 4</div>
+                    </div>
+                    <button class="btn-buy special" data-type="newweapon">
+                        <span class="cost">250</span> 💎
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Menu -->
+        <div id="game-over-menu" class="screen hidden glass-panel center-panel">
+            <h2 class="text-danger">SYSTEM FAILURE</h2>
+            <div class="stats-box">
+                <p>WAVES CLEARED: <span id="final-wave" class="highlight">0</span></p>
+                <p>FINAL SCORE: <span id="final-score" class="highlight">0</span></p>
+            </div>
+            <div class="menu-buttons">
+                <button id="btn-restart" class="cyber-button">REBOOT SYSTEM <span class="glitch-effect"></span></button>
+            </div>
+        </div>
+
+        <!-- Wave Announcer -->
+        <div id="wave-announcer" class="hidden">
+            <h2 id="announce-text">WAVE 1</h2>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

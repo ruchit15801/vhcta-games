@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Shadow Ninja Fight — Ultra premium cinematic fighting game inspired by Shadow Fight. Epic combat, combos, boss fights and 40 levels of intense action." />
+  <meta name="theme-color" content="#050508" />
+  <title>Shadow Ninja Fight | Epic Cinematic Action</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Shadow Ninja Fight" />
+  <meta property="og:description" content="Epic shadow combat fighting game with 40 levels, combo system and boss fights." />
+  <meta property="og:image" content="assets/images/thumbnail.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="assets/icons/icon.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,100;0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  GAME WRAPPER                                              -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div id="game-wrapper">
+
+  <!-- ── CANVAS ─────────────────────────────────────────────── -->
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- ── SOUND TOGGLE ───────────────────────────────────────── -->
+  <button id="sound-toggle" title="Toggle Sound" aria-label="Toggle sound">🔊</button>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  LOADING SCREEN                                           -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="loading-screen" class="screen" style="justify-content:center;">
+    <img src="assets/icons/icon.png" class="game-icon" alt="Shadow Ninja Fight Icon" style="width:80px;height:80px;border-radius:16px;margin-bottom:10px;" />
+    <div style="font-family:'Orbitron',monospace;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:900;letter-spacing:0.1em;background:linear-gradient(135deg,#ff4d00,#ffd700,#c8102e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SHADOW NINJA FIGHT</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar-fill"></div>
+    </div>
+    <div class="loading-text">Initializing engine…</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  TITLE SCREEN                                             -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="title-screen" class="screen hidden">
+    <!-- Full-viewport 2-column layout via inline styles -->
+    <div style="
+      position: absolute; inset: 0;
+      display: flex; flex-direction: row;
+      align-items: stretch;
+      padding: 28px 48px;
+      gap: 40px;
+      box-sizing: border-box;
+      overflow: hidden;
+      z-index: 1;
+    ">
+      <!-- LEFT: Branding + Buttons -->
+      <div style="
+        flex: 0 0 auto; width: 42%;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: flex-start;
+        gap: 22px;
+      ">
+        <!-- Icon + Title row -->
+        <div style="display:flex;align-items:center;gap:14px;">
+          <img src="assets/icons/icon.png" class="game-icon" alt="Icon" />
+          <div>
+            <h1 style="
+              font-family:'Orbitron',monospace; font-weight:900;
+              font-size:clamp(1.3rem,3.5vw,2.6rem);
+              background:linear-gradient(135deg,#ff4d00 0%,#ffd700 40%,#fff 60%,#c8102e 100%);
+              -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+              filter:drop-shadow(0 0 14px rgba(200,16,46,.8));
+              line-height:1.15; margin:0;
+            ">Shadow Ninja Fight</h1>
+            <p style="
+              font-family:'Rajdhani',sans-serif; font-size:clamp(0.6rem,1.4vw,0.9rem);
+              letter-spacing:0.28em; text-transform:uppercase;
+              color:rgba(150,140,200,.7); margin:4px 0 0;
+            ">⚔ Epic Shadow Combat ⚔</p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;">
+          <button id="start-btn" class="btn btn-primary" style="width:100%;padding:13px 20px;">▶ PLAY NOW</button>
+          <div style="display:flex;gap:10px;">
+            <button id="level-select-btn" class="btn btn-secondary" style="flex:1;padding:10px 8px;font-size:0.8rem;">📋 LEVELS</button>
+            <button id="skills-btn" class="btn btn-secondary" style="flex:1;padding:10px 8px;font-size:0.8rem;">⚡ SKILLS</button>
+          </div>
+        </div>
+
+        <!-- Tagline -->
+        <p style="font-family:'Rajdhani',sans-serif;font-size:0.68rem;letter-spacing:0.2em;color:rgba(100,100,150,.5);line-height:1.9;margin:0;">
+          40 LEVELS &nbsp;·&nbsp; BOSS FIGHTS<br>COMBO SYSTEM &nbsp;·&nbsp; SKILL TREE
+        </p>
+      </div>
+
+      <!-- RIGHT: Thumbnail fills remaining space -->
+      <div style="
+        flex: 1; min-width: 0;
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
+      ">
+        <img src="assets/images/thumbnail.png" alt="Shadow Ninja Fight Thumbnail" style="
+          width: 100%; height: 100%;
+          object-fit: contain;
+          border-radius: 14px;
+          border: 1px solid rgba(200,16,46,.35);
+          box-shadow: 0 0 50px rgba(200,16,46,.3), 0 16px 60px rgba(0,0,0,.85);
+          display: block;
+        " />
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  INSTRUCTIONS SCREEN                                      -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="instructions-screen" class="screen hidden">
+    <div class="instructions-panel slideUp">
+      <h2 class="inst-title">🥷 HOW TO FIGHT</h2>
+
+      <!-- Desktop Controls -->
+      <div class="inst-section">
+        <div class="inst-section-title">🖥 Desktop — Keyboard Controls</div>
+        <div class="controls-grid">
+          <div class="control-item">
+            <div class="key-badge">← →</div>
+            <div class="control-desc">Move Left / Right</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">↑ / W / Space</div>
+            <div class="control-desc">Jump</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">Z / J</div>
+            <div class="control-desc">Punch</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">X / K</div>
+            <div class="control-desc">Kick</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">C / L</div>
+            <div class="control-desc">Special Attack</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">Shift</div>
+            <div class="control-desc">Block</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">S / V</div>
+            <div class="control-desc">Shadow Mode</div>
+          </div>
+          <div class="control-item">
+            <div class="key-badge">P / Esc</div>
+            <div class="control-desc">Pause</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div class="inst-section">
+        <div class="inst-section-title">📱 Mobile — Touch Controls</div>
+        <p style="font-family:'Rajdhani';font-size:0.85rem;color:rgba(180,180,220,.6);line-height:1.5;">
+          Use the on-screen D-pad (left side) to move &amp; jump. Use the action buttons (right side) to Punch, Kick, and unleash Special attacks.
+        </p>
+      </div>
+
+      <!-- Combo System -->
+      <div class="inst-section">
+        <div class="inst-section-title">🔥 Combo System</div>
+        <div class="combo-list">
+          <div class="combo-row">
+            <div class="combo-keys">P + P + K</div>
+            <div class="combo-name">Shadow Strike</div>
+            <div class="combo-dmg">×1.8 DMG</div>
+          </div>
+          <div class="combo-row">
+            <div class="combo-keys">K + K + P</div>
+            <div class="combo-name">Tornado Kick</div>
+            <div class="combo-dmg">×2.0 DMG</div>
+          </div>
+          <div class="combo-row">
+            <div class="combo-keys">P + K + P + P</div>
+            <div class="combo-name">Dragon Barrage</div>
+            <div class="combo-dmg">×2.5 DMG</div>
+          </div>
+          <div class="combo-row">
+            <div class="combo-keys">K + P + K + K</div>
+            <div class="combo-name">Rising Storm</div>
+            <div class="combo-dmg">×2.8 DMG</div>
+          </div>
+          <div class="combo-row">
+            <div class="combo-keys">P+P+P+K+K</div>
+            <div class="combo-name">Inferno Fury</div>
+            <div class="combo-dmg">×3.5 DMG</div>
+          </div>
+          <div class="combo-row">
+            <div class="combo-keys">Special (C/L)</div>
+            <div class="combo-name">Power Strike</div>
+            <div class="combo-dmg">Costs Energy ⚡</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inst-footer">
+        <button id="inst-start-btn" class="btn btn-primary">⚔ START FIGHT</button>
+        <button id="inst-skip-btn" class="btn btn-secondary">SKIP</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  LEVEL SELECT SCREEN                                      -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="level-select-screen" class="screen hidden">
+    <div class="level-select-panel slideUp">
+      <h2 class="ls-title">📋 LEVEL SELECT</h2>
+      <div id="ls-levels-container"></div>
+      <button id="ls-back-btn" class="btn btn-secondary ls-back">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  SKILL SCREEN                                             -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="skill-screen" class="screen hidden">
+    <div class="skill-panel slideUp">
+      <h2 class="skill-title">⚡ SKILL TREE</h2>
+      <div class="skill-currency">Coins: <span id="skill-coin-count">0</span> 🪙</div>
+      <div class="skills-grid" id="skills-grid"></div>
+      <button id="skill-back-btn" class="btn btn-secondary" style="align-self:center;">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  HUD (Fight UI — shown on canvas)                         -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="hud" class="hidden">
+    <!-- Player side -->
+    <div class="hud-player">
+      <div class="hud-name">🥷 SHADOW NINJA</div>
+      <div class="health-bar-wrap">
+        <div class="health-bar-fill" id="player-hp-bar" style="width:100%;"></div>
+      </div>
+      <div class="energy-bar-wrap">
+        <div class="energy-bar-fill" id="player-energy-bar" style="width:100%;"></div>
+      </div>
+    </div>
+
+    <!-- Center -->
+    <div class="hud-center">
+      <div class="level-badge" id="level-badge">LEVEL 1</div>
+      <div class="timer-display" id="timer-display">90</div>
+    </div>
+
+    <!-- Enemy side -->
+    <div class="hud-enemy">
+      <div class="hud-name" id="enemy-name">ENEMY</div>
+      <div class="health-bar-wrap">
+        <div class="health-bar-fill" id="enemy-hp-bar" style="width:100%;"></div>
+      </div>
+      <div class="energy-bar-wrap">
+        <div class="energy-bar-fill" id="enemy-energy-bar" style="width:60%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMBO DISPLAY ──────────────────────────────────────── -->
+  <div id="combo-display" class="hidden">
+    <div class="combo-count">0x</div>
+    <div class="combo-label">COMBO</div>
+    <div class="combo-multiplier">×1.0 DAMAGE</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  PAUSE SCREEN                                             -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="pause-screen" class="screen hidden">
+    <div class="pause-panel slideUp">
+      <div class="pause-title">⏸ PAUSED</div>
+      <div class="pause-divider"></div>
+      <button id="pause-resume-btn"  class="btn btn-primary">▶ RESUME</button>
+      <button id="pause-restart-btn" class="btn btn-secondary">↺ RESTART</button>
+      <button id="pause-quit-btn"    class="btn btn-secondary">⬅ QUIT</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  RESULT SCREEN                                            -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="result-screen" class="screen hidden">
+    <div class="result-panel slideUp">
+      <div class="result-title win" id="result-title">VICTORY!</div>
+      <div class="pause-divider"></div>
+      <div class="result-stats">
+        <div class="stat-item">
+          <div class="stat-label">Damage Dealt</div>
+          <div class="stat-value" id="result-stat-damage">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Max Combo</div>
+          <div class="stat-value" id="result-stat-combo">0x</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Fight Time</div>
+          <div class="stat-value" id="result-stat-time">0s</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Coins Earned</div>
+          <div class="stat-value" id="result-stat-coins">+0</div>
+        </div>
+      </div>
+      <div class="pause-divider"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center;width:100%;">
+        <button id="result-next-btn"  class="btn btn-gold" style="width:100%;">⚔ NEXT LEVEL</button>
+        <button id="result-retry-btn" class="btn btn-secondary" style="width:100%;">↺ RETRY</button>
+        <button id="result-menu-btn"  class="btn btn-secondary" style="width:100%;">⬅ MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!--  MOBILE TOUCH CONTROLS                                    -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="touch-controls">
+    <!-- D-Pad -->
+    <div class="touch-left">
+      <div class="touch-dpad">
+        <div class="touch-btn dpad-left"  id="tc-left">◀</div>
+        <div class="touch-btn dpad-jump"  id="tc-jump">▲</div>
+        <div class="touch-btn dpad-block" id="tc-block">🛡</div>
+        <div class="touch-btn dpad-right" id="tc-right">▶</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="touch-right">
+      <div class="touch-btn special" id="tc-special">⚡</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="touch-btn punch" id="tc-punch">👊</div>
+        <div class="touch-btn kick"  id="tc-kick">🦵</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /game-wrapper -->
+
+<script src="js/script.js"></script>
+</body>
+</html>

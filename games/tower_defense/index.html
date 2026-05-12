@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>AEGIS DEFENSE — Tower Defense</title>
+<meta property="og:title" content="AEGIS DEFENSE">
+<meta property="og:description" content="Strategic Warfare Tower Defense System">
+<meta property="og:image" content="thumbnail.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="thumbnail.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ SPLASH / TITLE SCREEN ============ -->
+<div id="splashScreen" class="screen active">
+  <div class="splash-bg">
+    <div class="hex-grid"></div>
+    <div class="scan-line"></div>
+  </div>
+  <div class="splash-content">
+    <div class="game-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,5 75,22.5 75,57.5 40,75 5,57.5 5,22.5" fill="none" stroke="#d4af37" stroke-width="2"/>
+          <polygon points="40,15 65,27.5 65,52.5 40,65 15,52.5 15,27.5" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.5"/>
+          <circle cx="40" cy="40" r="8" fill="#d4af37"/>
+          <line x1="40" y1="15" x2="40" y2="28" stroke="#d4af37" stroke-width="2"/>
+          <line x1="40" y1="52" x2="40" y2="65" stroke="#d4af37" stroke-width="2"/>
+          <line x1="15" y1="27.5" x2="26" y2="34" stroke="#d4af37" stroke-width="2"/>
+          <line x1="54" y1="46" x2="65" y2="52.5" stroke="#d4af37" stroke-width="2"/>
+          <line x1="65" y1="27.5" x2="54" y2="34" stroke="#d4af37" stroke-width="2"/>
+          <line x1="26" y1="46" x2="15" y2="52.5" stroke="#d4af37" stroke-width="2"/>
+        </svg>
+      </div>
+      <h1 class="game-title">AEGIS<span>DEFENSE</span></h1>
+      <p class="game-subtitle">STRATEGIC WARFARE SYSTEM v2.4</p>
+    </div>
+    <div class="splash-buttons">
+      <button class="btn-primary glow-gold" onclick="startGame()">
+        <span class="btn-icon">▶</span> DEPLOY FORCES
+      </button>
+      <button class="btn-secondary" onclick="showGuide()">
+        <span class="btn-icon">📖</span> FIELD MANUAL
+      </button>
+      <button class="btn-secondary" onclick="showCredits()">
+        <span class="btn-icon">★</span> INTEL
+      </button>
+    </div>
+    <div class="version-tag">CLASSIFIED • CLEARANCE LEVEL ALPHA</div>
+  </div>
+</div>
+
+<!-- ============ GUIDE SCREEN ============ -->
+<div id="guideScreen" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="showScreen('splashScreen')">← BACK</button>
+    <h2>FIELD MANUAL</h2>
+  </div>
+  <div class="guide-content">
+    <div class="guide-section">
+      <h3>🎯 MISSION OBJECTIVE</h3>
+      <p>Prevent enemy forces from reaching your base. Place towers strategically along the path to eliminate all threats before they breach your defenses.</p>
+    </div>
+    <div class="guide-section">
+      <h3>🏗️ TOWER TYPES</h3>
+      <div class="tower-guide-grid">
+        <div class="tower-card" style="border-color:#4fc3f7">
+          <div class="tg-icon" style="background:#0d47a1">🔵</div>
+          <div class="tg-info">
+            <b>PULSE CANNON</b><br>
+            Cost: 100 | Fast attack, single target<br>
+            Best against: Light infantry
+          </div>
+        </div>
+        <div class="tower-card" style="border-color:#81c784">
+          <div class="tg-icon" style="background:#1b5e20">🟢</div>
+          <div class="tg-info">
+            <b>TESLA GRID</b><br>
+            Cost: 150 | Slows + area damage<br>
+            Best against: Swarms
+          </div>
+        </div>
+        <div class="tower-card" style="border-color:#ffb74d">
+          <div class="tg-icon" style="background:#e65100">🟠</div>
+          <div class="tg-info">
+            <b>INFERNO</b><br>
+            Cost: 200 | High damage, burn DoT<br>
+            Best against: Armored units
+          </div>
+        </div>
+        <div class="tower-card" style="border-color:#ce93d8">
+          <div class="tg-icon" style="background:#4a148c">🟣</div>
+          <div class="tg-info">
+            <b>VOID CANNON</b><br>
+            Cost: 350 | Massive range, explosive<br>
+            Best against: All types
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="guide-section">
+      <h3>⚔️ ENEMY TYPES</h3>
+      <div class="enemy-guide-grid">
+        <div class="eg-item"><span>🔴</span> Scout — Fast, low HP</div>
+        <div class="eg-item"><span>🟡</span> Soldier — Balanced</div>
+        <div class="eg-item"><span>🟤</span> Tank — Slow, high armor</div>
+        <div class="eg-item"><span>⚫</span> Phantom — Invisible phases</div>
+        <div class="eg-item"><span>🔥</span> Berserker — Speeds up when damaged</div>
+        <div class="eg-item"><span>💀</span> BOSS — Massive HP & abilities</div>
+      </div>
+    </div>
+    <div class="guide-section">
+      <h3>💎 GAME MECHANICS</h3>
+      <ul>
+        <li>Earn <b>Gold</b> by defeating enemies</li>
+        <li>Upgrade towers by tapping/clicking them</li>
+        <li>Each tower has <b>3 upgrade levels</b></li>
+        <li>You have <b>20 Lives</b> — don't let enemies reach the base!</li>
+        <li>Complete waves faster for <b>Time Bonus Gold</b></li>
+        <li>Special abilities recharge every 3 waves</li>
+        <li><b>10 Levels</b> of increasing difficulty</li>
+      </ul>
+    </div>
+    <div class="guide-section">
+      <h3>🎮 CONTROLS</h3>
+      <ul>
+        <li><b>Select Tower</b> → Click tower panel → Click empty grid cell</li>
+        <li><b>Upgrade/Sell</b> → Click placed tower</li>
+        <li><b>Speed Up</b> → ⚡ button (2x speed)</li>
+        <li><b>Pause</b> → ⏸ button</li>
+        <li><b>Special Ability</b> → 💥 button (screen nuke)</li>
+      </ul>
+    </div>
+    <button class="btn-primary glow-gold mt-20" onclick="forceStartGame()">▶ BEGIN MISSION</button>
+  </div>
+</div>
+
+<!-- ============ GAME SCREEN ============ -->
+<div id="gameScreen" class="screen">
+  <!-- In-Game Tutorial Overlay -->
+  <div id="inGameTutorial" class="tutorial-overlay hidden">
+    <div class="tutorial-card">
+      <h3>COMMANDER INITIALIZATION</h3>
+      <div class="tut-step active" id="tut1">
+        <div class="tut-icon">👆</div>
+        <p><b>1. SELECT FORCES</b><br>Tap a Tower from the bottom panel.</p>
+      </div>
+      <div class="tut-step" id="tut2">
+        <div class="tut-icon">🎯</div>
+        <p><b>2. DEPLOY</b><br>Tap an empty grid space to place.</p>
+      </div>
+      <div class="tut-step" id="tut3">
+        <div class="tut-icon">⬆️</div>
+        <p><b>3. UPGRADE</b><br>Tap placed towers to upgrade/sell.</p>
+      </div>
+      <div class="tut-step" id="tut4">
+        <div class="tut-icon">▶️</div>
+        <p><b>4. BEGIN ASSAULT</b><br>Press START WAVE to begin combat.</p>
+      </div>
+      <div class="tut-nav">
+        <button class="btn-secondary" id="tutPrevBtn" onclick="tutPrev()" disabled>← PREV</button>
+        <button class="btn-primary glow-gold" id="tutNextBtn" onclick="tutNext()">NEXT →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD Top Bar -->
+  <div class="hud-top">
+    <div class="hud-stat">
+      <span class="hud-icon">❤️</span>
+      <span id="livesDisplay">20</span>
+    </div>
+    <div class="hud-center">
+      <span class="level-badge" id="levelBadge">LEVEL 1</span>
+      <span class="wave-badge" id="waveBadge">WAVE 1/5</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-icon">💰</span>
+      <span id="goldDisplay">300</span>
+    </div>
+  </div>
+
+  <!-- Score Bar -->
+  <div class="score-bar">
+    <div class="score-item">SCORE: <span id="scoreDisplay">0</span></div>
+    <div class="score-item" id="bossAlert" style="display:none">⚠️ BOSS INCOMING</div>
+    <div class="score-item">KILLS: <span id="killsDisplay">0</span></div>
+    <div class="score-item" style="color:rgba(212,175,55,0.4);font-size:0.5rem">ENGINE: <span id="engineStatus">INIT</span></div>
+  </div>
+
+  <!-- Canvas Area -->
+  <div class="canvas-wrap">
+    <canvas id="gameCanvas"></canvas>
+    <div id="towerMenu" class="tower-menu hidden">
+      <div class="tm-title" id="tmTitle">TOWER OPTIONS</div>
+      <button class="tm-btn upgrade-btn" id="tmUpgrade" onclick="upgradeTower()">⬆ UPGRADE (<span id="tmUpgradeCost">0</span>g)</button>
+      <button class="tm-btn sell-btn" id="tmSell" onclick="sellTower()">💲 SELL (<span id="tmSellValue">0</span>g)</button>
+      <button class="tm-btn close-btn" onclick="closeTowerMenu()">✕ CLOSE</button>
+    </div>
+  </div>
+
+  <!-- Tower Selection Panel -->
+  <div class="tower-panel">
+    <div class="panel-label">SELECT TOWER</div>
+    <div class="tower-btns">
+      <button class="tower-select-btn" id="tb0" onclick="selectTower(0)" title="Pulse Cannon — 100g">
+        <div class="tb-icon t0">
+          <img src="assets/tower_pulse.svg" width="32" height="32" onerror="this.outerHTML='🔵'">
+        </div>
+        <div class="tb-name">PULSE</div>
+        <div class="tb-cost">100g</div>
+      </button>
+      <button class="tower-select-btn" id="tb1" onclick="selectTower(1)" title="Tesla Grid — 150g">
+        <div class="tb-icon t1">
+          <img src="assets/tower_tesla.svg" width="32" height="32" onerror="this.outerHTML='🟢'">
+        </div>
+        <div class="tb-name">TESLA</div>
+        <div class="tb-cost">150g</div>
+      </button>
+      <button class="tower-select-btn" id="tb2" onclick="selectTower(2)" title="Inferno — 200g">
+        <div class="tb-icon t2">
+          <img src="assets/tower_inferno.svg" width="32" height="32" onerror="this.outerHTML='🟠'">
+        </div>
+        <div class="tb-name">INFERNO</div>
+        <div class="tb-cost">200g</div>
+      </button>
+      <button class="tower-select-btn" id="tb3" onclick="selectTower(3)" title="Void Cannon — 350g">
+        <div class="tb-icon t3">
+          <img src="assets/tower_void.svg" width="32" height="32" onerror="this.outerHTML='🟣'">
+        </div>
+        <div class="tb-name">VOID</div>
+        <div class="tb-cost">350g</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Control Panel -->
+  <div class="control-panel">
+    <button class="ctrl-btn" id="startWaveBtn" onclick="startWave()">
+      <span>▶</span> START WAVE
+    </button>
+    <button class="ctrl-btn speed-btn" id="speedBtn" onclick="toggleSpeed()">⚡ 1x</button>
+    <button class="ctrl-btn pause-btn" id="pauseBtn" onclick="togglePause()">⏸</button>
+    <button class="ctrl-btn nuke-btn" id="nukeBtn" onclick="useNuke()" title="AIRSTRIKE — Damages all enemies">
+      💥 <span id="nukeCooldown"></span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ LEVEL COMPLETE ============ -->
+<div id="levelCompleteScreen" class="screen overlay-screen">
+  <div class="result-card gold-card">
+    <div class="result-badge">✓</div>
+    <h2>SECTOR SECURED</h2>
+    <div class="result-stats" id="levelStats"></div>
+    <div class="star-row" id="starRow"></div>
+    <button class="btn-primary glow-gold" onclick="nextLevel()">ADVANCE TO NEXT SECTOR →</button>
+    <button class="btn-secondary mt-10" onclick="restartLevel()">↺ REPLAY SECTOR</button>
+  </div>
+</div>
+
+<!-- ============ GAME OVER ============ -->
+<div id="gameOverScreen" class="screen overlay-screen">
+  <div class="result-card red-card">
+    <div class="result-badge fail">✗</div>
+    <h2>BASE BREACHED</h2>
+    <p class="fail-msg">Enemy forces have overrun your position.</p>
+    <div class="result-stats" id="gameOverStats"></div>
+    <button class="btn-primary glow-red" onclick="restartLevel()">↺ REDEPLOY</button>
+    <button class="btn-secondary mt-10" onclick="showScreen('splashScreen')">⌂ COMMAND CENTER</button>
+  </div>
+</div>
+
+<!-- ============ VICTORY ============ -->
+<div id="victoryScreen" class="screen overlay-screen">
+  <div class="result-card victory-card">
+    <div class="fireworks" id="fireworks"></div>
+    <div class="result-badge victory">★</div>
+    <h2>CAMPAIGN COMPLETE</h2>
+    <p>All sectors have been secured. You are an AEGIS Legend.</p>
+    <div class="result-stats" id="victoryStats"></div>
+    <button class="btn-primary glow-gold" onclick="showScreen('splashScreen')">⌂ RETURN TO BASE</button>
+  </div>
+</div>
+
+<!-- ============ CREDITS ============ -->
+<div id="creditsScreen" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="showScreen('splashScreen')">← BACK</button>
+    <h2>INTEL</h2>
+  </div>
+  <div class="credits-content">
+    <div class="credit-logo">⬡</div>
+    <h3>AEGIS DEFENSE</h3>
+    <p>Strategic Warfare System</p>
+    <div class="credit-divider"></div>
+    <p>Built with pure HTML5, CSS3 & JavaScript</p>
+    <p>Web Audio API for procedural sound</p>
+    <p>Canvas 2D for rendering</p>
+    <div class="credit-divider"></div>
+    <p class="credit-version">Version 2.4 — Production Build</p>
+    <p class="credit-year">© 2025 AEGIS SYSTEMS</p>
+  </div>
+</div>
+
+<!-- ============ PAUSE OVERLAY ============ -->
+<div id="pauseOverlay" class="pause-overlay hidden">
+  <div class="pause-card">
+    <h2>⏸ PAUSED</h2>
+    <button class="btn-primary glow-gold" onclick="togglePause()">▶ RESUME</button>
+    <button class="btn-secondary mt-10" onclick="restartLevel()">↺ RESTART</button>
+    <button class="btn-secondary mt-10" onclick="showScreen('splashScreen')">⌂ QUIT</button>
+  </div>
+</div>
+
+<script src="audio.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

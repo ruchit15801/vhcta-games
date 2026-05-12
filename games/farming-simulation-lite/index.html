@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Farming Simulation Lite - Premium Mobile Experience</title>
+    <!-- Social Metadata / Thumbnail -->
+    <meta property="og:title" content="Farming Simulation Lite">
+    <meta property="og:description" content="Premium mobile farming experience with isometric graphics and idle growth.">
+    <meta property="og:image" content="assets/building_barn.png">
+    
+    <!-- SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- HUD Layer -->
+        <div id="hud">
+            <div class="hud-top">
+                <div class="resource-pill" id="coin-pill">
+                    <img src="assets/icons_ui.png" class="icon" id="coin-icon">
+                    <span id="coin-count">500</span>
+                </div>
+                <div class="level-pill">
+                    <div class="xp-bar-container">
+                        <div id="xp-fill"></div>
+                    </div>
+                    <span id="level-num">LVL 1</span>
+                </div>
+            </div>
+            
+            <div class="hud-side">
+                <button class="side-btn" id="task-btn">📜</button>
+                <button class="side-btn" id="settings-btn">⚙️</button>
+            </div>
+        </div>
+
+        <!-- Canvas Layer -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Bottom UI -->
+        <div id="bottom-ui">
+            <div class="action-bar">
+                <button class="action-btn" id="shop-btn">
+                    <div class="btn-icon">🛒</div>
+                    <span>SHOP</span>
+                </button>
+                <button class="action-btn" id="inventory-btn">
+                    <div class="btn-icon">📦</div>
+                    <span>CARGO</span>
+                </button>
+                <button class="action-btn" id="expand-btn">
+                    <div class="btn-icon">🏗️</div>
+                    <span>EXPAND</span>
+                </button>
+                <button class="action-btn" id="upgrade-btn">
+                    <div class="btn-icon">⚡</div>
+                    <span>TOOLS</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="modal-overlay" class="hidden">
+            <div id="shop-modal" class="modal hidden">
+                <div class="modal-header">
+                    <h2>Seed Market</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-content" id="shop-items">
+                    <!-- Items injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial Screen -->
+        <div id="tutorial-overlay">
+            <div class="tutorial-card">
+                <h1>Welcome to <br><span>Farm Sim Lite</span></h1>
+                <p>Build your dream farm in this ultra-premium simulation.</p>
+                <div class="security-warning">
+                    ⚠️ PLEASE USE <strong>RUN_GAME.BAT</strong> TO AVOID SECURITY ERRORS
+                </div>
+                <div class="tutorial-steps">
+
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <p>Buy seeds from the Shop</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <p>Tap tiles to plant & water</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <p>Harvest when golden & sell!</p>
+                    </div>
+                </div>
+                <button id="start-game-btn">START FARMING</button>
+            </div>
+        </div>
+
+        <!-- Screen Flash / Effects -->
+        <div id="fx-overlay"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/engine/audio.js"></script>
+    <script src="js/engine/grid.js"></script>
+
+    <script src="js/engine/crops.js"></script>
+    <script src="js/engine/ui.js"></script>
+    <script src="js/systems/economy.js"></script>
+    <script src="js/systems/persistence.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

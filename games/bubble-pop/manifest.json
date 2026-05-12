@@ -1,0 +1,16 @@
+{
+  "name": "Neon Bubble Pop",
+  "short_name": "Bubble Pop",
+  "name": "A gorgeous neon bubble popping puzzle game.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#050010",
+  "theme_color": "#FF3366",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

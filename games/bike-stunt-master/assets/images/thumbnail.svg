@@ -1,0 +1,18 @@
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050508;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a24;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="txt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f94144;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f3722c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)" />
+  <path d="M0 600 Q 320 400 640 600 T 1280 600 L 1280 720 L 0 720 Z" fill="#2c1e16" opacity="0.6" />
+  <path d="M0 650 Q 320 500 640 650 T 1280 650 L 1280 720 L 0 720 Z" fill="#1a120c" />
+  <text x="640" y="300" font-family="Arial Black" font-size="120" fill="url(#txt)" text-anchor="middle" style="filter: drop-shadow(0 0 30px rgba(249, 65, 68, 0.6));">BIKE STUNT</text>
+  <text x="640" y="440" font-family="Arial Black" font-size="180" fill="#fff" text-anchor="middle" style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));">MASTER</text>
+  <rect x="540" y="480" width="200" height="10" fill="#f94144" rx="5" />
+</svg>

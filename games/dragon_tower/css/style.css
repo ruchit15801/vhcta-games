@@ -1,0 +1,186 @@
+/* ═══════════════════════════════════════════════
+   DRAGON TOWER — PREMIUM DESIGN SYSTEM
+   ═══════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:wght@300;400;600;700&display=swap');
+
+:root {
+  --gold:      #d4a843;
+  --gold-lt:   #f5d070;
+  --gold-dk:   #8a6420;
+  --crimson:   #8b1a1a;
+  --crimson-lt:#cc3333;
+  --fire:      #ff6600;
+  --ember:     #ff3300;
+  --obsidian:  #080608;
+  --stone:     #181214;
+  --parchment: #f0e4c0;
+  --parch-dk:  #c8b880;
+  --shadow:    rgba(0,0,0,0.85);
+  --glass:     rgba(15, 10, 15, 0.85);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--obsidian); touch-action:none; font-family:'Crimson Pro', serif; color:var(--parchment); }
+canvas { position: absolute; inset: 0; z-index: 10; }
+
+/* ── SCREENS ── */
+.screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:500; transition: opacity 0.5s ease; }
+.screen.off { opacity: 0; pointer-events: none; display: none; }
+
+/* ── SPLASH ── */
+#splash {
+  background: url('../assets/splash_bg.png') no-repeat center center;
+  background-size: cover;
+}
+#splash::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at center, transparent, var(--obsidian));
+}
+
+.splash-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px; padding:40px; text-align:center; }
+.game-title {
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(40px, 12vw, 100px);
+  font-weight:900;
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold), var(--fire), var(--gold-lt));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter: drop-shadow(0 0 30px rgba(255, 102, 0, 0.4));
+  letter-spacing: 5px;
+}
+
+.splash-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+  border: none; padding: 18px 50px;
+  font-family: 'Cinzel Decorative', serif; font-weight: 700; font-size: 20px;
+  color: var(--obsidian); cursor: pointer;
+  clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+  box-shadow: 0 0 20px rgba(212, 168, 67, 0.4);
+  transition: transform 0.2s, filter 0.2s;
+}
+.splash-btn:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+/* ── GUIDE ── */
+#guide { background: rgba(0,0,0,0.9); z-index: 600; padding: 20px; }
+.guide-card {
+    max-width: 600px; background: var(--glass); border: 1px solid var(--gold-dk);
+    padding: 30px; border-radius: 4px; box-shadow: 0 0 50px rgba(0,0,0,1);
+    backdrop-filter: blur(10px);
+}
+.guide-title { font-family: 'Cinzel Decorative', serif; color: var(--gold); text-align: center; margin-bottom: 20px; font-size: 24px; }
+.g-section { margin-bottom: 20px; }
+.g-section-title { color: var(--gold-dk); font-size: 12px; border-bottom: 1px solid rgba(212,168,67,0.2); margin-bottom: 10px; padding-bottom: 5px; }
+.g-row { display: flex; gap: 10px; margin-bottom: 5px; font-size: 14px; }
+.g-key { color: var(--gold); font-weight: bold; min-width: 80px; }
+
+/* ── HUD ── */
+#hud {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+  padding: 15px 25px; display: none; justify-content: space-between; align-items: flex-start;
+  pointer-events: none;
+}
+.hud-block { display: flex; flex-direction: column; }
+.hud-label { font-size: 10px; color: var(--parch-dk); text-transform: uppercase; letter-spacing: 2px; }
+.hud-val { font-family: 'Cinzel Decorative', serif; font-size: 24px; color: var(--gold); }
+
+.hp-bar-bg { width: 120px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-top: 5px; }
+.hp-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, var(--crimson), var(--crimson-lt)); transition: width 0.3s ease; }
+
+/* ── PALETTE ── */
+#tower-palette {
+  position:fixed; bottom:0; left:50%; transform: translateX(-50%); z-index:100;
+  background: var(--glass); border: 1px solid var(--gold-dk); border-bottom: none;
+  padding: 15px 30px; display: none; gap: 15px; border-radius: 12px 12px 0 0;
+  backdrop-filter: blur(10px);
+}
+.tower-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 10px; border: 1px solid transparent; border-radius: 8px;
+  cursor: pointer; transition: 0.2s; min-width: 80px;
+}
+.tower-btn:hover { background: rgba(212,168,67,0.1); }
+.tower-btn.selected { border-color: var(--gold); background: rgba(212,168,67,0.2); transform: translateY(-5px); }
+.tower-emoji { font-size: 28px; }
+.tower-btn-name { font-size: 9px; color: var(--parch-dk); text-transform: uppercase; }
+.tower-btn-cost { font-size: 12px; color: var(--gold); font-weight: bold; }
+.tower-btn.cant-afford { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; }
+
+/* ── OVERLAYS ── */
+#game-overlay {
+  position:fixed; inset:0; z-index:1000; background: rgba(0,0,0,0.9);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+}
+.ov-title { font-family: 'Cinzel Decorative', serif; font-size: 48px; color: var(--gold); margin-bottom: 20px; }
+.ov-btn {
+    background: var(--gold); color: black; border: none; padding: 15px 40px;
+    font-family: 'Cinzel Decorative', serif; cursor: pointer; margin: 10px;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+/* ── TOAST ── */
+.toast-el {
+  position: fixed; top: 100px; left: 50%; transform: translateX(-50%);
+  background: var(--glass); border: 1px solid var(--gold); padding: 10px 30px;
+  border-radius: 20px; font-family: 'Cinzel Decorative', serif; color: var(--gold);
+  opacity: 0; transition: 0.3s; pointer-events: none; z-index: 2000;
+}
+.toast-el.show { opacity: 1; transform: translateX(-50%) translateY(10px); }
+
+/* ── CONTROLS ── */
+#ctrl-btns { position: fixed; top: 90px; right: 20px; display: none; gap: 10px; z-index: 200; }
+.ctrl-btn {
+    width: 44px; height: 44px; background: var(--glass); border: 1px solid var(--gold-dk);
+    color: var(--gold); display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; cursor: pointer; transition: 0.2s;
+}
+.ctrl-btn:hover { background: var(--gold); color: black; }
+.ctrl-btn.active { background: var(--fire); border-color: var(--fire); color: white; }
+
+@media (max-width: 600px) {
+    .hud-val { font-size: 18px; }
+    #tower-palette { width: 100%; border-radius: 0; overflow-x: auto; justify-content: flex-start; padding: 10px; }
+    .tower-btn { min-width: 70px; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

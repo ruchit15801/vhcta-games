@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /games/
+Allow: /about
+Allow: /contact
+Allow: /privacy
+Allow: /terms
+
+# Sitemap location
+Sitemap: https://vhcta.com/sitemap.xml

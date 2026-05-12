@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#020b18" />
+  <meta name="description" content="Fishing Simulator Pro – Ultra-premium HTML5 fishing simulation. Cast, battle, and collect legendary fish." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Fishing Simulator Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="assets/icons/app-icon.png" />
+  <link rel="apple-touch-icon" href="assets/icons/app-icon.png" />
+</head>
+<body>
+<div id="game-wrapper">
+
+  <!-- BACKGROUND CANVAS -->
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN MENU SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen" id="screen-menu">
+    <!-- Particle container for menu -->
+    <div class="menu-particles" id="menu-particles"></div>
+
+    <div class="menu-inner">
+      <!-- Logo Section -->
+      <div class="menu-logo-wrap">
+        <div class="menu-icon-ring">
+          <img src="assets/icons/app-icon.png" alt="Icon" class="menu-game-icon" onerror="this.style.display='none'" />
+          <div class="menu-icon-glow"></div>
+        </div>
+        <h1 class="menu-title">FISHING<br><span class="menu-title-pro">SIMULATOR</span> PRO</h1>
+        <p class="menu-subtitle">⚓ Deep Sea Edition ⚓</p>
+      </div>
+
+      <!-- Thumbnail -->
+      <div class="menu-thumb-wrap">
+        <img src="assets/images/thumbnail.png" alt="Game Preview" class="menu-thumbnail" onerror="this.style.display='none'" />
+        <div class="menu-thumb-badge">🏆 40 LEVELS • 15 FISH SPECIES</div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="menu-buttons">
+        <button class="btn-gold btn-play-main" id="btn-play">
+          <span class="btn-icon-left">🎣</span>
+          <span>PLAY NOW</span>
+          <span class="btn-arrow">▶</span>
+        </button>
+        <div class="menu-btns-row">
+          <button class="btn-primary btn-half" id="btn-upgrades-menu">
+            <span>⚡</span><span>UPGRADES</span>
+          </button>
+          <button class="btn-primary btn-half" id="btn-catalog-menu">
+            <span>📖</span><span>CATALOG</span>
+          </button>
+        </div>
+        <button class="btn-daily-reward hidden" id="daily-reward-banner" onclick="showDailyReward()">
+          🎁 DAILY REWARD AVAILABLE!
+        </button>
+      </div>
+
+      <!-- Stats Footer -->
+      <div class="menu-stats-row">
+        <div class="menu-stat-chip" id="menu-stat-level">🏅 LVL 1</div>
+        <div class="menu-stat-chip" id="menu-stat-coins">🪙 0</div>
+        <div class="menu-stat-chip" id="menu-stat-caught">🐟 0 Caught</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TUTORIAL SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-tutorial">
+    <div class="screen-inner scroll-y">
+      <h2 class="screen-title gold">🎣 HOW TO FISH</h2>
+
+      <div class="tutorial-steps">
+        <div class="tutorial-step" style="--delay:0.05s">
+          <div class="tut-num">1</div>
+          <div class="tut-icon">🎯</div>
+          <div class="tut-text">
+            <div class="tut-title">CAST YOUR LINE</div>
+            <div class="tut-desc">Tap &amp; hold the screen — the power meter fills up. Release to cast. More power = farther cast = bigger fish!</div>
+          </div>
+        </div>
+        <div class="tutorial-step" style="--delay:0.1s">
+          <div class="tut-num">2</div>
+          <div class="tut-icon">⏳</div>
+          <div class="tut-text">
+            <div class="tut-title">WAIT FOR THE BITE</div>
+            <div class="tut-desc">Watch the bobber. It bobs on the surface. A fish shadow will appear below — the bobber starts to dip!</div>
+          </div>
+        </div>
+        <div class="tutorial-step" style="--delay:0.15s">
+          <div class="tut-num">3</div>
+          <div class="tut-icon">⚡</div>
+          <div class="tut-text">
+            <div class="tut-title">TAP FAST — HOOK IT!</div>
+            <div class="tut-desc">The red <strong>BITE!</strong> flash appears — tap it instantly! Miss the window and the fish escapes!</div>
+          </div>
+        </div>
+        <div class="tutorial-step" style="--delay:0.2s">
+          <div class="tut-num">4</div>
+          <div class="tut-icon">🧲</div>
+          <div class="tut-text">
+            <div class="tut-title">REEL BATTLE — TENSION!</div>
+            <div class="tut-desc">Hold <strong>REEL</strong> to pull the fish in. Release to rest. Keep the bar in the <span style="color:#2ecc71">GREEN ZONE</span> or the line snaps!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tension Demo Animation -->
+      <div class="tut-demo-box">
+        <div class="tut-demo-label">LINE TENSION DEMO</div>
+        <div class="tut-tension-demo">
+          <div class="tut-safe-zone"></div>
+          <div class="tut-fill-demo"></div>
+          <div class="tut-fill-glow"></div>
+        </div>
+        <div class="tut-demo-hints">
+          <span style="color:#e74c3c">TOO LOOSE</span>
+          <span style="color:#2ecc71">SAFE ZONE ✓</span>
+          <span style="color:#e74c3c">SNAP!</span>
+        </div>
+      </div>
+
+      <div class="tut-buttons">
+        <button class="btn-gold" id="btn-start-fishing">🎣 START FISHING!</button>
+        <button class="btn-ghost" id="btn-skip-tutorial">SKIP →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       LOCATION SELECT SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-location">
+    <div class="screen-inner">
+      <h2 class="screen-title">🌍 CHOOSE LOCATION</h2>
+      <p class="screen-sub" id="location-unlock-hint"></p>
+
+      <div class="location-grid">
+        <div class="location-card active-loc" id="loc-lake" onclick="selectLocation('lake')">
+          <img src="assets/images/lake-bg.png" alt="Lake" class="loc-img" />
+          <div class="loc-overlay">
+            <div class="loc-icon">🏔️</div>
+            <div class="loc-name">MOUNTAIN LAKE</div>
+            <div class="loc-sub">All levels • Common & Rare</div>
+          </div>
+        </div>
+        <div class="location-card locked" id="loc-river">
+          <img src="assets/images/river-bg.png" alt="River" class="loc-img" />
+          <div class="loc-overlay">
+            <div class="loc-icon">🌊</div>
+            <div class="loc-name">WILD RIVER</div>
+            <div class="loc-sub">Level 7+ • Trout &amp; Salmon</div>
+          </div>
+          <div class="loc-lock-cover">
+            <div class="loc-lock-icon">🔒</div>
+            <div class="loc-lock-text">LEVEL 7</div>
+          </div>
+        </div>
+        <div class="location-card locked" id="loc-ocean">
+          <img src="assets/images/ocean-bg.png" alt="Ocean" class="loc-img" />
+          <div class="loc-overlay">
+            <div class="loc-icon">🌊</div>
+            <div class="loc-name">DEEP OCEAN</div>
+            <div class="loc-sub">Level 12+ • Tuna &amp; Marlin</div>
+          </div>
+          <div class="loc-lock-cover">
+            <div class="loc-lock-icon">🔒</div>
+            <div class="loc-lock-text">LEVEL 12</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-ghost" id="btn-back-loc">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       GAMEPLAY SCREEN (HUD overlay — transparent)
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-gameplay">
+
+    <!-- HUD Top Bar -->
+    <div class="hud-top">
+      <div class="hud-left">
+        <div class="hud-level" id="hud-level">LVL 1</div>
+        <div class="hud-xp-bar"><div class="hud-xp-fill" id="hud-xp-fill"></div></div>
+      </div>
+      <div class="hud-coins-chip">
+        <span>🪙</span><span id="hud-coins-val">0</span>
+      </div>
+      <div class="hud-right">
+        <button class="hud-btn" id="btn-pause">☰</button>
+      </div>
+    </div>
+
+    <!-- Location Tag -->
+    <div class="hud-location-tag" id="hud-location-tag">🏔️ MOUNTAIN LAKE</div>
+
+  <!-- Transparent tap zone for casting / waiting / bite —
+       sits below HUD elements, above canvas -->
+  <div class="cast-zone" id="cast-zone"></div>
+
+    <!-- Center Gameplay Area (cast hint / bite / etc) -->
+    <div class="gameplay-center">
+
+      <!-- Cast Hint -->
+      <div class="cast-hint" id="cast-hint">
+        <div class="cast-hint-icon">🎣</div>
+        <div class="cast-hint-text" id="cast-hint-text">TAP &amp; HOLD TO CAST</div>
+        <div class="cast-hint-sub" id="cast-hint-sub">Hold longer for greater distance</div>
+      </div>
+
+      <!-- Bobber waiting hint -->
+      <div class="waiting-hint hidden" id="bobber-hint">
+        <div class="waiting-dot"></div>
+        <span>Waiting for a bite…</span>
+      </div>
+
+      <!-- Bite Alert -->
+      <div class="bite-alert" id="bite-alert" onclick="onBiteAlertTap()">
+        <div class="bite-text">BITE!</div>
+        <div class="bite-sub">⚡ TAP NOW! ⚡</div>
+      </div>
+    </div>
+
+    <!-- Power Meter (right side, vertical) -->
+    <div class="power-meter-wrap" id="power-meter-container" style="display:none">
+      <div class="power-label">POWER</div>
+      <div class="power-track">
+        <div class="power-fill" id="power-meter-fill"></div>
+        <div class="power-zones">
+          <div class="pz pz-perfect">PERFECT</div>
+          <div class="pz pz-good">GOOD</div>
+          <div class="pz pz-ok">OK</div>
+        </div>
+      </div>
+      <div class="power-arrow" id="power-arrow"></div>
+    </div>
+
+    <!-- BATTLE HUD (bottom panel) -->
+    <div id="battle-hud" class="battle-hud hidden">
+
+      <!-- Fish Portrait Row -->
+      <div class="battle-top-row">
+        <div class="battle-fish-portrait" id="battle-fish-portrait">🐟</div>
+        <div class="battle-fish-info">
+          <div class="battle-fish-name" id="battle-fish-name">Largemouth Bass</div>
+          <div class="battle-fish-sub">
+            <span class="battle-fish-weight" id="battle-fish-weight">~1.2 kg</span>
+            <span class="battle-rarity-tag" id="battle-rarity-tag">COMMON</span>
+          </div>
+          <!-- Fish HP -->
+          <div class="hp-bar-wrap">
+            <span class="hp-label">FISH HP</span>
+            <div class="hp-track"><div class="hp-fill" id="fish-hp-fill"></div></div>
+            <span class="hp-pct" id="hp-pct">100%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tension Bar -->
+      <div class="tension-wrap">
+        <div class="tension-header">
+          <span class="tension-lbl">LINE TENSION</span>
+          <span class="tension-status" id="tension-status">SAFE</span>
+          <span class="tension-pct" id="tension-value">50%</span>
+        </div>
+        <div class="tension-track" id="tension-track">
+          <div class="t-zone t-zone-danger-left"></div>
+          <div class="t-zone t-zone-safe" id="tension-safe-zone"></div>
+          <div class="t-zone t-zone-danger-right"></div>
+          <div class="t-fill" id="tension-fill"></div>
+          <div class="t-needle" id="tension-marker"></div>
+        </div>
+        <div class="tension-footer">
+          <span>SNAP!</span><span>SAFE ZONE</span><span>SNAP!</span>
+        </div>
+      </div>
+
+      <!-- Reel Button -->
+      <div class="reel-area">
+        <button id="reel-btn" class="reel-btn">
+          <div class="reel-inner">
+            <div class="reel-icon">🎣</div>
+            <div class="reel-text">HOLD TO REEL</div>
+            <div class="reel-hint">Release to let out line</div>
+          </div>
+          <div class="reel-ripple"></div>
+        </button>
+        <div class="reel-guide">
+          <div class="reel-guide-item reel-guide-hold">
+            <span>⬆️</span><span>REEL IN</span>
+          </div>
+          <div class="reel-guide-sep">VS</div>
+          <div class="reel-guide-item reel-guide-release">
+            <span>⬇️</span><span>LET OUT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       RESULT SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-result">
+    <div class="screen-inner result-inner">
+      <div class="result-header" id="result-header">🏆 FISH CAUGHT!</div>
+
+      <div class="result-fish-card" id="result-card">
+        <!-- Fish splash animation -->
+        <div class="result-fish-glow" id="result-fish-glow"></div>
+        <div class="result-fish-emoji" id="result-fish-emoji">🐟</div>
+        <div class="result-fish-name" id="result-fish-name">Largemouth Bass</div>
+        <div class="result-rarity-strip" id="result-rarity-strip">COMMON</div>
+
+        <div class="result-stats-grid">
+          <div class="result-stat">
+            <div class="rs-icon">⚖️</div>
+            <div class="rs-val" id="result-weight">0.0 kg</div>
+            <div class="rs-lbl">WEIGHT</div>
+          </div>
+          <div class="result-stat">
+            <div class="rs-icon">🎯</div>
+            <div class="rs-val" id="result-rarity">COMMON</div>
+            <div class="rs-lbl">RARITY</div>
+          </div>
+          <div class="result-stat">
+            <div class="rs-icon">🏅</div>
+            <div class="rs-val" id="result-level">1</div>
+            <div class="rs-lbl">LEVEL</div>
+          </div>
+          <div class="result-stat">
+            <div class="rs-icon">📍</div>
+            <div class="rs-val" id="result-location">Lake</div>
+            <div class="rs-lbl">LOCATION</div>
+          </div>
+        </div>
+
+        <div class="result-coins-row">
+          <div class="result-coins" id="result-coins">+50 🪙</div>
+          <div class="result-xp" id="result-xp">+20 XP</div>
+        </div>
+        <div class="result-new-record hidden" id="result-new-record">🏆 NEW RECORD!</div>
+      </div>
+
+      <div class="result-buttons">
+        <button class="btn-gold" id="btn-fish-again">🎣 FISH AGAIN</button>
+        <div class="result-btns-row">
+          <button class="btn-primary btn-half" id="btn-result-upgrades">⚡ UPGRADES</button>
+          <button class="btn-ghost btn-half" id="btn-result-menu">🏠 MENU</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       UPGRADES SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-upgrades">
+    <div class="screen-inner scroll-y">
+      <div class="screen-header-row">
+        <h2 class="screen-title" style="margin:0">⚡ UPGRADES</h2>
+        <div class="coins-chip">🪙 <span id="upgrade-coins-val">0</span></div>
+      </div>
+
+      <div class="upgrade-cards">
+        <div class="upgrade-card" id="upg-rod">
+          <div class="upg-icon">🎣</div>
+          <div class="upg-body">
+            <div class="upg-name">ROD STRENGTH</div>
+            <div class="upg-desc" id="rod-desc">Reduces fish resistance during battle.</div>
+            <div class="upg-pips" id="rod-pips"></div>
+          </div>
+          <button class="upg-btn" id="btn-upgrade-rod" onclick="purchaseUpgrade('rod')">
+            <div class="upg-btn-cost" id="rod-cost-label">🪙 80</div>
+            <div class="upg-btn-label">UPGRADE</div>
+          </button>
+        </div>
+
+        <div class="upgrade-card" id="upg-reel">
+          <div class="upg-icon">⚙️</div>
+          <div class="upg-body">
+            <div class="upg-name">REEL SPEED</div>
+            <div class="upg-desc" id="reel-desc">Pull fish in faster when reeling.</div>
+            <div class="upg-pips" id="reel-pips"></div>
+          </div>
+          <button class="upg-btn" id="btn-upgrade-reel" onclick="purchaseUpgrade('reel')">
+            <div class="upg-btn-cost" id="reel-cost-label">🪙 80</div>
+            <div class="upg-btn-label">UPGRADE</div>
+          </button>
+        </div>
+
+        <div class="upgrade-card" id="upg-line">
+          <div class="upg-icon">🧵</div>
+          <div class="upg-body">
+            <div class="upg-name">LINE DURABILITY</div>
+            <div class="upg-desc" id="line-desc">Wider safe-zone on tension bar.</div>
+            <div class="upg-pips" id="line-pips"></div>
+          </div>
+          <button class="upg-btn" id="btn-upgrade-line" onclick="purchaseUpgrade('line')">
+            <div class="upg-btn-cost" id="line-cost-label">🪙 100</div>
+            <div class="upg-btn-label">UPGRADE</div>
+          </button>
+        </div>
+
+        <div class="upgrade-card" id="upg-bait">
+          <div class="upg-icon">🪱</div>
+          <div class="upg-body">
+            <div class="upg-name">PREMIUM BAIT</div>
+            <div class="upg-desc" id="bait-desc">Attracts rarer fish, less wait time.</div>
+            <div class="upg-pips" id="bait-pips"></div>
+          </div>
+          <button class="upg-btn" id="btn-upgrade-bait" onclick="purchaseUpgrade('bait')">
+            <div class="upg-btn-cost" id="bait-cost-label">🪙 120</div>
+            <div class="upg-btn-label">UPGRADE</div>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-ghost" id="btn-back-upgrades">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FISH CATALOG SCREEN
+  ═══════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-catalog">
+    <div class="screen-inner scroll-y">
+      <div class="screen-header-row">
+        <h2 class="screen-title" style="margin:0">📖 FISH CATALOG</h2>
+        <div class="coins-chip" id="catalog-count">0 / 15</div>
+      </div>
+      <div class="catalog-grid" id="catalog-grid"></div>
+      <button class="btn-ghost" id="btn-back-catalog">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       DAILY REWARD MODAL
+  ═══════════════════════════════════════════ -->
+  <div id="modal-daily" class="modal-overlay hidden">
+    <div class="modal-card daily-card">
+      <div class="daily-crown">👑</div>
+      <div class="daily-title">DAILY REWARD</div>
+      <div class="daily-coin-anim">🪙</div>
+      <div class="daily-amount" id="daily-amount">+500</div>
+      <div class="daily-desc">Login tomorrow for another reward!</div>
+      <button class="btn-gold" onclick="claimDailyReward()">💰 CLAIM REWARD!</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAUSE MODAL
+  ═══════════════════════════════════════════ -->
+  <div id="modal-pause" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-title">⏸ PAUSED</div>
+      <button class="btn-gold" id="btn-resume">▶ RESUME</button>
+      <button class="btn-primary" id="btn-pause-upgrades">⚡ UPGRADES</button>
+      <button class="btn-primary" id="btn-pause-catalog">📖 CATALOG</button>
+      <button class="btn-ghost" id="btn-pause-menu">🏠 MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- Level Up Banner -->
+  <div class="level-up-banner" id="level-up-banner">
+    <div class="level-up-content">
+      <div class="lu-stars">⭐⭐⭐</div>
+      <div class="lu-text">LEVEL UP!</div>
+      <div class="lu-num" id="level-up-num">2</div>
+      <div class="lu-sub">New fish unlocked!</div>
+    </div>
+  </div>
+
+  <!-- Line Snap Flash -->
+  <div class="screen-flash" id="screen-flash"></div>
+
+  <!-- Sound Toggle (fixed) -->
+  <div id="sound-toggle-wrap">
+    <button class="sound-btn" id="sound-toggle-btn" title="Toggle Sound">🔊</button>
+  </div>
+
+</div><!-- end #game-wrapper -->
+<script src="js/script.js"></script>
+</body>
+</html>

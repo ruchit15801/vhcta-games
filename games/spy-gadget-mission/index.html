@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Spy Gadget Mission</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background overlay for pure black outside canvas -->
+    <div id="game-container">
+        
+        <!-- Game Canvas Layers -->
+        <canvas id="floorCanvas"></canvas> <!-- Static background / floor -->
+        <canvas id="gameCanvas"></canvas> <!-- Game elements: player, guards, walls -->
+        <canvas id="lightCanvas"></canvas> <!-- Dynamic shadows & lighting overlay -->
+        <canvas id="uiCanvas"></canvas> <!-- Minimap, specific in-game 3D UI hooks -->
+
+        <!-- Start Screen / Main Menu -->
+        <div id="menuScreen" class="screen active">
+            <div class="menu-content">
+                <img src="assets/images/thumbnail.png" alt="Spy Gadget Mission Thumbnail" class="thumbnail-img">
+                <h1 class="game-title">SPY GADGET MISSION</h1>
+                <p class="subtitle">TACTICAL ESPIONAGE OPERATION</p>
+                
+                <button id="btn-start" class="btn-primary">BEGIN MISSION</button>
+                <button id="btn-guide" class="btn-secondary">TACTICAL GUIDE</button>
+                
+                <div class="sound-toggle-menu">
+                    <label class="switch">
+                        <input type="checkbox" id="soundToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="sound-label">AUDIO LINK</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instruction / Guide Screen -->
+        <div id="guideScreen" class="screen hidden">
+            <div class="glass-panel">
+                <h2>TACTICAL GUIDE</h2>
+                <div class="guide-sections">
+                    <div class="guide-card">
+                        <h3>MOVEMENT</h3>
+                        <p>Desktop: WASD or Arrows. <br>Mobile: Virtual Joystick.</p>
+                        <p>Sneak: Hold Shift (Desktop) or Sneak Button (Mobile) to reduce noise and detection radius.</p>
+                    </div>
+                    <div class="guide-card">
+                        <h3>DETECTION</h3>
+                        <p>Avoid red vision cones. Noise generates sound ripples that guards investigate.</p>
+                    </div>
+                    <div class="guide-card">
+                        <h3>GADGETS</h3>
+                        <p>1. EMP/Smoke: Blinds guards & disables cameras.<br>2. Distraction: Lures guards.</p>
+                    </div>
+                </div>
+                <button id="btn-close-guide" class="btn-primary">ACKNOWLEDGE</button>
+            </div>
+        </div>
+
+        <!-- In-Game HUD -->
+        <div id="hud" class="hidden">
+            <div class="top-bar">
+                <div class="mission-info">
+                    <span class="mission-label">MISSION <span id="missionNum">1</span></span>
+                    <span class="objective" id="objectiveText">INFILTRATE FACILITY</span>
+                </div>
+                
+                <!-- Stealth/Detection Meter -->
+                <div class="detection-wrapper">
+                    <span class="detection-text" id="detectionStatus">HIDDEN</span>
+                    <div class="detection-bar-container">
+                        <div id="detectionBar" class="detection-bar"></div>
+                    </div>
+                </div>
+
+                <button id="btn-pause" class="btn-icon">⏸</button>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div id="mobile-controls" class="mobile-only">
+                <div id="joystick-area">
+                    <div id="joystick-base">
+                        <div id="joystick-stick"></div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="btn-sneak" class="btn-action sneak-btn">SNEAK</button>
+                </div>
+            </div>
+
+            <!-- Gadget Panel -->
+            <div class="gadget-panel">
+                <div class="gadget-slot" data-gadget="smoke">
+                    <div class="gadget-icon">💨</div>
+                    <span class="gadget-count" id="smokeCount">3</span>
+                    <span class="key-bind">1</span>
+                </div>
+                <div class="gadget-slot" data-gadget="distraction">
+                    <div class="gadget-icon">🔊</div>
+                    <span class="gadget-count" id="distractCount">2</span>
+                    <span class="key-bind">2</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pauseScreen" class="screen hidden">
+            <div class="glass-panel">
+                <h2>MISSION PAUSED</h2>
+                <button id="btn-resume" class="btn-primary">RESUME</button>
+                <button id="btn-restart" class="btn-secondary">RESTART MISSION</button>
+                <button id="btn-quit" class="btn-danger">ABORT MISSION</button>
+            </div>
+        </div>
+
+        <!-- Mission Complete Screen -->
+        <div id="victoryScreen" class="screen hidden">
+            <div class="glass-panel success-panel">
+                <h2>MISSION ACCOMPLISHED</h2>
+                <p id="victoryStats">Stealth Score: S Rank</p>
+                <button id="btn-next-mission" class="btn-primary">NEXT MISSION</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen hidden">
+            <div class="glass-panel danger-panel">
+                <h2>AGENT COMPROMISED</h2>
+                <p>You were detected by security.</p>
+                <button id="btn-retry" class="btn-primary">RETRY MISSION</button>
+                <button id="btn-menu" class="btn-secondary">MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

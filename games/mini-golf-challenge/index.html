@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mini Golf Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <span id="holeDisplay">HOLE 1 / 9</span>
+                <span id="parDisplay">PAR 3</span>
+                <span id="strokeDisplay">SHOTS: 0</span>
+            </div>
+
+            <div id="startScreen" class="screen active">
+                <h1>⛳ NEON GOLF</h1>
+                <p>Drag from the ball to aim. Release to shoot.</p>
+                <button id="startBtn">TEE OFF</button>
+            </div>
+
+            <div id="holeCompleteScreen" class="screen">
+                <h1 id="holeTitle">HOLE IN!</h1>
+                <p id="holeMsg">Nice shot!</p>
+                <button id="nextHoleBtn">NEXT HOLE ▶</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>ROUND COMPLETE!</h1>
+                <p>Total shots: <span id="totalShots">0</span></p>
+                <p>Total par: <span id="totalPar">0</span></p>
+                <p id="scoreSummary"></p>
+                <button id="restartBtn">PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

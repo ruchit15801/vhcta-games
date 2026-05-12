@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NEON STRIKE | Luxury Space Shooter</title>
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Experience the ultimate luxury space shooter. High-end visuals, intense levels, and premium gameplay.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+    <link rel="apple-touch-icon" href="assets/images/icon.png">
+
+    <!-- Social Media Thumbnails (Open Graph) -->
+    <meta property="og:title" content="NEON STRIKE | Luxury Space Shooter">
+    <meta property="og:description" content="Experience the ultimate luxury space shooter. High-end visuals and premium gameplay.">
+    <meta property="og:image" content="assets/images/splash.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/images/splash.png">
+
+
+
+</head>
+<body>
+    <div id="app-container">
+        <!-- Game Canvas Layer -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- HUD Layout -->
+        <div id="hud" class="abs-full no-pointer hidden">
+            <div id="top-hud" class="flex-between">
+                <div class="luxury-stat glass-panel">
+                    <div class="hud-label">NEURON SCORE</div>
+                    <div id="score" class="hud-value neon-cyan">000000</div>
+                </div>
+                <div id="combo-container" class="combo-pulse hidden">
+                    <div id="combo-multiplier" class="combo-val">2X</div>
+                    <div class="hud-label">COMBO</div>
+                </div>
+                <div class="luxury-stat glass-panel">
+                    <div class="hud-label">SECTOR</div>
+                    <div id="level" class="hud-value neon-pink">01</div>
+                </div>
+            </div>
+
+            <div class="hud-center">
+                <div id="combo-display" class="hidden">
+                    <span id="combo-multiplier">x2</span>
+                    <span class="combo-label">STREAK</span>
+                </div>
+            </div>
+            
+            <div class="hud-bottom">
+                <div class="glass-panel resource-panel">
+                    <div class="resource-row">
+                        <span class="hud-label">SHIELD STABILIZER</span>
+                        <div class="bar-container"><div id="shield-bar" class="bar glow-cyan"></div></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel status-panel">
+                    <div class="hud-label">SECTOR PROGRESS</div>
+                    <div class="bar-container"><div id="sector-bar" class="bar glow-pink"></div></div>
+                </div>
+
+                <div class="glass-panel resource-panel">
+                    <div class="resource-row">
+                        <span class="hud-label">HULL INTEGRITY</span>
+                        <div class="bar-container"><div id="health-bar" class="bar glow-pink"></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="combo-ui" class="abs-center hidden">
+                <div id="combo-val">2X</div>
+                <div class="hud-label">COMBO STREAK</div>
+            </div>
+        </div>
+
+        <!-- Start Screen Overlay -->
+        <div id="overlay" class="abs-full center-flex">
+            <div id="start-screen" class="luxury-card center-flex">
+                <h1 class="premium-title">NEON STRIKE</h1>
+                <p class="premium-subtitle">ULTRA-FIDELITY SPACE COMBAT</p>
+                <div class="action-stack">
+                    <button id="start-btn" class="luxury-btn glow-cyan">INITIATE MISSION</button>
+                    <button id="briefing-btn" class="luxury-btn outline">MISSION BRIEFING</button>
+                </div>
+            </div>
+
+            <div id="briefing-screen" class="luxury-card hidden">
+                <h2 class="card-title">COMBAT COMMANDS</h2>
+                <div class="briefing-grid">
+                    <div class="brief-item">
+                        <div class="brief-icon cyan">✦</div>
+                        <div class="brief-text">
+                            <h3>MOVEMENT</h3>
+                            <p>Drag or move your finger to navigate. The craft will bank into turns.</p>
+                        </div>
+                    </div>
+                    <div class="brief-item">
+                        <div class="brief-icon pink">✦</div>
+                        <div class="brief-text">
+                            <h3>COMBAT</h3>
+                            <p>Auto-cannons engage targets instantly. Watch for Elite units.</p>
+                        </div>
+                    </div>
+                    <div class="brief-item">
+                        <div class="brief-icon yellow">✦</div>
+                        <div class="brief-text">
+                            <h3>OBJECTIVE</h3>
+                            <p>Clear all 25 Sectors. Difficulty increases with every jump.</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="close-briefing-btn" class="luxury-btn">UNDERSTOOD</button>
+            </div>
+
+            <!-- Transition Layer -->
+            <div id="transition-screen" class="screen hidden">
+                <div class="transition-msg">
+                    <p class="small-text">SECTOR SECURED</p>
+                    <h2 id="next-level-text" class="glitch-text">SECTOR 02</h2>
+                    <div class="loading-bar"></div>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div id="game-over-screen" class="screen hidden">
+                <h2 class="failed-text">MISSION ABORTED</h2>
+                <div class="stats-luxury glass-panel">
+                    <div class="stat-item"><span>FINAL SCORE</span> <span id="res-score">0</span></div>
+                    <div class="stat-item"><span>TOTAL KILLS</span> <span id="res-kills">0</span></div>
+                    <div class="stat-item"><span>SECTOR REACHED</span> <span id="res-level">1</span></div>
+                </div>
+                <div class="action-stack">
+                    <button id="restart-btn" class="btn luxury-btn">RE-DEPLOY</button>
+                    <button id="exit-btn" class="btn glass-btn">RETURN TO BASE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile UI -->
+        <div id="mobile-ui" class="hidden">
+            <div id="joystick-container">
+                <div id="joystick-base">
+                    <div id="joystick-handle"></div>
+                </div>
+            </div>
+            <button id="mobile-fire-btn"></button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/assets.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

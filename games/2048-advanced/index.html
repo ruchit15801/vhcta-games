@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2048 Advanced - 3D Puzzle</title>
+    
+    <!-- Meta/Thumbnail -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <meta property="og:image" content="assets/images/thumbnail.svg">
+    <meta property="og:title" content="2048 Advanced">
+    <meta property="og:description" content="3D Grid Evolving Puzzle Experience">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Background layers for 3D/parallax effect -->
+    <div id="bg-layer-1" class="parallax-bg"></div>
+    <div id="bg-layer-2" class="parallax-bg"></div>
+
+    <div id="app-container">
+        <!-- Header / UI HUD -->
+        <header id="hud" class="hidden-initially">
+            <div class="hud-topline">
+                <div class="game-title">2048 <span class="badge" id="level-badge">LVL 1</span></div>
+                <div class="hud-scores">
+                    <div class="score-card">
+                        <div class="score-label">SCORE</div>
+                        <div class="score-val" id="score-current">0</div>
+                    </div>
+                    <div class="score-card best-card">
+                        <div class="score-label">BEST</div>
+                        <div class="score-val" id="score-best">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hud-bottomline">
+                <div class="target-container">
+                    TARGET: <span id="target-value">256</span>
+                </div>
+                <div id="controls-top">
+                    <button id="btn-pause" class="icon-btn">⏸</button>
+                    <button id="btn-sound" class="icon-btn">🔊</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Controls layer
+        <div id="controls-top" class="hidden-initially">
+            <button id="btn-pause" class="icon-btn">⏸</button>
+            <button id="btn-sound" class="icon-btn">🔊</button>
+        </div> -->
+
+        <!-- Main Game Board 3D Container -->
+        <main id="game-stage">
+            <div id="board-container" class="board-container hidden-initially">
+                <div id="board-grid" class="board-grid"></div>
+                <div id="tiles-layer" class="tiles-layer"></div>
+            </div>
+        </main>
+
+        <!-- UI Overlays -->
+        <div id="screen-start" class="screen full-screen active">
+            <h1 class="logo-3d">2048 <br><span class="logo-sub">ADVANCED</span></h1>
+
+            <div class="animated-demo">
+                <div class="demo-board">
+                    <div class="demo-tile t-left">2</div>
+                    <div class="demo-tile t-right"></div>
+                    <div class="demo-hand">👆</div>
+                </div>
+            </div>
+
+            <div class="card tutorial-card">
+                <h3>HOW TO PLAY</h3>
+                <ul>
+                    <li>Swipe or use Arrow Keys to move tiles.</li>
+                    <li>Merge identical numbers to level up.</li>
+                    <li>Reach the <strong class="hl">Target Score</strong> to advance.</li>
+                    <li><strong class="hl-red">Rocks</strong> cannot move or merge!</li>
+                </ul>
+                <button id="btn-start" class="primary-btn pulse">START EXPLORING</button>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="screen-pause" class="screen overlay">
+            <div class="card">
+                <h2>PAUSED</h2>
+                <div class="btn-group">
+                    <button id="btn-resume" class="primary-btn">RESUME GAME</button>
+                    <button id="btn-restart" class="secondary-btn">RESTART LEVEL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="screen-gameover" class="screen overlay">
+            <div class="card">
+                <h2>GAME OVER</h2>
+                <p>No moves left!</p>
+                <div class="final-score">SCORE: <span id="final-score-val">0</span></div>
+                <button id="btn-retry" class="primary-btn">TRY AGAIN</button>
+            </div>
+        </div>
+
+        <!-- Level Complete Screen -->
+        <div id="screen-level-up" class="screen overlay">
+            <div class="card">
+                <h2 class="hdr-success">LEVEL PASSED!</h2>
+                <div class="stars-container">
+                    <span class="star pop-in-1">⭐</span>
+                    <span class="star pop-in-2">⭐</span>
+                    <span class="star pop-in-3">⭐</span>
+                </div>
+                <p id="next-level-desc" class="desc">Prepare for next challenge...</p>
+                <button id="btn-next" class="primary-btn glow">CONTINUE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script loaded for core functionality and Audio Synthesis -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

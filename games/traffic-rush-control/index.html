@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Traffic Rush Control</title>
+<link rel="icon" href="assets/icons/icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<!-- Timer Bar -->
+<div id="timerBar"><div id="timerFill" style="width:100%"></div></div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div class="hud-block"><span class="hud-val" id="scoreVal">0</span><span class="hud-lbl">SCORE</span></div>
+  <div class="hud-block"><span class="hud-val" id="comboVal">x1</span><span class="hud-lbl">COMBO</span></div>
+  <div class="hud-block"><span class="hud-val" id="carsVal">0</span><span class="hud-lbl">CLEARED</span></div>
+  <div class="hud-spacer"></div>
+  <div id="levelBadge">LVL 1</div>
+  <div class="hud-block"><span class="hud-val" id="livesVal">❤️❤️❤️</span><span class="hud-lbl">LIVES</span></div>
+  <button id="pauseBtn" onclick="G.pause()">⏸</button>
+</div>
+
+<!-- Signal Panel -->
+<div id="signalPanel" class="hidden">
+  <div id="signalControls"></div>
+  <button id="soundToggle" onclick="G.toggleSound()">🔊</button>
+</div>
+
+<!-- Emergency Alert -->
+<div id="emergencyAlert">🚨 EMERGENCY VEHICLE</div>
+
+<!-- Combo Toast -->
+<div id="comboToast"></div>
+
+<!-- START SCREEN -->
+<div id="startScreen" class="screen">
+  <div class="start-logo">
+    <div class="game-title">TRAFFIC RUSH</div>
+    <div class="game-title" style="font-size:clamp(14px,3vw,36px);margin-top:-8px">CONTROL</div>
+    <div class="subtitle">MASTER THE INTERSECTION</div>
+  </div>
+  <div class="thumbnail-container">
+    <img src="assets/images/thumbnail.png" alt="Traffic Rush Control">
+    <div class="thumb-overlay"></div>
+  </div>
+  <div class="start-stats">
+    <div class="stat-badge"><div class="val">80</div><div class="lbl">LEVELS</div></div>
+    <div class="stat-badge"><div class="val">3</div><div class="lbl">VEHICLE TYPES</div></div>
+    <div class="stat-badge"><div class="val" id="hiScore">0</div><div class="lbl">HI-SCORE</div></div>
+  </div>
+  <button class="btn-start" onclick="G.startGame()">▶ START GAME</button>
+  <div class="how-to">
+    <div class="how-card"><div class="icon">🚦</div><div class="tip">Tap signals to change lights</div></div>
+    <div class="how-card"><div class="icon">🚗</div><div class="tip">Guide vehicles safely</div></div>
+    <div class="how-card"><div class="icon">💥</div><div class="tip">Avoid crashes!</div></div>
+  </div>
+</div>
+
+<!-- PAUSE SCREEN -->
+<div id="pauseScreen" class="screen hidden">
+  <div class="pause-box">
+    <div class="pause-title">⏸ PAUSED</div>
+    <div class="pause-btns">
+      <button class="p-btn resume" onclick="G.resume()">▶ RESUME</button>
+      <button class="p-btn restart" onclick="G.restart()">↺ RESTART LEVEL</button>
+      <button class="p-btn menu" onclick="G.menu()">⌂ MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME OVER SCREEN -->
+<div id="gameOverScreen" class="screen hidden">
+  <div class="go-box">
+    <div class="go-title">CRASH!</div>
+    <div class="go-reason" id="goReason">Collision detected</div>
+    <div class="go-scores">
+      <div class="go-score-item"><div class="gsv" id="goScore">0</div><div class="gsl">SCORE</div></div>
+      <div class="go-score-item"><div class="gsv" id="goLevel">1</div><div class="gsl">LEVEL</div></div>
+      <div class="go-score-item"><div class="gsv" id="goCleared">0</div><div class="gsl">CLEARED</div></div>
+    </div>
+    <div class="pause-btns">
+      <button class="p-btn resume" onclick="G.restart()">↺ TRY AGAIN</button>
+      <button class="p-btn menu" onclick="G.menu()">⌂ MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL COMPLETE SCREEN -->
+<div id="levelCompleteScreen" class="screen hidden">
+  <div class="lc-box">
+    <div class="lc-title">LEVEL COMPLETE!</div>
+    <div class="stars" id="lcStars">⭐⭐⭐</div>
+    <div class="lc-score" id="lcScore">+1500 PTS</div>
+    <div class="pause-btns">
+      <button class="p-btn resume" onclick="G.nextLevel()">▶ NEXT LEVEL</button>
+      <button class="p-btn menu" onclick="G.menu()">⌂ MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

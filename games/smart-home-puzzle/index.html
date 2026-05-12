@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Home Puzzle</title>
+    <!-- SEO Best Practices -->
+    <meta name="description" content="A premium logic puzzle game. Build automation chains to control smart home devices.">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+</head>
+<body>
+    <!-- Background overlay -->
+    <div id="bg-container">
+        <div class="glow-grid"></div>
+        <div class="ambient-light"></div>
+    </div>
+
+    <!-- Intro / Start Screen -->
+    <div id="start-screen" class="screen active">
+        <div class="glass-panel main-menu">
+            <h1 class="glitch" data-text="SMART HOME">SMART HOME</h1>
+            <h2 class="subtitle">AUTOMATION PUZZLE</h2>
+            <div class="guide-box">
+                <h3>System Manual</h3>
+                <ul>
+                    <li><span class="icon">🔘</span> Connect triggers to devices.</li>
+                    <li><span class="icon">🔗</span> Build logic chains (IF &rarr; THEN).</li>
+                    <li><span class="icon">💡</span> Solve the puzzle to advance.</li>
+                </ul>
+            </div>
+            <button id="start-btn" class="cyber-btn">INITIALIZE SYSTEM</button>
+        </div>
+    </div>
+
+    <!-- Main Game Interface -->
+    <div id="game-screen" class="screen hidden">
+        <!-- HUD Top -->
+        <header id="hud-header">
+            <div class="level-info glass-panel">
+                <span class="level-label">LEVEL <span id="current-level-display">1</span></span>
+                <span class="level-title" id="level-name-display">Basic Switch</span>
+            </div>
+            <div class="controls glass-panel">
+                <button id="sound-toggle-btn" class="icon-btn" title="Toggle Sound">🔊</button>
+                <button id="reset-level-btn" class="icon-btn" title="Reset Level">🔄</button>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <div id="canvas-container">
+            <!-- Canvas for drawing connections (wires) -->
+            <canvas id="game-canvas"></canvas>
+            
+            <!-- Nodes Layer (DOM elements over canvas for interactivity and 3D effects) -->
+            <div id="nodes-layer"></div>
+        </div>
+
+        <!-- HUD Bottom (Test / Run panel) -->
+        <footer id="hud-footer">
+            <div class="test-panel glass-panel">
+                <div class="status-indicator">
+                    <div class="status-dot" id="system-status-dot"></div>
+                    <span id="system-status-text">SYSTEM STANDBY</span>
+                </div>
+                <div class="objective-box" id="objective-display">
+                    Objective: Turn on the light.
+                </div>
+                <button id="run-test-btn" class="cyber-btn primary">EXECUTE LOGIC</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Level Complete Overlay -->
+    <div id="level-complete-screen" class="screen hidden overlay">
+        <div class="glass-panel success-panel">
+            <h2>SYSTEM AUTOMATED</h2>
+            <p class="success-stats">Efficiency: <span class="highlight">100%</span></p>
+            <div class="particle-container" id="success-particles"></div>
+            <button id="next-level-btn" class="cyber-btn success">NEXT MODULE</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

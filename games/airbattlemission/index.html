@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="manifest" href="appmanifest.json">
+    <title>Air Battle Mission</title>
+    <meta name="description" content="Air Battle Mission is an intense and action-packed game that puts players in the cockpit of a fighter jet, challenging them to complete daring missions in the skies.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" sizes="256x256" href="icon-256.png">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="256x256" href="icon-256.png">
+    <style type="text/css">
+        * { padding: 0; margin: 0; }
+        html, body { background: #000; color: #fff; overflow: hidden; touch-action: none; -ms-touch-action: none; }
+        canvas { touch-action-delay: none; touch-action: none; -ms-touch-action: none; }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>
+        (function() {
+            if (window.location.protocol.substr(0, 4) === "file") {
+                alert("Exported games won't work until you upload them.");
+            }
+        })();
+    </script>
+    <div id="c2canvasdiv">
+        <canvas id="c2canvas" width="720" height="1280">
+            <h1>Your browser does not appear to support HTML5. Try upgrading your browser.</h1>
+        </canvas>
+    </div>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="c2runtime.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            cr_createRuntime("c2canvas");
+        });
+        function onVisibilityChanged() {
+            if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden)
+                cr_setSuspended(true);
+            else
+                cr_setSuspended(false);
+        }
+        document.addEventListener("visibilitychange", onVisibilityChanged, false);
+        document.addEventListener("mozvisibilitychange", onVisibilityChanged, false);
+        document.addEventListener("webkitvisibilitychange", onVisibilityChanged, false);
+        document.addEventListener("msvisibilitychange", onVisibilityChanged, false);
+        window.C2_RegisterSW = function() {
+            if (!navigator.serviceWorker) return;
+            try {
+                navigator.serviceWorker.register("sw.js", { scope: "./" })
+                    .then(function(reg) { console.log("Registered service worker on " + reg.scope); })
+                    .catch(function(e) { console.warn("Failed to register service worker: ", e); });
+            } catch(e) { console.warn("Failed to register service worker: ", e); }
+        };
+    </script>
+<div id="a23-brand" style="position:fixed;bottom:8px;left:8px;z-index:99999;pointer-events:none;font-family:'Arial Black',sans-serif;text-shadow:0 2px 4px rgba(0,0,0,0.7);background:rgba(0,0,0,0.5);padding:4px 10px;border-radius:6px;">
+	<span style="color:#7c4dff;font-size:22px;font-weight:900;">A23</span><span style="color:#fff;font-size:13px;font-weight:700;margin-left:3px;">GAMES</span>
+</div>
+</body>
+</html>

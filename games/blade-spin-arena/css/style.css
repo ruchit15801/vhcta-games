@@ -1,0 +1,343 @@
+:root {
+    --bg-color: #050510;
+    --primary: #00f3ff;
+    --secondary: #ff00ea;
+    --danger: #ff003c;
+    --text-main: #ffffff;
+    --ui-bg: rgba(5, 5, 16, 0.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: 'Orbitron', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    touch-action: none; /* Prevent scroll on mobile */
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #11112b 0%, #050510 100%);
+}
+
+/* Add a subtle grid background */
+#game-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    display: none; /* Hidden until game starts */
+}
+
+#top-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.score-container {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.combo-container {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--secondary);
+    text-shadow: 0 0 15px var(--secondary);
+    transition: transform 0.1s ease-out, opacity 0.3s;
+}
+
+.combo-pulse {
+    transform: scale(1.3);
+}
+
+#health-bar-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    overflow: hidden;
+}
+
+#health-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #00ff88);
+    transition: width 0.2s ease-out, background 0.2s;
+}
+
+#health-bar.low {
+    background: linear-gradient(90deg, var(--danger), #ffaa00);
+    box-shadow: 0 0 15px var(--danger);
+}
+
+.icon-btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 243, 255, 0.1);
+    border: 2px solid var(--primary);
+    color: var(--text-main);
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 243, 255, 0.3);
+    box-shadow: 0 0 15px var(--primary);
+    transform: scale(1.1);
+}
+
+#pause-btn {
+    top: 20px;
+    right: 20px;
+}
+
+#sound-toggle {
+    top: 20px;
+    right: 85px;
+}
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--ui-bg);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.game-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px var(--primary);
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+h1 {
+    font-size: 48px;
+    color: var(--text-main);
+    text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 36px;
+    color: var(--secondary);
+    text-shadow: 0 0 20px var(--secondary);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #aaa;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.btn {
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.primary-btn {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.primary-btn:hover {
+    background: var(--primary);
+    color: var(--bg-color);
+    box-shadow: 0 0 30px var(--primary);
+    transform: scale(1.05);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 15px rgba(255, 0, 234, 0.4), inset 0 0 15px rgba(255, 0, 234, 0.4);
+}
+
+.secondary-btn:hover {
+    background: var(--secondary);
+    color: var(--bg-color);
+    box-shadow: 0 0 30px var(--secondary);
+    transform: scale(1.05);
+}
+
+.instruction-content {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+    max-width: 600px;
+    width: 90%;
+}
+
+.instruction-content p {
+    margin: 15px 0;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.final-score, .best-score {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.final-score span {
+    color: var(--primary);
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.best-score span {
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ffd700;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 28px; }
+    .btn { padding: 12px 30px; font-size: 16px; }
+    #health-bar-container { width: 80%; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

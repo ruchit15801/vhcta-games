@@ -1,0 +1,16 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="80" fill="#030810"/>
+  <polygon points="256,30 482,145 482,367 256,482 30,367 30,145" fill="none" stroke="#d4af37" stroke-width="8"/>
+  <polygon points="256,80 432,172 432,340 256,432 80,340 80,172" fill="none" stroke="#d4af37" stroke-width="4" opacity="0.5"/>
+  <circle cx="256" cy="256" r="55" fill="#d4af37"/>
+  <circle cx="256" cy="256" r="35" fill="#030810"/>
+  <circle cx="256" cy="256" r="12" fill="#d4af37"/>
+  <line x1="256" y1="80" x2="256" y2="180" stroke="#d4af37" stroke-width="6"/>
+  <line x1="256" y1="332" x2="256" y2="432" stroke="#d4af37" stroke-width="6"/>
+  <line x1="80" y1="172" x2="167" y2="220" stroke="#d4af37" stroke-width="6"/>
+  <line x1="345" y1="292" x2="432" y2="340" stroke="#d4af37" stroke-width="6"/>
+  <line x1="432" y1="172" x2="345" y2="220" stroke="#d4af37" stroke-width="6"/>
+  <line x1="167" y1="292" x2="80" y2="340" stroke="#d4af37" stroke-width="6"/>
+  <text x="256" y="150" text-anchor="middle" font-family="Arial Black" font-size="48" fill="#d4af37" font-weight="900">AEGIS</text>
+  <text x="256" y="400" text-anchor="middle" font-family="Arial" font-size="28" fill="#d4af37" letter-spacing="12">DEF</text>
+</svg>

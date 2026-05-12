@@ -1,0 +1,56 @@
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { background-color: #050505; font-family: 'Orbitron', sans-serif; overflow: hidden; touch-action: none; }
+#game-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle at center, #1a0b2e, #050505); }
+canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
+#ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; }
+#scoreDisplay { position: absolute; top: 20px; left: 30px; font-size: 2rem; color: #ff00ea; text-shadow: 0 0 10px #ff00ea; font-weight: 700; letter-spacing: 2px; }
+#levelDisplay { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; font-weight: 700; letter-spacing: 2px; }
+.screen { background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(10px); border: 2px solid #ff00ea; border-radius: 15px; padding: 3rem; text-align: center; box-shadow: 0 0 30px rgba(255, 0, 234, 0.2), inset 0 0 20px rgba(255, 0, 234, 0.1); display: none; pointer-events: auto; transform: scale(0.9); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.screen.active { display: flex; flex-direction: column; gap: 20px; transform: scale(1); animation: pulseGlow 2s infinite alternate; }
+h1 { color: #ff00ea; text-shadow: 0 0 15px #ff00ea; font-size: 3rem; margin-bottom: 10px; }
+.screen p { color: #fff; font-size: 1.2rem; letter-spacing: 1px; }
+button { background: transparent; border: 2px solid #ff00ea; color: #ff00ea; padding: 15px 40px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 5px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 0, 234, 0.3) inset; }
+button:hover { background: #ff00ea; color: #000; box-shadow: 0 0 25px #ff00ea; }
+@keyframes pulseGlow { from { box-shadow: 0 0 20px rgba(255, 0, 234, 0.2), inset 0 0 10px rgba(255, 0, 234, 0.1); } to { box-shadow: 0 0 40px rgba(255, 0, 234, 0.4), inset 0 0 20px rgba(255, 0, 234, 0.2); } }
+@media (max-width: 768px) { h1 { font-size: 2rem; } .screen { padding: 2rem; width: 90%; } #scoreDisplay, #levelDisplay { font-size: 1.2rem; top: 10px; left: 15px; right: 15px; } #levelDisplay {text-align: right;} }
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

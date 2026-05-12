@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Music DJ Simulator</title>
+    <meta name="description" content="A premium 3D DJ simulator game with multi-track mixing and realistic audio.">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background Layer -->
+        <div class="bg-layer"></div>
+
+        <!-- Visualizer Canvas -->
+        <canvas id="visualizer-canvas"></canvas>
+
+        <!-- Intro/Tutorial Screen -->
+        <div id="intro-screen" class="overlay-screen active">
+            <div class="intro-content glass-panel">
+                <img src="assets/images/thumbnail.png" alt="DJ Game" class="intro-thumbnail">
+                <h1 class="neon-text">MUSIC DJ SIMULATOR</h1>
+                <p class="subtitle">Experience real 4-track audio mixing</p>
+                
+                <div class="tutorial-grid">
+                    <div class="tut-item">
+                        <div class="tut-icon">🎛️</div>
+                        <h3>Mix Tracks</h3>
+                        <p>Drums, Bass, Melody, Vocals</p>
+                    </div>
+                    <div class="tut-item">
+                        <div class="tut-icon">🎚️</div>
+                        <h3>Crossfader</h3>
+                        <p>Transition between decks smoothly</p>
+                    </div>
+                    <div class="tut-item">
+                        <div class="tut-icon">⚡</div>
+                        <h3>Beat Sync</h3>
+                        <p>Timing is everything. Drop on the beat!</p>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="neon-button">START MIXING</button>
+            </div>
+        </div>
+
+        <!-- Game HUD -->
+        <div id="hud" class="hidden">
+            <div class="top-bar">
+                <div class="level-info">
+                    <span class="label">LEVEL</span>
+                    <span id="level-value" class="neon-value">1</span>
+                </div>
+                <div class="objective-info">
+                    <span class="label">MISSION</span>
+                    <span id="objective-text">Turn on the Drums!</span>
+                </div>
+                <div class="score-info">
+                    <span class="label">SCORE</span>
+                    <span id="score-value" class="neon-value">0</span>
+                </div>
+            </div>
+
+            <!-- DJ Console -->
+            <div id="dj-console">
+                <div class="mixer-board glass-panel">
+                    <!-- Left Deck (Drums & Bass) -->
+                    <div class="deck deck-left">
+                        <div class="deck-header">DECK A</div>
+                        <div class="track-controls">
+                            <!-- Drum Track -->
+                            <div class="track-strip" data-track="drums">
+                                <div class="track-label">DRUMS</div>
+                                <div class="eq-knobs">
+                                    <div class="knob-container"><div class="knob" data-type="high"></div><span>HI</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="mid"></div><span>MID</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="low"></div><span>LOW</span></div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="vertical-slider fader-vol" min="0" max="1" step="0.01" value="0.8">
+                                </div>
+                                <button class="track-mute neon-button-small active">PLAY</button>
+                            </div>
+
+                            <!-- Bass Track -->
+                            <div class="track-strip" data-track="bass">
+                                <div class="track-label">BASS</div>
+                                <div class="eq-knobs">
+                                    <div class="knob-container"><div class="knob" data-type="high"></div><span>HI</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="mid"></div><span>MID</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="low"></div><span>LOW</span></div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="vertical-slider fader-vol" min="0" max="1" step="0.01" value="0.8">
+                                </div>
+                                <button class="track-mute neon-button-small active">PLAY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Master Controls -->
+                    <div class="center-mixer">
+                        <div class="master-meters">
+                            <div class="meter left-meter"><div class="meter-fill"></div></div>
+                            <div class="meter right-meter"><div class="meter-fill"></div></div>
+                        </div>
+                        
+                        <div class="crossfader-section">
+                            <div class="cf-label">CROSSFADER</div>
+                            <input type="range" id="crossfader" min="-1" max="1" step="0.01" value="0">
+                        </div>
+
+                        <div class="master-fx">
+                            <div class="fx-button" id="fx-filter">FILTER SWEEP</div>
+                            <div class="fx-button" id="fx-drop">BEAT DROP</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Deck (Melody & Vocals) -->
+                    <div class="deck deck-right">
+                        <div class="deck-header">DECK B</div>
+                        <div class="track-controls">
+                            <!-- Melody Track -->
+                            <div class="track-strip" data-track="melody">
+                                <div class="track-label">MELODY</div>
+                                <div class="eq-knobs">
+                                    <div class="knob-container"><div class="knob" data-type="high"></div><span>HI</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="mid"></div><span>MID</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="low"></div><span>LOW</span></div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="vertical-slider fader-vol" min="0" max="1" step="0.01" value="0.8">
+                                </div>
+                                <button class="track-mute neon-button-small active">PLAY</button>
+                            </div>
+
+                            <!-- Vocals Track -->
+                            <div class="track-strip" data-track="vocals">
+                                <div class="track-label">VOCALS</div>
+                                <div class="eq-knobs">
+                                    <div class="knob-container"><div class="knob" data-type="high"></div><span>HI</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="mid"></div><span>MID</span></div>
+                                    <div class="knob-container"><div class="knob" data-type="low"></div><span>LOW</span></div>
+                                </div>
+                                <div class="slider-container">
+                                    <input type="range" class="vertical-slider fader-vol" min="0" max="1" step="0.01" value="0.8">
+                                </div>
+                                <button class="track-mute neon-button-small active">PLAY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Level Complete Overlay -->
+        <div id="level-complete" class="overlay-screen hidden">
+            <div class="glass-panel text-center">
+                <h2 class="neon-text success">MIX PERFECT!</h2>
+                <p>Level <span id="completed-level">1</span> Completed</p>
+                <div class="stats">
+                    <p>Score: <span id="final-score">0</span></p>
+                    <p>Beat Sync: <span id="beat-accuracy">100%</span></p>
+                </div>
+                <button id="next-level-btn" class="neon-button">NEXT LEVEL</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

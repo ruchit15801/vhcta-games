@@ -1,0 +1,401 @@
+:root {
+    --primary: #f29c1f;
+    --primary-dark: #d68112;
+    --text-main: #5c3a21;
+    --bg-overlay: rgba(0, 0, 0, 0.4);
+    --wheel-bg: rgba(255, 255, 255, 0.15);
+    --cell-bg: rgba(255, 255, 255, 0.9);
+    --cell-border: #e6b885;
+    --cell-found: #f29c1f;
+    --cell-found-text: #fff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    background-color: #333;
+    color: white;
+}
+
+/* Background Layer */
+#bg-layer {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: url('../assets/images/bg1.png');
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+    z-index: -1;
+    filter: brightness(0.85);
+}
+
+/* Overlays & Modals */
+.overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    background: linear-gradient(145deg, #fff9f0, #ffe6cc);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    color: var(--text-main);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal-thumbnail {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.modal h1, .modal h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+.modal p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #7a5c43;
+}
+
+.btn-primary {
+    background: linear-gradient(to bottom, #ffbe3b, #f29c1f);
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 var(--primary-dark), 0 10px 10px rgba(0,0,0,0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 var(--primary-dark), 0 4px 4px rgba(0,0,0,0.2);
+}
+
+/* Main Game UI */
+#game-ui {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.level-indicator {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 900;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.coin-container {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    padding: 8px 15px 8px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.coin-icon {
+    font-size: 20px;
+    margin-right: 5px;
+    animation: bounce 2s infinite;
+}
+
+.icon-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+/* Board Area */
+#board-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+}
+
+/* Board Grid handled strictly by JS, but we define cell classes here */
+.crossword-board {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.cell {
+    position: absolute;
+    background: var(--cell-bg);
+    border: 3px solid var(--cell-border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: transparent;
+    box-shadow: 0 4px 0px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+}
+
+.cell.found {
+    background: var(--cell-found);
+    border-color: #fff;
+    color: var(--cell-found-text);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(242, 156, 31, 0.8), 0 4px 0px rgba(0,0,0,0.2);
+}
+
+.cell.hinted {
+    color: var(--text-main);
+    background: #ffebcc;
+}
+
+/* Bottom Section */
+#bottom-section {
+    height: 45vh;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.powerups {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 30px;
+}
+
+.powerup-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transition: transform 0.1s;
+}
+
+.powerup-btn:active {
+    transform: translateY(4px);
+}
+
+.powerup-btn .p-icon { font-size: 24px; }
+.powerup-btn .cost { font-size: 12px; background: var(--primary); padding: 2px 8px; border-radius: 10px; margin-top: -5px; }
+
+.current-word-display {
+    min-width: 120px;
+    height: 45px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+    color: white;
+}
+
+/* Wheel */
+#wheel-container {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: var(--wheel-bg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    touch-action: none;
+}
+
+#swipe-layer {
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    pointer-events: none; /* Let touches pass through to letters */
+    z-index: 2;
+}
+
+#letters-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 3;
+}
+
+.wheel-letter {
+    position: absolute;
+    width: 60px; height: 60px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text-main);
+    box-shadow: 0 5px 0px #b3b3b3, 0 10px 15px rgba(0,0,0,0.2);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: transform 0.1s;
+    user-select: none;
+}
+
+.wheel-letter.active {
+    background: linear-gradient(145deg, #ffdb58, #ffbf00);
+    box-shadow: 0 5px 0px #cc9900, 0 10px 20px rgba(255,191,0,0.5);
+    color: #fff;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Toast Messages */
+#toast-msg {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background: linear-gradient(45deg, #ff5f6d, #ffc371);
+    color: white;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 50;
+}
+
+#toast-msg.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Tutorial Animation */
+.tutorial-anim {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.tut-letter {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    color: white;
+    font-size: 24px; font-weight: bold;
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 8px;
+    animation: pop 1.5s infinite alternate;
+}
+.tut-letter:nth-child(2) { animation-delay: 0.2s; }
+.tut-letter:nth-child(3) { animation-delay: 0.4s; }
+.tut-letter:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); background: var(--primary-dark); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Animations for words */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.shake { animation: shake 0.3s ease-in-out; }
+
+/* Responsive Adjustments */
+@media (min-height: 800px) {
+    #bottom-section { height: 40vh; }
+    #wheel-container { width: 300px; height: 300px; }
+    .wheel-letter { width: 70px; height: 70px; font-size: 32px; }
+}
+
+@media (max-width: 400px) {
+    #wheel-container { width: 220px; height: 220px; }
+    .wheel-letter { width: 50px; height: 50px; font-size: 24px; }
+}

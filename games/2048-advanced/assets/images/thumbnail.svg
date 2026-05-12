@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0f172a" />
+            <stop offset="100%" stop-color="#1e1b4b" />
+        </linearGradient>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="20" stdDeviation="20" flood-opacity="0.6"/>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="1200" height="630" fill="url(#bg)" />
+    
+    <!-- Grid decorative background -->
+    <path d="M 0 100 L 1200 100 M 0 200 L 1200 200 M 0 300 L 1200 300 M 0 400 L 1200 400 M 0 500 L 1200 500" stroke="#ffffff" stroke-width="2" opacity="0.03" />
+    <path d="M 200 0 L 200 630 M 400 0 L 400 630 M 600 0 L 600 630 M 800 0 L 800 630 M 1000 0 L 1000 630" stroke="#ffffff" stroke-width="2" opacity="0.03" />
+    
+    <!-- Title -->
+    <text x="600" y="220" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="180" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">2048</text>
+    <text x="600" y="360" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="70" fill="#2dd4bf" text-anchor="middle" dominant-baseline="middle" letter-spacing="15">ADVANCED</text>
+    
+    <!-- Hero Tiles Demo -->
+    <g transform="translate(450, 430)" filter="url(#shadow)">
+        <rect x="0" y="0" width="120" height="120" rx="15" fill="#3b82f6"/>
+        <text x="60" y="65" font-family="'Segoe UI', Arial, sans-serif" font-weight="bold" font-size="50" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">2</text>
+    </g>
+    <g transform="translate(630, 430)" filter="url(#shadow)">
+        <rect x="0" y="0" width="120" height="120" rx="15" fill="#8b5cf6"/>
+        <text x="60" y="65" font-family="'Segoe UI', Arial, sans-serif" font-weight="bold" font-size="50" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">4</text>
+    </g>
+</svg>

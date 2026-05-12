@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cannon Target Strike</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <div id="scoreDisplay">SCORE: 0</div>
+                <div id="ammoDisplay">AMMO: 10</div>
+            </div>
+            
+            <div id="startScreen" class="screen active">
+                <h1>CANNON STRIKE</h1>
+                <p>Drag backwards to aim. Release to fire.</p>
+                <button id="startBtn">ENGAGE</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>MISSION FAILED</h1>
+                <p>FINAL SCORE: <span id="finalScore">0</span></p>
+                <button id="restartBtn">RETRY</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "Train Control Manager",
+  "short_name": "TrainControl",
+  "description": "Premium Rail Simulation Game",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#050c1a",
+  "theme_color": "#00e5ff",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

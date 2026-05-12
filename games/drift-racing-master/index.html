@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Drift Racing Master</title>
+    <!-- Premium Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+</head>
+<body>
+
+    <!-- 3D Background Container -->
+    <div id="ui-background">
+        <div class="bg-layer grid-floor"></div>
+        <div class="bg-layer neon-lights"></div>
+    </div>
+
+    <!-- MAIN MENU -->
+    <section id="menu-screen" class="screen active">
+        <div class="logo-container">
+            <h1 class="glitch" data-text="DRIFT RACING">DRIFT RACING</h1>
+            <h2 class="subtitle">MASTER</h2>
+        </div>
+        <div class="menu-buttons">
+            <button id="btn-start" class="btn premium">START ENGINE</button>
+            <button id="btn-garage" class="btn glass">GARAGE</button>
+            <button id="btn-leaderboard" class="btn glass">LEADERBOARD</button>
+            <button id="btn-settings" class="btn glass">SETTINGS</button>
+        </div>
+        <div class="version">v1.0.0 - Premium Edition</div>
+    </section>
+
+    <!-- INSTRUCTION SCREEN -->
+    <section id="instruction-screen" class="screen hidden">
+        <div class="panel glass-panel">
+            <h2>HOW TO DRIFT</h2>
+            <div class="tutorial-anim">
+                <div class="anim-car"></div>
+                <div class="anim-track"></div>
+            </div>
+            <ul class="instructions-list">
+                <li><span class="key">W</span> / <span class="key">▲</span> or <span class="touch-icon">T</span> Accelerate</li>
+                <li><span class="key">A</span> <span class="key">D</span> / <span class="key">◀</span> <span class="key">▶</span> or <span class="touch-icon">T</span> Steer</li>
+                <li><span class="key">SPACE</span> / <span class="touch-icon">T</span> Handbrake & Drift</li>
+                <li><span class="highlight">Grip vs Slip:</span> Angle + Speed = High Score!</li>
+            </ul>
+            <div class="score-explain">
+                <div class="badge">Combo x2, x3...</div>
+                <p>Chain drifts without crashing onto walls to keep the combo going.</p>
+            </div>
+            <button id="btn-play" class="btn premium">RACE NOW</button>
+        </div>
+    </section>
+
+    <!-- GARAGE SCREEN -->
+    <section id="garage-screen" class="screen hidden">
+        <div class="panel glass-panel wide">
+            <button class="btn-close" id="btn-garage-back">BACK</button>
+            <div class="garage-content">
+                <div class="car-display">
+                    <!-- 3D like rendering of the car -->
+                    <canvas id="garage-canvas" width="400" height="300"></canvas>
+                    <h3 id="garage-car-name">Neon Viper</h3>
+                </div>
+                <div class="upgrades">
+                    <h2>CAR STATS</h2>
+                    <div class="stats">
+                        <div class="stat-row"><span>Speed</span><div class="bar-bg"><div class="bar-fill" id="stat-speed"></div></div></div>
+                        <div class="stat-row"><span>Handling</span><div class="bar-bg"><div class="bar-fill" id="stat-handling"></div></div></div>
+                        <div class="stat-row"><span>Drift</span><div class="bar-bg"><div class="bar-fill" id="stat-drift"></div></div></div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn premium block hidden" id="btn-buy-car">PURCHASE <span id="car-cost-disp">1000 🪙</span></button>
+                        <div id="car-owned-msg" class="active-msg">OWNED</div>
+                    </div>
+                    <div class="car-selector">
+                        <button class="btn nav-btn" id="btn-prev-car">◄</button>
+                        <span>Select Car</span>
+                        <button class="btn nav-btn" id="btn-next-car">►</button>
+                    </div>
+                </div>
+            </div>
+            <div class="coins-display"><span id="garage-coins">0</span> 🪙</div>
+        </div>
+    </section>
+
+    <!-- TRACK SELECT SCREEN -->
+    <section id="track-screen" class="screen hidden">
+        <div class="panel glass-panel">
+            <button class="btn-close" id="btn-track-back">BACK</button>
+            <h2>SELECT TRACK</h2>
+            <div class="track-list">
+                <div class="track-card selected" data-track="city">
+                    <div class="track-img city-bg"></div>
+                    <h3>Neon City</h3>
+                    <p>Sharp turns, tight roads</p>
+                </div>
+                <div class="track-card" data-track="mountain">
+                    <div class="track-img mountain-bg"></div>
+                    <h3>Mountain Pass</h3>
+                    <p>Long continuous drifts</p>
+                </div>
+                <div class="track-card locked" data-track="desert">
+                    <div class="track-img desert-bg"></div>
+                    <h3>Desert Ruins</h3>
+                    <p>Requires 10,000 pts</p>
+                </div>
+            </div>
+            <button id="btn-start-race" class="btn premium mt-4">START RACE</button>
+        </div>
+    </section>
+
+    <!-- LEADERBOARD SCREEN -->
+    <section id="leaderboard-screen" class="screen hidden">
+        <div class="panel glass-panel">
+            <button class="btn-close" id="btn-leader-back">BACK</button>
+            <h2>HIGH SCORES</h2>
+            <div class="leaderboard-content mt-4">
+                <div class="lb-row"><span class="lb-label city-color">Neon City</span><span id="lb-city" class="lb-score glow-text">0</span></div>
+                <div class="lb-row"><span class="lb-label mtn-color">Mountain Pass</span><span id="lb-mountain" class="lb-score glow-text">0</span></div>
+                <div class="lb-row"><span class="lb-label desert-color">Desert Ruins</span><span id="lb-desert" class="lb-score glow-text">0</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SETTINGS SCREEN -->
+    <section id="settings-screen" class="screen hidden">
+        <div class="panel glass-panel">
+            <button class="btn-close" id="btn-settings-back">BACK</button>
+            <h2>SETTINGS</h2>
+            <div class="settings-content mt-4">
+                <div class="setting-row">
+                    <span>Background Music</span>
+                    <button class="btn glass toggle-btn" id="btn-toggle-bgm">ON</button>
+                </div>
+                <div class="setting-row">
+                    <span>Sound Effects</span>
+                    <button class="btn glass toggle-btn" id="btn-toggle-sfx">ON</button>
+                </div>
+                
+                <hr style="border: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+                
+                <button class="btn glass block" id="btn-reset-data" style="color: #ff5555; border-color: #ff5555;">RESET ALL PROGRESS</button>
+            </div>
+        </div>
+    </section>
+    <!-- LEVEL HUD & GAME CANVAS -->
+    <div id="game-container" class="hidden">
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="hud">
+            <div class="hud-top">
+                <div class="hud-score">
+                    <div>SCORE</div>
+                    <div id="hud-score-val" class="glow-text">0</div>
+                </div>
+                <div class="hud-center">
+                    <button id="btn-ingame-menu" class="btn glass minor-btn">⏸ MENU</button>
+                    <div id="hud-time">00:00.000</div>
+                    <div id="hud-lap">LAP 1/3</div>
+                </div>
+                <div class="hud-position">
+                    <div>POS</div>
+                    <div id="hud-pos-val" class="glow-text">1st</div>
+                </div>
+            </div>
+            
+            <div id="drift-alert" class="hidden">
+                <div id="drift-points">+500</div>
+                <div id="drift-combo">COMBO x2</div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="speedometer">
+                    <div class="speed-ring"></div>
+                    <div class="speed-needle" id="speed-needle"></div>
+                    <div class="speed-val">
+                        <span id="hud-speed">0</span>
+                        <small>KM/H</small>
+                    </div>
+                </div>
+                <div class="minimap">
+                    <canvas id="minimap-canvas" width="120" height="120"></canvas>
+                </div>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div id="mobile-controls">
+                <div class="ctrl-left">
+                    <button id="btn-steer-left" class="t-btn">&larr;</button>
+                    <button id="btn-steer-right" class="t-btn">&rarr;</button>
+                </div>
+                <div class="ctrl-right">
+                    <button id="btn-brake" class="t-btn brake">BRAKE</button>
+                    <button id="btn-accel" class="t-btn accel">GAS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME OVER / RESULTS -->
+    <section id="result-screen" class="screen hidden">
+        <div class="panel glass-panel">
+            <h2 id="result-title">RACE FINISHED!</h2>
+            <div class="result-stats">
+                <div class="r-row"><span>Position</span><span id="r-pos" class="glow-text">1st</span></div>
+                <div class="r-row"><span>Best Drift</span><span id="r-drift">5,400</span></div>
+                <div class="r-row"><span>Total Score</span><span id="r-score" class="glow-text">12,500</span></div>
+                <div class="r-row"><span>Coins Earned</span><span id="r-coins">+150 🪙</span></div>
+            </div>
+            <div class="menu-buttons horizontal">
+                <button id="btn-restart" class="btn glass">RESTART</button>
+                <button id="btn-menu" class="btn premium">MAIN MENU</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOADING OVERLAY -->
+    <div id="loader" class="hidden">
+        <div class="spinner"></div>
+        <div class="loading-text">LOADING ASSETS...</div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/track.js"></script>
+    <script src="js/car.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

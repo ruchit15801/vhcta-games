@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Color Path Builder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.png">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background Elements -->
+        <div class="bg-circles"></div>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="level-display">
+                    LEVEL <span id="current-level">1</span>
+                </div>
+            </div>
+
+            <button id="restart-level-btn" class="btn icon-btn" title="Restart Level">🔄</button>
+            <button id="sound-toggle" class="btn icon-btn">🔊</button>
+            <button id="pause-btn" class="btn icon-btn">⏸</button>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="title-container">
+                <h1>COLOR PATH</h1>
+                <h2>BUILDER</h2>
+            </div>
+            <p class="subtitle">Connect the matching colors. Fill the grid.</p>
+            <button id="start-btn" class="btn primary-btn">PLAY NOW</button>
+            <button id="instructions-btn" class="btn secondary-btn">HOW TO PLAY</button>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="screen">
+            <h2>HOW TO PLAY</h2>
+            <div class="instruction-content">
+                <p>👆 <strong>CONNECT:</strong> Drag from one colored node to its matching pair.</p>
+                <p>🚫 <strong>NO CROSSING:</strong> Paths cannot cross or overlap each other.</p>
+                <p>✅ <strong>FILL GRID:</strong> Every single square on the board must be filled with a path to win the level.</p>
+            </div>
+            <button id="back-btn" class="btn secondary-btn">BACK</button>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen">
+            <h2>PAUSED</h2>
+            <button id="resume-btn" class="btn primary-btn">RESUME</button>
+            <button id="quit-btn" class="btn secondary-btn">MAIN MENU</button>
+        </div>
+
+        <!-- Level Complete Screen -->
+        <div id="level-complete-screen" class="screen">
+            <h2>LEVEL COMPLETE!</h2>
+            <div class="stars">✨ ✨ ✨</div>
+            <button id="next-level-btn" class="btn primary-btn">NEXT LEVEL</button>
+        </div>
+
+        <!-- Game Complete Screen -->
+        <div id="game-complete-screen" class="screen">
+            <h2>CONGRATULATIONS!</h2>
+            <p class="subtitle">You have mastered all levels!</p>
+            <button id="retry-btn" class="btn primary-btn">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

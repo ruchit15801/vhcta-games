@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0f0c29"/>
+            <stop offset="50%" stop-color="#302b63"/>
+            <stop offset="100%" stop-color="#24243e"/>
+        </linearGradient>
+        <linearGradient id="neon" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f2fe"/>
+            <stop offset="100%" stop-color="#4facfe"/>
+        </linearGradient>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="15" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000" flood-opacity="0.8"/>
+        </filter>
+    </defs>
+    <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+    
+    <!-- Maze Pattern -->
+    <g stroke="url(#neon)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+        <path d="M128,128 L384,128 L384,256 L256,256 L256,384 L128,384 Z" fill="none"/>
+        <path d="M256,128 L256,192" fill="none"/>
+        <path d="M192,256 L192,320" fill="none"/>
+    </g>
+    
+    <!-- Player -->
+    <circle cx="160" cy="160" r="28" fill="#ff0844" filter="url(#glow)"/>
+    <circle cx="160" cy="160" r="14" fill="#ffb199"/>
+</svg>

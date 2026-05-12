@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>City Builder Tycoon | Ultra Premium</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+    <meta name="theme-color" content="#4cc9f0">
+    <meta property="og:title" content="City Builder Tycoon">
+    <meta property="og:image" content="assets/thumbnail.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+</head>
+<body class="day-mode">
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="ui-layer">
+            <!-- HUD 2.0 -->
+            <header class="top-hud">
+                <div class="hud-group">
+                    <div class="hud-item">
+                        <span class="hud-label">CAPITAL</span>
+                        <span id="money-display" class="hud-value money-val">$0</span>
+                    </div>
+                </div>
+                <div class="hud-group">
+                    <div class="hud-item">
+                        <span class="hud-label">CITIZENS</span>
+                        <span id="population-display" class="hud-value">0</span>
+                    </div>
+                    <div class="hud-item" style="width: 80px;">
+                        <span class="hud-label">SMILE</span>
+                        <div class="happiness-bar-container" style="width: 100%; height: 8px;">
+                            <div id="happiness-fill" style="width: 80%; background: var(--accent); height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hud-group">
+                    <div class="hud-item">
+                        <span class="hud-label">RANK</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span id="level-display" class="hud-value" style="color: var(--primary);">1</span>
+                            <div class="lvl-progress-container" style="width: 60px;">
+                                <div id="lvl-progress-fill" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Budget Toggle -->
+            <button id="budget-btn">📊 BUDGET</button>
+            <div id="budget-panel" class="budget-panel hidden">
+                <h3 style="margin-bottom: 15px; font-size: 0.9rem;">CITY BUDGET</h3>
+                <div class="slider-group">
+                    <label class="hud-label">TAX RATE: <span id="tax-label">10</span>%</label>
+                    <input type="range" id="tax-slider" min="1" max="30" value="10">
+                </div>
+                <p style="font-size: 0.7rem; opacity: 0.6;">High taxes reduce happiness but increase revenue.</p>
+            </div>
+
+            <div id="notification-center"></div>
+
+            <!-- Build Menu 2.0 -->
+            <nav class="build-menu">
+                <div class="menu-tabs">
+                    <button class="tab-btn active" data-category="residential">🏠</button>
+                    <button class="tab-btn" data-category="commercial">🏪</button>
+                    <button class="tab-btn" data-category="industrial">🏭</button>
+                    <button class="tab-btn" data-category="services">🏛️</button>
+                </div>
+                <div class="building-items" id="build-items-list"></div>
+            </nav>
+
+            <!-- Splash Screen -->
+            <div id="startup-overlay" class="overlay">
+                <div class="modal premium-panel">
+                    <div class="thumb-container">
+                        <img src="assets/thumbnail.png" alt="Game Thumbnail" class="hero-bg">
+                        <img src="assets/icon.svg" alt="Game Logo" class="hero-thumb">
+                    </div>
+                    <h2>CITY BUILDER <span class="accent">TYCOON</span></h2>
+                    <p>Experience the ultimate luxury city management. Balance economy, happiness, and growth.</p>
+                    <div class="tutorial-grid">
+                        <div class="tut-step"><div class="tut-icon">🏙️</div><p>Zoning</p></div>
+                        <div class="tut-step"><div class="tut-icon">📈</div><p>Economy</p></div>
+                        <div class="tut-step"><div class="tut-icon">🎨</div><p>Premium</p></div>
+                    </div>
+                    <button id="start-btn" class="btn-primary" onclick="startGame()">ENTER MANAGEMENT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        function startGame() {
+            const overlay = document.getElementById('startup-overlay');
+            overlay.classList.add('hidden');
+            if(window.game && window.game.playSnd) window.game.playSnd(440, 880);
+        }
+    </script>
+</body>
+</html>

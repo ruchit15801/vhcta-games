@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tank Shooter Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="scoreDisplay">SCORE: 0</div>
+            <div id="waveDisplay">WAVE: 1</div>
+            
+            <div id="startScreen" class="screen active">
+                <h1>NEON TANK ARENA</h1>
+                <p>Drag left side to move. Tap/Drag right side to shoot.</p>
+                <button id="startBtn">ENGAGE</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>DESTROYED</h1>
+                <p>FINAL SCORE: <span id="finalScore">0</span></p>
+                <button id="restartBtn">RETRY</button>
+            </div>
+            
+            <!-- Virtual Joysticks for Mobile -->
+            <div id="joystick-left" class="joystick-zone"></div>
+            <div id="joystick-right" class="joystick-zone"></div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

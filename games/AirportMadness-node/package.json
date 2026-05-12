@@ -1,0 +1,19 @@
+{
+  "name": "AirportMadness",
+  "version": "0.1.0",
+  "description": "A simple JavaScript game.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MarcosLopezC/AirportMadness.git"
+  },
+  "author": "Marcos López C.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarcosLopezC/AirportMadness/issues"
+  },
+  "homepage": "https://github.com/MarcosLopezC/AirportMadness",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-browserify": "~3.2.1"
+  }
+}

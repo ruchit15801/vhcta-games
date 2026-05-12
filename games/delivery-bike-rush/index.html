@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Delivery Bike Rush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <span id="scoreDisplay">SCORE: 0</span>
+                <span id="speedDisplay">SPEED: 1X</span>
+                <span id="packageDisplay">📦 0</span>
+            </div>
+
+            <div id="startScreen" class="screen active">
+                <h1>🏍️ BIKE RUSH</h1>
+                <p>Tap / Hold LEFT to brake.</p>
+                <p>Tap / Hold RIGHT to throttle.</p>
+                <p>Collect packages. Dodge traffic!</p>
+                <button id="startBtn">RIDE!</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>CRASHED!</h1>
+                <p>SCORE: <span id="finalScore">0</span></p>
+                <p>PACKAGES: <span id="finalPackages">0</span></p>
+                <button id="restartBtn">TRY AGAIN</button>
+            </div>
+        </div>
+
+        <!-- Touch controls -->
+        <div id="leftBtn"  class="touch-btn">◀ BRAKE</div>
+        <div id="rightBtn" class="touch-btn">GAS ▶</div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

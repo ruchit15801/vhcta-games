@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cyber-Run | Endless Runner</title>
+    <link rel="icon" href="assets/icons/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Dynamic HUD -->
+        <div id="hud" class="hidden">
+            <div class="hud-top">
+                <div class="score-container">
+                    <span class="label">DISTANCE</span>
+                    <span id="score-val">00000</span>
+                </div>
+                <div class="coins-container">
+                    <div class="coin-icon"></div>
+                    <span id="coins-val">0</span>
+                </div>
+            </div>
+            <div class="hud-bottom">
+                <div class="multiplier-container">
+                    <span id="multiplier-val">x1</span>
+                </div>
+                <div id="pause-btn" class="icon-btn">
+                    <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen">
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="logo-container">
+                    <h1 class="logo-text" data-text="CYBER">CYBER</h1>
+                    <h1 class="logo-text sub" data-text="RUN">RUN</h1>
+                </div>
+                <!-- Controls Hint moved to Tutorial Screen for better focus -->
+                <button id="start-btn" class="glitch-btn">NEURAL LINK START</button>
+                <div class="high-score-display">
+                    RECORD: <span id="top-score-val">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial Screen (Mission Briefing) -->
+        <div id="tutorial-screen" class="screen hidden">
+            <div class="overlay cyan"></div>
+            <div class="content">
+                <h2 class="title cyan-glow">MISSION BRIEFING</h2>
+                <div class="briefing-panel">
+                    <div class="instruction-item">
+                        <div class="icon-box">W / ↑</div>
+                        <div class="text">JUMP / CLIMB</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="icon-box">S / ↓</div>
+                        <div class="text">SLIDE / FALL</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="icon-box">A/D / ←→</div>
+                        <div class="text">LANE SHIFT</div>
+                    </div>
+                    <div class="briefing-note">
+                        AVOID OBSTACLES. COLLECT DATA CORES.
+                    </div>
+                </div>
+                <button id="ready-btn" class="glitch-btn cyan">READY FOR UPLINK</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen hidden">
+            <div class="overlay crimson"></div>
+            <div class="content">
+                <h2 class="title pink-glow">CONNECTION TERMINATED</h2>
+                <div class="stats-panel">
+                    <div class="stat-row">
+                        <span>DISTANCE</span>
+                        <span id="final-score">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>DATA CORES</span>
+                        <span id="final-coins">0</span>
+                    </div>
+                    <div id="new-record" class="hidden">NEW SYSTEM RECORD!</div>
+                </div>
+                <div class="actions">
+                    <button id="restart-btn" class="glitch-btn">REBOOT SYSTEM</button>
+                    <button id="main-menu-btn" class="text-btn">RETURN TO HUB</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen hidden">
+            <div class="overlay blue"></div>
+            <div class="content">
+                <h2 class="title blue-glow">PAUSED</h2>
+                <div class="settings-panel">
+                    <div class="setting-row">
+                        <span>AUDIO</span>
+                        <label class="switch">
+                            <input type="checkbox" id="audio-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <button id="resume-btn" class="glitch-btn">RESUME LINK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Entry Point -->
+    <script src="js/script.js"></script>
+</body>
+</html>

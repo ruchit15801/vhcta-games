@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fixing Updates...</title>
+</head>
+<body style="background: #0A0A0F; color: #C9A84C; font-family: sans-serif; text-align: center; padding-top: 20vh;">
+    <h1>Applying Premium Updates...</h1>
+    <p>Please wait a second.</p>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+                // Clear local storage just in case
+                localStorage.clear();
+                
+                // Force a true hard reload to the home page
+                setTimeout(() => {
+                    window.location.href = '/index.html?cleared=' + Date.now();
+                }, 1000);
+            });
+        } else {
+            window.location.href = '/index.html?cleared=' + Date.now();
+        }
+    </script>
+</body>
+</html>

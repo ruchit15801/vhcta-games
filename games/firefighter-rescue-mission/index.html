@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Firefighter Rescue Mission</title>
+    
+    <!-- Meta tags for SEO & Display -->
+    <meta name="description" content="A highly realistic 3D-styled firefighter rescue simulation game. Control a firefighter, extinguish dynamic fires, and rescue trapped civilians.">
+    
+    <!-- Icons and Thumbnail -->
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <meta property="og:image" content="assets/images/thumbnail.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Canvas for rendering -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Overlay Layer -->
+        <div id="ui-layer">
+            
+            <!-- Main Menu -->
+            <div id="main-menu" class="screen active">
+                <div class="logo-container">
+                    <img src="assets/images/icon.png" alt="Game Icon" class="menu-icon">
+                    <h1>FIREFIGHTER</h1>
+                    <h2>RESCUE MISSION</h2>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-play" class="btn primary">START RESCUE</button>
+                    <button id="btn-tutorial" class="btn secondary">TUTORIAL</button>
+                </div>
+            </div>
+
+            <!-- Tutorial / Guide Screen -->
+            <div id="tutorial-screen" class="screen hidden">
+                <div class="panel">
+                    <h2>MISSION GUIDE</h2>
+                    <div class="tutorial-content">
+                        <div class="tut-item">
+                            <div class="tut-icon">🕹️</div>
+                            <p><strong>MOVE:</strong> Use Joystick on Mobile or WASD/Arrows on PC.</p>
+                        </div>
+                        <div class="tut-item">
+                            <div class="tut-icon">💧</div>
+                            <p><strong>EXTINGUISH:</strong> Stand near fire and press the Water button to spray.</p>
+                        </div>
+                        <div class="tut-item">
+                            <div class="tut-icon">🧍</div>
+                            <p><strong>RESCUE:</strong> Reach civilians to guide them to the green Safe Zone.</p>
+                        </div>
+                        <div class="tut-item">
+                            <div class="tut-icon">⏱️</div>
+                            <p><strong>TIME:</strong> Fire spreads. Rescue everyone before time runs out!</p>
+                        </div>
+                    </div>
+                    <button id="btn-close-tutorial" class="btn primary">UNDERSTOOD</button>
+                </div>
+            </div>
+
+            <!-- In-Game HUD -->
+            <div id="hud" class="hidden">
+                <div class="top-bar">
+                    <div class="hud-item health-box">
+                        <span class="label">HP</span>
+                        <div class="bar-container"><div id="health-bar" class="bar fill-green"></div></div>
+                    </div>
+                    <div class="hud-item water-box">
+                        <span class="label">H₂O</span>
+                        <div class="bar-container"><div id="water-bar" class="bar fill-blue"></div></div>
+                    </div>
+                    <div class="hud-item info-box">
+                        <div class="mission-text">MISSION <span id="level-display">1</span></div>
+                        <div class="timer-text">TIME: <span id="time-display">02:00</span></div>
+                    </div>
+                    <button id="btn-pause" class="btn-icon">⏸️</button>
+                </div>
+
+                <div class="objective-tracker">
+                    <div class="obj-item">🔥 <span id="fire-count">0</span></div>
+                    <div class="obj-item">🧍 <span id="rescue-count">0/0</span></div>
+                </div>
+
+                <!-- Mobile Controls -->
+                <div id="mobile-controls">
+                    <div id="joystick-zone">
+                        <div id="joystick-base">
+                            <div id="joystick-stick"></div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="btn-action-water" class="btn-action water-btn">💧</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause Menu -->
+            <div id="pause-menu" class="screen hidden">
+                <div class="panel">
+                    <h2>PAUSED</h2>
+                    <div class="menu-buttons">
+                        <button id="btn-resume" class="btn primary">RESUME</button>
+                        <button id="btn-toggle-sound" class="btn secondary">SOUND: ON</button>
+                        <button id="btn-quit" class="btn danger">QUIT MISSION</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Complete -->
+            <div id="level-complete" class="screen hidden">
+                <div class="panel victory-panel">
+                    <h2>MISSION ACCOMPLISHED</h2>
+                    <div class="stats">
+                        <p>Time Remaining: <span id="stat-time">00:00</span></p>
+                        <p>Civilians Saved: <span id="stat-rescued">0</span></p>
+                        <p>Fires Extinguished: <span id="stat-fires">0</span></p>
+                    </div>
+                    <div class="score-display">SCORE: <span id="stat-score">0</span></div>
+                    <button id="btn-next-level" class="btn primary">NEXT MISSION</button>
+                </div>
+            </div>
+
+            <!-- Game Over -->
+            <div id="game-over" class="screen hidden">
+                <div class="panel defeat-panel">
+                    <h2>MISSION FAILED</h2>
+                    <p id="fail-reason">The building collapsed!</p>
+                    <button id="btn-retry" class="btn primary">RETRY MISSION</button>
+                    <button id="btn-menu" class="btn secondary">MAIN MENU</button>
+                </div>
+            </div>
+            
+            <!-- Screen Flash Effects -->
+            <div id="damage-flash" class="overlay-flash hidden"></div>
+        </div>
+    </div>
+
+    <!-- Audio Synthesizer (ZzFX) included in script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Airport Security Check</title>
+    <link rel="icon" type="image/png" href="assets/images/game_icon.png" />
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Start Screen -->
+        <div id="screen-start" class="screen active">
+            <div class="start-content">
+                <div class="logo-area">
+                    <img id="game-logo" src="assets/images/game_icon.png" alt="Icon" />
+                    <h1>AIRPORT<br><span class="accent">SECURITY CHECK</span></h1>
+                </div>
+                <div class="options">
+                    <button id="btn-play" class="btn primary-btn">START SHIFT</button>
+                    <button id="btn-tutorial" class="btn secondary-btn">TUTORIAL / RULES</button>
+                    <label class="toggle-container">
+                        <input type="checkbox" id="toggle-sound" checked>
+                        <span class="checkmark"></span>
+                        <span class="label-text">AUDIO FX</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Background video/animation overlay can go here -->
+            <div class="bg-overlay"></div>
+        </div>
+
+        <!-- Rules / Tutorial Screen -->
+        <div id="screen-tutorial" class="screen hidden">
+            <div class="tutorial-modal">
+                <h2>OFFICER MANUAL</h2>
+                <div class="tutorial-pages">
+                    <div class="tut-page active">
+                        <h3>1. DOCUMENT VERIFICATION</h3>
+                        <p>Verify all incoming passengers. Check the expiry date on their Passport, match the names, and ensure their Boarding Pass is valid for today's date.</p>
+                        <div class="tut-visual doc-visual"></div>
+                    </div>
+                </div>
+                <button id="btn-close-tutorial" class="btn primary-btn">UNDERSTOOD</button>
+            </div>
+        </div>
+
+        <!-- Main Gameplay Screen -->
+        <div id="screen-game" class="screen hidden">
+            <!-- Top HUD -->
+            <div class="hud">
+                <div class="hud-item clock">
+                    <span class="label">TIME</span>
+                    <span id="game-time">08:00</span>
+                </div>
+                <div class="hud-item quota">
+                    <span class="label">PROCESSED</span>
+                    <span id="game-quota">0/10</span>
+                </div>
+                <div class="hud-item score">
+                    <span class="label">PENALTIES</span>
+                    <span id="game-strikes" class="strikes">0/3</span>
+                </div>
+                <div class="hud-item level">
+                    <span class="label">DAY</span>
+                    <span id="game-level">1</span>
+                </div>
+            </div>
+
+            <!-- Main Desk Area -->
+            <div class="desk">
+                
+                <!-- Passenger / Queue Area -->
+                <div class="booth-window">
+                    <div id="passenger-container"></div>
+                    <div class="glass-overlay"></div>
+                </div>
+
+                <!-- Interactive Desk Surface -->
+                <div class="desk-surface">
+                    
+                    <!-- Documents Area -->
+                    <div class="doc-area" id="doc-area">
+                        <div class="drag-hint">DOCUMENTS</div>
+                    </div>
+
+                    <!-- Scanner Monitor -->
+                    <div class="scanner-monitor">
+                        <div class="monitor-bezel">
+                            <canvas id="scanner-canvas" width="400" height="300"></canvas>
+                            <div class="scan-line"></div>
+                            <div class="monitor-glare"></div>
+                            <div class="scanner-status" id="scanner-status">READY</div>
+                        </div>
+                        <div class="monitor-controls">
+                            <button id="btn-scan" class="control-btn">SCAN LUGGAGE</button>
+                            <button id="btn-next" class="control-btn call-next">NEXT PASSENGER</button>
+                        </div>
+                    </div>
+
+                    <!-- Control Panel (Action Buttons) -->
+                    <div class="action-panel">
+                        <div class="stamp-pad approve" id="btn-approve">
+                            <div class="btn-inner">
+                                <span class="icon">✓</span>
+                                <span class="text">APPROVE</span>
+                            </div>
+                        </div>
+                        <div class="stamp-pad reject" id="btn-reject">
+                            <div class="btn-inner">
+                                <span class="icon">✕</span>
+                                <span class="text">DENY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Warning / Alert Overlay -->
+            <div id="alert-banner" class="alert-banner hidden">
+                CITATION ISSUED
+            </div>
+            
+            <!-- Timer Bar -->
+            <div class="time-pressure-bar">
+                <div id="time-bar-fill" class="fill"></div>
+            </div>
+        </div>
+
+        <!-- End of Level Screen -->
+        <div id="screen-result" class="screen hidden">
+            <div class="result-modal">
+                <h2 id="result-title">SHIFT OVER</h2>
+                <div class="stats">
+                    <div class="stat-row"><span>Processed:</span> <span id="res-processed">10</span></div>
+                    <div class="stat-row"><span>Correct:</span> <span id="res-correct" class="good">9</span></div>
+                    <div class="stat-row"><span>Mistakes:</span> <span id="res-mistakes" class="bad">1</span></div>
+                    <div class="stat-row"><span>Salary:</span> <span id="res-salary">$45</span></div>
+                </div>
+                <button id="btn-next-level" class="btn primary-btn">START NEXT SHIFT</button>
+            </div>
+        </div>
+        
+         <!-- Game Over Screen -->
+         <div id="screen-gameover" class="screen hidden">
+            <div class="gameover-modal">
+                <h2>TERMINATED</h2>
+                <p>Too many citations. You have been relieved of your duties.</p>
+                <button id="btn-restart" class="btn retry-btn">REPLY FOR JOB</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

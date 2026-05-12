@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+    <defs>
+      <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1f2833" />
+        <stop offset="100%" stop-color="#4a3e2a" />
+      </linearGradient>
+      <filter id="heavyShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="-10" dy="20" stdDeviation="15" flood-color="#000" flood-opacity="0.9"/>
+      </filter>
+      <filter id="explosionGlow">
+        <feGaussianBlur stdDeviation="20" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="1280" height="720" fill="url(#skyGrad)"/>
+    
+    <!-- Sun / Explosion glow in bg -->
+    <circle cx="800" cy="360" r="300" fill="#ff4400" opacity="0.3" filter="url(#explosionGlow)"/>
+    <circle cx="800" cy="360" r="150" fill="#ffcc00" opacity="0.5" filter="url(#explosionGlow)"/>
+  
+    <!-- Distant mountains / rubble -->
+    <polygon points="0,720 200,500 400,650 700,450 1000,600 1280,400 1280,720" fill="#0b0c10" opacity="0.8"/>
+  
+    <!-- Title Text -->
+    <text x="80" y="150" font-family="Arial, sans-serif" font-weight="900" font-size="120" fill="#45a29e" filter="url(#explosionGlow)" font-style="italic">TANK BATTLE</text>
+    <text x="80" y="270" font-family="Arial, sans-serif" font-weight="900" font-size="140" fill="#fff" filter="url(#heavyShadow)" letter-spacing="10">WAR</text>
+  
+    <!-- Main Hero Tank (Isometric) -->
+    <g transform="translate(400, 350) scale(1.5)" filter="url(#heavyShadow)">
+      <!-- Left Track -->
+      <path d="M 0 100 L 150 200 L 250 150 L 100 50 Z" fill="#111" />
+      <!-- Right Track -->
+      <path d="M 100 150 L 250 250 L 350 200 L 200 100 Z" fill="#050505" />
+      
+      <!-- Hull -->
+      <path d="M 50 80 L 200 180 L 300 130 L 150 30 Z" fill="#3a5a3a"/>
+      <path d="M 200 180 L 300 130 L 300 160 L 200 210 Z" fill="#1a2a1a"/>
+      <path d="M 50 80 L 200 180 L 200 210 L 50 110 Z" fill="#2a4a2a"/>
+  
+      <!-- Turret -->
+      <path d="M 120 70 L 220 130 L 260 100 L 160 40 Z" fill="#4a6b4a"/>
+      <path d="M 220 130 L 260 100 L 260 120 L 220 150 Z" fill="#2a3b2a"/>
+      <path d="M 120 70 L 220 130 L 220 150 L 120 90 Z" fill="#3a5a3a"/>
+      
+      <!-- Gun Barrel (pointing right/up) -->
+      <path d="M 240 110 L 400 40 L 410 50 L 250 120 Z" fill="#555"/>
+      <path d="M 240 110 L 400 40 L 400 30 L 250 100 Z" fill="#777"/>
+      
+      <!-- Muzzle Flash -->
+      <circle cx="420" cy="35" r="40" fill="#fff" filter="url(#explosionGlow)"/>
+      <polygon points="420,35 500,-20 480,40 550,60 480,80 460,140" fill="#ffcc00" filter="url(#explosionGlow)"/>
+    </g>
+  
+    <!-- Silhouette Enemy Tank -->
+    <g transform="translate(950, 450) scale(0.8) scale(-1, 1)" opacity="0.6">
+        <path d="M 50 80 L 200 180 L 300 130 L 150 30 Z" fill="#000"/>
+        <path d="M 120 70 L 220 130 L 260 100 L 160 40 Z" fill="#000"/>
+        <path d="M 240 110 L 350 70 L 350 90 L 240 130 Z" fill="#000"/>
+    </g>
+  
+    <!-- Flying Shell / Bullet Tracer -->
+    <line x1="1020" y1="410" x2="800" y2="480" stroke="#ff4400" stroke-width="8" filter="url(#explosionGlow)"/>
+    <ellipse cx="800" cy="480" rx="20" ry="8" fill="#fff" transform="rotate(20 800 480)"/>
+    
+</svg>

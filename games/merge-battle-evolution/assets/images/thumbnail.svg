@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <!-- Deep Space/Arena Background -->
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#3c096c"/>
+      <stop offset="60%" stop-color="#10002b"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ff9e00"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="5" dy="15" stdDeviation="15" flood-color="#000" flood-opacity="0.9"/>
+    </filter>
+
+    <filter id="heavyGlow">
+      <feGaussianBlur stdDeviation="25" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bg)"/>
+
+  <!-- Grid lines for Merge board feel in background -->
+  <g stroke="rgba(255,255,255,0.05)" stroke-width="4">
+    <line x1="0" y1="200" x2="1280" y2="200"/>
+    <line x1="0" y1="400" x2="1280" y2="400"/>
+    <line x1="0" y1="600" x2="1280" y2="600"/>
+  </g>
+
+  <!-- Left Side: Epic Merge Orb -->
+  <circle cx="300" cy="350" r="160" fill="#ff9e00" filter="url(#heavyGlow)"/>
+  <circle cx="300" cy="350" r="140" fill="#000"/>
+  <circle cx="300" cy="350" r="120" fill="#ff006e" filter="url(#shadow)"/>
+  <circle cx="250" cy="300" r="30" fill="#fff" opacity="0.8"/>
+
+  <!-- Right Side: Evil Enemy Cube/Polygon -->
+  <polygon points="980,200 1150,350 980,500 810,350" fill="#ff0000" filter="url(#heavyGlow)"/>
+  <polygon points="980,230 1110,350 980,470 850,350" fill="#550000" filter="url(#shadow)"/>
+
+  <!-- Clashing energy in the middle -->
+  <path d="M 600 100 Q 640 360 600 620" stroke="#00f5d4" stroke-width="20" fill="none" filter="url(#heavyGlow)"/>
+  <path d="M 680 100 Q 640 360 680 620" stroke="#f15bb5" stroke-width="20" fill="none" filter="url(#heavyGlow)"/>
+
+  <!-- Epic Big Title -->
+  <text x="640" y="650" font-family="'Segoe UI', impact, sans-serif" font-size="110" font-weight="900" fill="url(#textGrad)" text-anchor="middle" letter-spacing="5" filter="url(#shadow)">MERGE BATTLE EVOLUTION</text>
+  
+</svg>

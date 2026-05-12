@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Tap Tap Jump – A fast-paced arcade runner! Tap to jump, avoid obstacles, and beat your high score. Play free on mobile, tablet, and desktop." />
+  <meta name="theme-color" content="#6c2bd9" />
+  <title>Tap Tap Jump – Arcade Runner</title>
+  <link rel="icon" href="assets/icons/icon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ========== OVERLAY SCREENS ========== -->
+
+  <!-- Start Screen -->
+  <div id="start-screen" class="overlay active">
+    <div class="overlay-bg-bubbles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="start-content">
+      <div class="game-logo">
+        <img src="assets/icons/icon.png" alt="Tap Tap Jump Icon" class="logo-icon bounce-anim" />
+        <h1 class="game-title">TAP TAP<br/><span>JUMP</span></h1>
+      </div>
+      <div class="start-instructions">
+        <div class="instruction-card">
+          <span class="instr-icon">👆</span>
+          <span>Tap / Click to Jump</span>
+        </div>
+        <div class="instruction-card">
+          <span class="instr-icon">⚡</span>
+          <span>Double Tap = Double Jump</span>
+        </div>
+        <div class="instruction-card">
+          <span class="instr-icon">🚧</span>
+          <span>Dodge all Obstacles</span>
+        </div>
+        <div class="instruction-card">
+          <span class="instr-icon">🌟</span>
+          <span>Grab Power-Ups!</span>
+        </div>
+      </div>
+      <div class="best-score-display" id="start-best-display">Best: 0</div>
+      <button id="start-btn" class="btn-primary pulse-anim" aria-label="Start Game">
+        <span>▶ PLAY NOW</span>
+      </button>
+      <p class="version-tag">v1.0 • Casual Arcade</p>
+    </div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameover-screen" class="overlay">
+    <div class="overlay-bg-bubbles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="gameover-content">
+      <div class="gameover-emoji" id="go-emoji">💥</div>
+      <h2 class="gameover-title">GAME OVER!</h2>
+      <div class="score-cards">
+        <div class="score-card">
+          <span class="sc-label">YOUR SCORE</span>
+          <span class="sc-value" id="go-score">0</span>
+        </div>
+        <div class="score-card highlight">
+          <span class="sc-label">🏆 BEST</span>
+          <span class="sc-value" id="go-best">0</span>
+        </div>
+      </div>
+      <div id="new-record-badge" class="new-record hidden">🎉 NEW RECORD!</div>
+      <div class="go-buttons">
+        <button id="retry-btn" class="btn-primary" aria-label="Retry Game">
+          <span>↺ RETRY</span>
+        </button>
+        <button id="menu-btn" class="btn-secondary" aria-label="Back to Menu">
+          <span>🏠 MENU</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pause Screen -->
+  <div id="pause-screen" class="overlay">
+    <div class="pause-content">
+      <div class="pause-icon">⏸</div>
+      <h2 class="pause-title">PAUSED</h2>
+      <div class="go-buttons">
+        <button id="resume-btn" class="btn-primary" aria-label="Resume Game">
+          <span>▶ RESUME</span>
+        </button>
+        <button id="pause-menu-btn" class="btn-secondary" aria-label="Back to Menu">
+          <span>🏠 MENU</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HUD ========== -->
+  <div id="hud" class="hud hidden">
+    <div class="hud-left">
+      <button id="pause-btn" class="hud-btn" aria-label="Pause">⏸</button>
+      <button id="sound-btn" class="hud-btn" aria-label="Toggle Sound">🔊</button>
+    </div>
+    <div class="hud-center">
+      <div class="hud-score-wrap">
+        <span class="hud-score-label">SCORE</span>
+        <span id="hud-score" class="hud-score">0</span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-best-wrap">
+        <span class="hud-best-label">BEST</span>
+        <span id="hud-best" class="hud-best">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Power-up Indicator -->
+  <div id="powerup-indicator" class="powerup-indicator hidden">
+    <span id="powerup-icon-display">🛡</span>
+    <div id="powerup-bar-fill" class="powerup-bar-fill"></div>
+  </div>
+
+  <!-- Combo Display -->
+  <div id="combo-display" class="combo-display hidden"></div>
+
+  <!-- ========== CANVAS ========== -->
+  <canvas id="game-canvas" aria-label="Tap Tap Jump Game Canvas"></canvas>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

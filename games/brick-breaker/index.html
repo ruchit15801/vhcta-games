@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Neon Breaker | Premium Arcade</title>
+    
+    <!-- Meta Assets -->
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <meta property="og:image" content="assets/thumbnail.png">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Persistent Immersive Background -->
+        <div id="global-bg">
+            <img src="assets/bg.png" alt="Background">
+            <div id="scanlines"></div>
+        </div>
+
+        <!-- Gameplay HUD (Independent Layer) -->
+        <div id="game-hud" class="ui-layer hidden">
+            <div class="hud-box">
+                <span class="label">SCORE</span>
+                <span id="score-text">000000</span>
+            </div>
+            <div class="hud-box">
+                <span class="label">STAGE</span>
+                <span id="level-text">01</span>
+            </div>
+            <div class="hud-box">
+                <span class="label">LIVES</span>
+                <span id="lives-text">❤❤❤</span>
+            </div>
+        </div>
+
+        <!-- Main Graphics Canvas -->
+        <div id="canvas-wrapper">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- UI Modals (Start / Game Over) -->
+        <div id="ui-overlay" class="ui-layer">
+            <!-- Start Menu -->
+            <div id="start-menu" class="glass-modal">
+                <img src="assets/icon.png" alt="Logo" class="menu-logo">
+                <h1 class="glitch-text">NEON BREAKER</h1>
+                <p class="subtitle">PREMIUM ELITE EDITION</p>
+                <div class="menu-actions">
+                    <button id="start-btn" class="glow-btn">INITIALIZE</button>
+                    <p class="hint">TAP OR DRAG TO CONTROL</p>
+                </div>
+            </div>
+
+            <!-- Game Over Menu -->
+            <div id="death-menu" class="glass-modal hidden">
+                <h2 class="alert-text">MISSION FAILED</h2>
+                <div class="score-summary">
+                    <p>TOTAL SCORE: <span id="final-score-val">0</span></p>
+                </div>
+                <button id="restart-btn" class="glow-btn">RE-INITIALIZE</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

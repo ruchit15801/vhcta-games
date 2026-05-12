@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Premium Sliding Puzzle Game - 20 levels of brain-teasing tile puzzles with luxury UI, power-ups, and stunning visual themes.">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sliding Puzzle — Premium Brain Game</title>
+    <link rel="icon" type="image/png" href="assets/icons/game-icon.png">
+    <link rel="apple-touch-icon" href="assets/icons/game-icon.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-cosmic">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">LOADING</div>
+    </div>
+
+    <!-- Background -->
+    <div id="game-background"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Combo Display -->
+    <div id="combo-display" class="combo-display"></div>
+
+    <!-- ==================== MENU SCREEN ==================== -->
+    <div id="menu-screen" class="screen active">
+        <img src="assets/icons/game-icon.png" alt="Sliding Puzzle" class="menu-icon" id="menu-icon">
+        <h1 class="menu-title">SLIDING PUZZLE</h1>
+        <p class="menu-subtitle">Premium Brain Game</p>
+        <div class="menu-buttons">
+            <button class="btn btn-primary" id="btn-play">
+                ▶ PLAY
+            </button>
+            <button class="btn btn-secondary" id="btn-levels">
+                📋 SELECT LEVEL
+            </button>
+            <button class="btn btn-secondary" id="btn-tutorial">
+                📖 TUTORIAL
+            </button>
+            <button class="btn btn-secondary" id="btn-settings">
+                ⚙️ SETTINGS
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== LEVEL SELECT SCREEN ==================== -->
+    <div id="level-screen" class="screen">
+        <h2 class="level-screen-title">SELECT LEVEL</h2>
+        <div id="level-grid" class="level-grid"></div>
+        <button class="btn btn-secondary" id="btn-level-back" style="margin-top: 16px;">
+            ← BACK
+        </button>
+    </div>
+
+    <!-- ==================== GAME SCREEN ==================== -->
+    <div id="game-screen" class="screen">
+        <!-- HUD Top -->
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="hud-level-badge" id="hud-level">LV 1</div>
+                <div class="hud-stat" id="hud-moves">
+                    <span class="hud-stat-label">MOVES</span>
+                    <span class="hud-stat-value">0</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="hud-stat" id="hud-time">
+                    <span class="hud-stat-label">TIME</span>
+                    <span class="hud-stat-value">0:00</span>
+                </div>
+                <div class="hud-stat" id="hud-score">
+                    <span class="hud-stat-label">SCORE</span>
+                    <span class="hud-stat-value">0</span>
+                </div>
+                <div class="hud-stat" id="hud-move-limit" style="display: none;">
+                    <span class="hud-stat-label">LEFT</span>
+                    <span class="hud-stat-value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puzzle Grid -->
+        <div class="puzzle-container">
+            <div id="puzzle-grid" class="puzzle-grid"></div>
+        </div>
+
+        <!-- Power-ups Bar -->
+        <div class="powerups-bar">
+            <button class="powerup-btn" id="btn-hint" title="Hint">
+                💡 Hint <span class="count" id="hint-count">0</span>
+            </button>
+            <button class="powerup-btn" id="btn-freeze" title="Freeze Timer">
+                ❄️ Freeze <span class="count" id="freeze-count">0</span>
+            </button>
+            <button class="powerup-btn" id="btn-skip" title="Skip Bonus">
+                ⏭️ Skip <span class="count" id="skip-count">0</span>
+            </button>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <button class="btn btn-secondary btn-icon" id="btn-home" title="Home">🏠</button>
+            <button class="btn btn-secondary btn-icon" id="btn-pause" title="Pause">⏸️</button>
+            <button class="btn btn-secondary btn-icon" id="btn-restart" title="Restart">🔄</button>
+        </div>
+    </div>
+
+    <!-- ==================== PAUSE MODAL ==================== -->
+    <div id="pause-modal" class="modal-overlay">
+        <div class="modal">
+            <span class="modal-icon">⏸️</span>
+            <h2 class="modal-title">PAUSED</h2>
+            <p class="modal-subtitle">Take a breath...</p>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="btn-resume">▶ RESUME</button>
+                <button class="btn btn-secondary" id="btn-pause-restart">🔄 RESTART</button>
+                <button class="btn btn-secondary" id="btn-pause-menu">🏠 MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== WIN MODAL ==================== -->
+    <div id="win-modal" class="modal-overlay">
+        <div class="modal">
+            <span class="modal-icon">🏆</span>
+            <h2 class="modal-title">PUZZLE SOLVED!</h2>
+            <p class="modal-subtitle">Amazing work!</p>
+            <div class="modal-stars">
+                <span class="modal-star">⭐</span>
+                <span class="modal-star">⭐</span>
+                <span class="modal-star">⭐</span>
+            </div>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-label">MOVES</div>
+                    <div class="modal-stat-value">0</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-label">TIME</div>
+                    <div class="modal-stat-value">0:00</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-label">SCORE</div>
+                    <div class="modal-stat-value">0</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-gold" id="btn-next-level">NEXT LEVEL →</button>
+                <button class="btn btn-secondary" id="btn-win-restart">🔄 REPLAY</button>
+                <button class="btn btn-secondary" id="btn-win-menu">📋 LEVELS</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LOSE MODAL ==================== -->
+    <div id="lose-modal" class="modal-overlay">
+        <div class="modal">
+            <span class="modal-icon">😔</span>
+            <h2 class="modal-title">TIME'S UP!</h2>
+            <p class="modal-subtitle">Don't give up, try again!</p>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-label">MOVES</div>
+                    <div class="modal-stat-value">0</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-label">TIME</div>
+                    <div class="modal-stat-value">0:00</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-label">SCORE</div>
+                    <div class="modal-stat-value">0</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="btn-lose-retry">🔄 TRY AGAIN</button>
+                <button class="btn btn-secondary" id="btn-lose-menu">📋 LEVELS</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SETTINGS MODAL ==================== -->
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal">
+            <h2 class="settings-title">⚙️ SETTINGS</h2>
+            <div class="settings-content">
+                <div class="setting-row">
+                    <span class="setting-label">🔊 Sound Effects</span>
+                    <div class="toggle on" id="toggle-sound"></div>
+                </div>
+                <div class="setting-row">
+                    <span class="setting-label">🎵 Background Music</span>
+                    <div class="toggle on" id="toggle-music"></div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="btn-settings-close" style="margin-top: 24px; width: 100%;">
+                ✓ DONE
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== TUTORIAL OVERLAY ==================== -->
+    <div id="tutorial-overlay" class="tutorial-overlay">
+        <div class="tutorial-card">
+            <div class="tutorial-step-indicator"></div>
+            <div class="tutorial-icon">🧩</div>
+            <h3 class="tutorial-title">Welcome!</h3>
+            <p class="tutorial-text">Learn how to play</p>
+            <div class="tutorial-buttons">
+                <button class="btn btn-secondary btn-sm" id="tutorial-prev">← Back</button>
+                <button class="btn btn-secondary btn-sm" id="tutorial-skip">Skip</button>
+                <button class="btn btn-primary btn-sm" id="tutorial-next">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

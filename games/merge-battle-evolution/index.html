@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Merge Battle Evolution</title>
+    <meta name="description" content="Merge your way to victory in this premium 3D-style puzzle combat game!">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/icons/game_icon.svg" type="image/svg+xml">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 3D Parallax Background -->
+        <div id="game-bg"></div>
+        
+        <!-- Main Rendering Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Layer - Premium 3D Overlays -->
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="stat-box glass-panel">
+                    <div class="stat-icon pulse-glow">💎</div>
+                    <div class="stat-value" id="gems">50</div>
+                </div>
+                <div class="stat-box glass-panel level-display">
+                    <div class="stat-value" id="level">WAVE 1</div>
+                </div>
+                <div class="stat-box glass-panel">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+            </div>
+
+            <!-- Health Bars UI System -->
+            <div id="health-bars-container"></div>
+            <div id="damage-text-container"></div>
+
+            <div id="bottom-panel">
+                <button class="premium-btn action-btn" id="btn-spawn">
+                    <span class="btn-text">Spawn (10💎)</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <button class="premium-btn fight-btn" id="btn-attack">
+                    <span class="btn-text">BATTLE!</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Screens -->
+        <div id="splash-screen" class="screen full-glass active">
+            <div class="modal-content card-3d animated-drop">
+                <h1 class="game-headline"><span>MERGE</span> BATTLE<br><small>EVOLUTION</small></h1>
+                
+                <div class="tutorial-box">
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li><span class="highlight">🥚 SPAWN</span> units using gems.</li>
+                        <li><span class="highlight">🔄 DRAG & MERGE</span> same-tier units to evolve!</li>
+                        <li><span class="highlight">⚔️ BATTLE</span> monstrous waves to earn rewards.</li>
+                    </ul>
+                </div>
+                
+                <button class="premium-btn start-btn" id="btn-start">
+                    <span class="btn-text">PLAY NOW</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Victory Screen -->
+        <div id="victory-screen" class="screen full-glass">
+            <div class="modal-content card-3d">
+                <h1 class="victory-text">VICTORY!</h1>
+                <div class="rewards-box">
+                    <h2>Rewards Earned:</h2>
+                    <div class="reward-item">
+                        <span class="reward-icon">💎</span>
+                        <span class="reward-amount" id="reward-gems">+20</span>
+                    </div>
+                </div>
+                <button class="premium-btn continue-btn" id="btn-next-level">
+                    <span class="btn-text">NEXT WAVE</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Defeat Screen -->
+        <div id="gameover-screen" class="screen full-glass">
+            <div class="modal-content card-3d defeat-card">
+                <h1 class="defeat-text">DEFEAT</h1>
+                <p>Your units were overwhelmed.</p>
+                <button class="premium-btn restart-btn" id="btn-restart">
+                    <span class="btn-text">RETRY WAVE</span>
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

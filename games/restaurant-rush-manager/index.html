@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Attach Game Metadata & Thumbnail -->
+    <title>Restaurant Rush - Premium</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta property="og:title" content="Restaurant Rush Manager">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/thumbnail.png">
+    <meta property="og:description" content="Jor Dar Premium Restaurant Management Game">
+    <!-- Fonts and CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="game-wrapper">
+        <div id="game-container">
+            <!-- Background Layer -->
+            <div class="bg-layer top-bg"></div>
+            
+            <!-- HUD -->
+            <div id="hud">
+                <div class="hud-item hud-level">LVL: <span id="ui-level">1</span></div>
+                <div class="hud-item hud-time">
+                    <div class="time-bar"><div id="ui-timer" class="time-fill"></div></div>
+                </div>
+                <div class="hud-item hud-coins">
+                    <img src="assets/icon.png" class="hud-icon" alt="Coins">
+                    <span id="ui-coins">0</span>
+                </div>
+                <!-- Sound Toggle -->
+                <button class="sound-btn" onclick="game.toggleSound()" id="btn-sound">🔊</button>
+            </div>
+            
+            <!-- Customers Area -->
+            <div id="customers-area"></div>
+
+            <!-- Main Counter -->
+            <div id="counter-top">
+                <div class="counter-surface">
+                    <div id="plates-area">
+                        <div class="plate-zone" id="plate-0" onclick="game.clickPlate(0)">
+                            <div class="plate-dish"></div>
+                            <div class="burger-model hidden" id="burger-0">
+                                <div class="bun-top"></div><div class="lettuce"></div><div class="meat-cooked"></div><div class="bun-bottom"></div>
+                            </div>
+                        </div>
+                        <div class="plate-zone" id="plate-1" onclick="game.clickPlate(1)">
+                            <div class="plate-dish"></div>
+                            <div class="burger-model hidden" id="burger-1">
+                                <div class="bun-top"></div><div class="lettuce"></div><div class="meat-cooked"></div><div class="bun-bottom"></div>
+                            </div>
+                        </div>
+                        <div class="plate-zone" id="plate-2" onclick="game.clickPlate(2)">
+                            <div class="plate-dish"></div>
+                            <div class="burger-model hidden" id="burger-2">
+                                <div class="bun-top"></div><div class="lettuce"></div><div class="meat-cooked"></div><div class="bun-bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="counter-front"></div>
+            </div>
+
+            <!-- Kitchen Area -->
+            <div id="kitchen-floor">
+                <!-- Ingredients -->
+                <div id="ingredient-area">
+                    <div class="meat-box" onclick="game.takeMeat()">
+                        <div class="meat-pile">🥩</div>
+                        <div class="meat-label">TAP TO COOK</div>
+                    </div>
+                </div>
+
+                <!-- Stoves -->
+                <div id="stoves-area">
+                    <div class="stove-machine">
+                        <div class="stove-burners">
+                            <div class="burner" id="stove-0" onclick="game.clickStove(0)">
+                                <div class="grill-lines"></div>
+                                <div class="patty hidden" id="patty-0"></div>
+                                <div class="cook-timer"><div class="cook-fill" id="timer-0"></div></div>
+                            </div>
+                            <div class="burner" id="stove-1" onclick="game.clickStove(1)">
+                                <div class="grill-lines"></div>
+                                <div class="patty hidden" id="patty-1"></div>
+                                <div class="cook-timer"><div class="cook-fill" id="timer-1"></div></div>
+                            </div>
+                            <div class="burner" id="stove-2" onclick="game.clickStove(2)">
+                                <div class="grill-lines"></div>
+                                <div class="patty hidden" id="patty-2"></div>
+                                <div class="cook-timer"><div class="cook-fill" id="timer-2"></div></div>
+                            </div>
+                        </div>
+                        <div class="stove-front"></div>
+                    </div>
+                </div>
+
+                <!-- Drink Machine -->
+                <div id="drinks-area">
+                    <div class="drink-machine locked" id="drink-0" onclick="game.clickDrink()">
+                        <div class="lock-overlay">
+                            <div class="padlock">🔒</div>
+                            <div>LVL 3</div>
+                        </div>
+                        <div class="drink-content">
+                            <div class="drink-tank"><div class="drink-liquid" id="drink-liquid-0"></div></div>
+                            <div class="drink-nozzle"></div>
+                            <div class="drink-cup hidden" id="drink-cup-0">
+                                <img src="assets/dish_drink.png" class="drink-img" alt="Drink">
+                            </div>
+                            <div class="drink-btn">POUR</div>
+                            <div class="cook-timer drink-timer"><div class="cook-fill" id="timer-drink"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <!-- Loading -->
+            <div id="screen-loading" class="modal active">
+                <div class="modal-content">
+                    <img src="assets/thumbnail.png" class="modal-thumbnail" alt="Thumbnail">
+                    <h1 class="logo">RESTAURANT<br><span>RUSH</span></h1>
+                    <p class="subtitle">Premium Management Simulation</p>
+                    <button class="btn big-btn" onclick="game.startGame()">START GAME!</button>
+                </div>
+            </div>
+
+            <!-- Win/Clear -->
+            <div id="screen-level-complete" class="modal hidden">
+                <div class="modal-content">
+                    <h2 class="title-win">LEVEL <span id="end-lvl"></span> CLEAR!</h2>
+                    <p class="stats">Earned: <span class="gold" id="end-earned">0</span> 🪙</p>
+                    <div class="upgrades">
+                        <button class="btn-upgrade" onclick="game.buyUpgrade('stove')">Faster Stoves (-<span id="upg-cost">100</span>🪙)</button>
+                    </div>
+                    <button class="btn big-btn mt-2" onclick="game.nextLevel()">PLAY NEXT LEVEL</button>
+                </div>
+            </div>
+
+            <!-- Lose/Failed -->
+            <div id="screen-game-over" class="modal hidden">
+                <div class="modal-content">
+                    <h2 class="title-lose">SHIFT FAILED</h2>
+                    <p>Too many angry customers left the restaurant.</p>
+                    <button class="btn big-btn mt-2" onclick="game.restartLevel()">RETRY LEVEL</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

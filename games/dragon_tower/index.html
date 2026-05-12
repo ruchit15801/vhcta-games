@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐉 DRAGON TOWER — Epic Kingdom Defense</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A premium medieval tower defense game. Defend your kingdom against waves of dragons and dark forces in Dragon Tower.">
+    <meta name="keywords" content="tower defense, dragon game, strategy game, medieval game, mobile game">
+    <meta name="author" content="Antigravity AI">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🐉 DRAGON TOWER — Epic Kingdom Defense">
+    <meta property="og:description" content="Defuse the darkness. Build towers, slay dragons, and save the realm.">
+    <meta property="og:image" content="./assets/thumbnail.png">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="./assets/icon.png">
+    <link rel="apple-touch-icon" href="./assets/icon.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./css/style.css?v=2">
+</head>
+<body>
+
+    <!-- ══════ SPLASH ══════ -->
+    <div id="splash" class="screen">
+        <div class="splash-content">
+            <div class="game-title">DRAGON TOWER</div>
+            <div style="font-size: 14px; letter-spacing: 10px; color: var(--gold-dk);">EPIC KINGDOM DEFENSE</div>
+            <button class="splash-btn" onclick="showGuide()">DEFEND THE REALM</button>
+        </div>
+    </div>
+
+    <!-- ══════ GUIDE ══════ -->
+    <div id="guide" class="screen off">
+        <div class="guide-card">
+            <div class="guide-title">Commander's Codex</div>
+            
+            <div class="g-section">
+                <div class="g-section-title">⚔ OBJECTIVE</div>
+                <div class="g-row"><div class="g-key">GOAL</div><div>Stop enemies from reaching the Kingdom Gate. 20 leaks means defeat!</div></div>
+                <div class="g-row"><div class="g-key">GOLD</div><div>Slay enemies to earn gold. Build and upgrade towers.</div></div>
+            </div>
+
+            <div class="g-section">
+                <div class="g-section-title">🏰 CONTROLS</div>
+                <div class="g-row"><div class="g-key">TAP PANEL</div><div>Select a tower from the bottom bar.</div></div>
+                <div class="g-row"><div class="g-key">TAP GRID</div><div>Place the selected tower on any grass tile.</div></div>
+                <div class="g-row"><div class="g-key">KEYS</div><div>'U' to Upgrade, 'S' to Sell (while selected).</div></div>
+            </div>
+
+            <button class="splash-btn" onclick="startGame()">🐉 BEGIN DEFENSE</button>
+        </div>
+    </div>
+
+    <!-- ══════ HUD ══════ -->
+    <div id="hud">
+        <div class="hud-block">
+            <div class="hud-label">Kingdom HP</div>
+            <div class="hud-val" id="hud-hp">❤ 20</div>
+            <div class="hp-bar-bg"><div class="hp-bar-fill" id="hp-fill"></div></div>
+        </div>
+        <div class="hud-block" style="align-items: center;">
+            <div class="hud-label">Current State</div>
+            <div class="hud-val" id="hud-wave" style="font-size: 18px;">WAVE 1</div>
+        </div>
+        <div class="hud-block" style="align-items: flex-end;">
+            <div class="hud-label">Treasury</div>
+            <div class="hud-val" id="hud-gold">🪙 200</div>
+            <div class="hud-label" style="margin-top: 5px;">Score</div>
+            <div class="hud-val" id="hud-score" style="font-size: 14px; color: var(--parch-dk);">0</div>
+        </div>
+    </div>
+
+    <!-- ══════ CANVAS ══════ -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- ══════ CTRL ══════ -->
+    <div id="ctrl-btns">
+        <div class="ctrl-btn" id="speed-btn" onclick="toggleSpeed()">▶▶</div>
+        <div class="ctrl-btn" id="pause-btn" onclick="togglePause()">⏸</div>
+    </div>
+
+    <!-- ══════ PALETTE ══════ -->
+    <div id="tower-palette">
+        <div id="tower-row" style="display: flex; gap: 10px;"></div>
+    </div>
+
+    <!-- ══════ OVERLAY ══════ -->
+    <div id="game-overlay">
+        <div class="ov-title" id="ov-title">GAME OVER</div>
+        <div id="ov-stats" style="display: flex; gap: 20px; margin-bottom: 30px;"></div>
+        <div style="display: flex; gap: 10px;">
+            <button class="ov-btn" onclick="restartGame()">PLAY AGAIN</button>
+            <button class="ov-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="goMenu()">MENU</button>
+        </div>
+    </div>
+
+    <!-- ══════ TOAST ══════ -->
+    <div class="toast-el" id="toast"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="./js/game.js?v=2"></script>
+</body>
+</html>

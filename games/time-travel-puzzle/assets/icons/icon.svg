@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2d1e15"/>
+            <stop offset="100%" stop-color="#0a0e17"/>
+        </linearGradient>
+        <linearGradient id="split" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="#f39c12"/>
+            <stop offset="100%" stop-color="#00d2ff"/>
+        </linearGradient>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <rect width="512" height="512" fill="url(#bg)" rx="100"/>
+    <!-- Clock Outer -->
+    <circle cx="256" cy="256" r="180" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="20"/>
+    <circle cx="256" cy="256" r="160" fill="none" stroke="url(#split)" stroke-width="8" filter="url(#glow)"/>
+    <!-- Hourglass / Infinity -->
+    <path d="M 200 150 L 312 150 L 256 256 L 312 362 L 200 362 L 256 256 Z" fill="none" stroke="#fff" stroke-width="12" stroke-linejoin="round"/>
+    <!-- Particles -->
+    <circle cx="256" cy="180" r="10" fill="#f39c12" filter="url(#glow)"/>
+    <circle cx="256" cy="332" r="10" fill="#00d2ff" filter="url(#glow)"/>
+</svg>

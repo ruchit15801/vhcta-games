@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Train Control Manager — Premium Rail Simulation</title>
+  <meta name="description" content="Train Control Manager: Premium HTML5 rail simulation game. Control signals, manage multiple trains, prevent collisions and master 20 challenging levels.">
+  <meta name="theme-color" content="#050c1a">
+
+  <!-- Branding / OG -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Train Control Manager — Premium Rail Simulation">
+  <meta property="og:description" content="Master the rails in this high-fidelity simulation. Manage signals and stations at a grand scale.">
+  <meta property="og:image" content="assets/icons/thumbnail.svg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image" content="assets/icons/thumbnail.svg">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Fonts preloaded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+  BACKGROUND DECORATIONS
+══════════════════════════════════════════════════════ -->
+<div class="background-grid"></div>
+<div class="bg-orbs">
+  <div class="bg-orb"></div>
+  <div class="bg-orb"></div>
+  <div class="bg-orb"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  COLLISION FLASH OVERLAY
+══════════════════════════════════════════════════════ -->
+<div id="collision-flash"></div>
+
+<!-- ══════════════════════════════════════════════════════
+  FLOATING NOTIFICATIONS
+══════════════════════════════════════════════════════ -->
+<div id="notifications"></div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: INTRO / LOADING
+══════════════════════════════════════════════════════ -->
+<div id="screen-intro" class="screen active">
+  <div class="intro-logo">
+    <!-- SVG game logo icon -->
+    <div class="logo-icon">
+      <img src="assets/icons/icon.svg" alt="Logo" width="140" height="140">
+    </div>
+
+    <h1 class="logo-title">Train Control</h1>
+    <p class="logo-subtitle">Grand Rail Manager</p>
+
+    <div class="loading-bar-wrap">
+      <div class="loading-label">POWERING UP ENGINE</div>
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: MAIN MENU
+══════════════════════════════════════════════════════ -->
+<div id="screen-menu" class="screen">
+  <!-- Decorative background canvas (separate from game canvas) -->
+  <canvas id="menuCanvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:0.4;pointer-events:none;"></canvas>
+
+  <div class="menu-container">
+    <div class="background-thumbnail"></div>
+    
+    <div class="menu-header">
+      <!-- JOR DAR Logo Pulse -->
+      <div class="menu-logo-wrap">
+        <img src="assets/icons/icon.svg" class="menu-logo"
+             onerror="this.style.display='none'"/>
+      </div>
+
+      <h1 class="menu-title">Train Control<br>Manager</h1>
+      <p class="menu-tagline">Premium Rail Simulation</p>
+    </div>
+
+    <div class="menu-stats-row">
+      <div class="menu-stat-card">
+        <div class="menu-stat-val" id="menu-highscore">0</div>
+        <div class="menu-stat-lbl">High Score</div>
+      </div>
+      <div class="menu-stat-card">
+        <div class="menu-stat-val" id="menu-level">1</div>
+        <div class="menu-stat-lbl">Level</div>
+      </div>
+      <div class="menu-stat-card">
+        <div class="menu-stat-val" id="menu-trains">0/20</div>
+        <div class="menu-stat-lbl">Completed</div>
+      </div>
+    </div>
+
+    <button id="btn-play" class="btn-menu btn-menu-primary">
+      🚂 START JOURNEY
+    </button>
+    <button id="btn-levels" class="btn-menu btn-menu-secondary">
+      🗺️ SELECT LEVEL
+    </button>
+    <button id="btn-menu-sound" class="btn-menu btn-menu-secondary">
+      🔊 TOGGLE SOUND
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: TUTORIAL
+══════════════════════════════════════════════════════ -->
+<div id="screen-tutorial" class="screen">
+  <div class="tutorial-box">
+    <div class="tutorial-header">
+      <h2 class="tutorial-title">HOW TO PLAY</h2>
+      <div class="tutorial-step-indicator">
+        <div class="tutorial-dot active"></div>
+        <div class="tutorial-dot"></div>
+        <div class="tutorial-dot"></div>
+        <div class="tutorial-dot"></div>
+      </div>
+    </div>
+
+    <div class="tutorial-body">
+
+      <!-- Slide 0: Signals -->
+      <div class="tutorial-slide active">
+        <div class="tutorial-card">
+          <div class="tutorial-icon red">🚦</div>
+          <div class="tutorial-card-content">
+            <h4>SIGNAL CONTROL</h4>
+            <p>Tap or click any signal to toggle it between <strong style="color:#ff3366">STOP (red)</strong> and <strong style="color:#00ff9d">GO (green)</strong>. Trains will halt when they approach a red signal.</p>
+          </div>
+        </div>
+        <div class="tutorial-card">
+          <div class="tutorial-icon cyan">🚂</div>
+          <div class="tutorial-card-content">
+            <h4>SELECT A TRAIN</h4>
+            <p>Click a train to select it. Use the speed slider in the control panel below to adjust its speed. Deselect by clicking again.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 1: Tracks -->
+      <div class="tutorial-slide">
+        <div class="tutorial-card">
+          <div class="tutorial-icon gold">🛤️</div>
+          <div class="tutorial-card-content">
+            <h4>TRACK NETWORK</h4>
+            <p>Trains run along colored tracks. At junctions (golden diamonds), multiple routes merge. Manage signals carefully at these crossings!</p>
+          </div>
+        </div>
+        <div class="tutorial-card">
+          <div class="tutorial-icon green">🏆</div>
+          <div class="tutorial-card-content">
+            <h4>EARN POINTS</h4>
+            <p>Score points every time a train safely reaches a station. Perfect timing earns combo bonuses. Reach the target score before time runs out!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Collisions -->
+      <div class="tutorial-slide">
+        <div class="tutorial-card">
+          <div class="tutorial-icon red">💥</div>
+          <div class="tutorial-card-content">
+            <h4>AVOID COLLISIONS</h4>
+            <p>If two trains get too close, they crash! Game over. Use signals and speed control to keep safe distances between all trains.</p>
+          </div>
+        </div>
+        <div class="tutorial-card">
+          <div class="tutorial-icon orange">🚨</div>
+          <div class="tutorial-card-content">
+            <h4>EMERGENCY BRAKE</h4>
+            <p>Press the <strong style="color:#ff6b2b">EMERGENCY</strong> button or hit <kbd style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:3px">SPACE</kbd> to instantly stop all trains. Use it when danger is detected!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Levels -->
+      <div class="tutorial-slide">
+        <div class="tutorial-card">
+          <div class="tutorial-icon cyan">⭐</div>
+          <div class="tutorial-card-content">
+            <h4>20 LEVELS</h4>
+            <p>Progress through 5 zones: Green Valley → Iron Ridge → Steel Canyon → Neon Heights → Quantum Rail. Each zone adds more trains, faster speeds, and complex junctions.</p>
+          </div>
+        </div>
+        <div class="tutorial-card">
+          <div class="tutorial-icon gold">🎯</div>
+          <div class="tutorial-card-content">
+            <h4>STAR RATING</h4>
+            <p>Earn up to 3 stars per level based on your score. Score 150% of target for all 3 stars. Complete all 20 levels to become a Train Control Master!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tutorial-footer">
+      <button id="btn-tut-skip" class="btn-tut btn-tut-skip">SKIP</button>
+      <button id="btn-tut-next" class="btn-tut btn-tut-next">NEXT →</button>
+      <button id="btn-tut-start" class="btn-tut btn-tut-start" style="display:none">🚂 LET'S GO!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: LEVEL SELECT
+══════════════════════════════════════════════════════ -->
+<div id="screen-levels" class="screen">
+  <div class="levels-container">
+    <div class="levels-header">
+      <button id="btn-levels-back" class="btn-back">←</button>
+      <h2 class="levels-title">SELECT LEVEL</h2>
+    </div>
+    <div id="level-zones"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: GAME
+══════════════════════════════════════════════════════ -->
+<div id="screen-game" class="screen" style="flex-direction:column;align-items:stretch;">
+
+  <!-- TOP HUD -->
+  <div class="hud-top">
+    <!-- Level badge -->
+    <div class="hud-level-badge">
+      <div class="hud-level-label">LVL</div>
+      <div class="hud-level-num" id="hud-level">1</div>
+    </div>
+
+    <div class="hud-divider"></div>
+
+    <!-- Score -->
+    <div class="hud-score-wrap">
+      <div class="hud-score-label">SCORE</div>
+      <div class="hud-score-val" id="hud-score">0</div>
+    </div>
+
+    <div class="hud-spacer"></div>
+
+    <!-- Combo -->
+    <div class="hud-combo hidden" id="hud-combo">
+      <div class="hud-combo-val" id="hud-combo-val">x1</div>
+      <div class="hud-combo-label">COMBO</div>
+    </div>
+
+    <!-- Timer -->
+    <div class="hud-timer-wrap">
+      <div class="hud-timer-label">TIME</div>
+      <div class="hud-timer-val" id="hud-timer">60s</div>
+    </div>
+
+    <div class="hud-divider"></div>
+
+    <!-- Trains -->
+    <div class="hud-trains-wrap">
+      <span class="hud-train-icon">🚂</span>
+      <div class="hud-trains-info">
+        <div class="hud-trains-count" id="hud-trains-count">0/0</div>
+        <div class="hud-trains-label">Active</div>
+      </div>
+    </div>
+
+    <div class="hud-divider"></div>
+
+    <!-- Control buttons -->
+    <button class="btn-hud" id="btn-sound" title="Toggle Sound">🔊</button>
+    <button class="btn-hud" id="btn-pause" title="Pause (Esc)">⏸</button>
+  </div>
+
+  <!-- GAME CANVAS AREA -->
+  <div class="game-canvas-wrap">
+    <div class="canvas-grid-overlay"></div>
+    <canvas id="gameCanvas" style="display:block;width:100%;height:100%;"></canvas>
+  </div>
+
+  <!-- BOTTOM CONTROL PANEL -->
+  <div class="control-panel">
+    <!-- Tabs -->
+    <div class="control-panel-tabs">
+      <button class="ctrl-tab active" data-panel="signals">🚦 Signals</button>
+      <button class="ctrl-tab" data-panel="speed">⚡ Speed</button>
+      <button class="ctrl-tab" data-panel="trains">🚂 Trains</button>
+    </div>
+
+    <!-- Panel: Signals -->
+    <div class="control-panel-body ctrl-panel" data-panel="signals">
+      <div class="signal-controls" id="signal-controls">
+        <!-- Populated by JS based on level signals -->
+        <div style="color:rgba(100,150,200,0.7);font-family:'Rajdhani',sans-serif;font-size:13px;">
+          Click signals on the track to toggle them
+        </div>
+      </div>
+      <button class="btn-emergency" id="btn-emergency">
+        🚨<br>EMERGENCY<br>BRAKE
+      </button>
+    </div>
+
+    <!-- Panel: Speed -->
+    <div class="control-panel-body ctrl-panel" data-panel="speed" style="display:none;">
+      <div class="speed-controls" style="flex-direction:column;gap:12px;width:100%">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:13px;color:rgba(100,150,200,0.8);">
+          Select a train on the track, then adjust its speed:
+        </div>
+        <div class="speed-slider-wrap">
+          <div class="speed-slider-label">
+            <span>SPEED</span>
+            <span class="speed-val" id="speed-val">100%</span>
+          </div>
+          <input type="range" id="speed-slider" class="speed-slider" min="0" max="150" value="100" style="--pct:67%">
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="if(window.game&&window.game.selectedTrain){window.game.selectedTrain.stopped=false;window.game.selectedTrain.speedPct=0.5;document.getElementById('speed-slider').value=50;document.getElementById('speed-val').textContent='50%';}"
+            style="flex:1;padding:8px;border-radius:6px;background:rgba(0,229,255,0.15);border:1px solid rgba(0,229,255,0.3);color:#00e5ff;font-family:Orbitron,monospace;font-size:10px;cursor:pointer;letter-spacing:1px;">SLOW</button>
+          <button onclick="if(window.game&&window.game.selectedTrain){window.game.selectedTrain.stopped=false;window.game.selectedTrain.speedPct=1.0;document.getElementById('speed-slider').value=100;document.getElementById('speed-val').textContent='100%';}"
+            style="flex:1;padding:8px;border-radius:6px;background:rgba(0,255,157,0.15);border:1px solid rgba(0,255,157,0.3);color:#00ff9d;font-family:Orbitron,monospace;font-size:10px;cursor:pointer;letter-spacing:1px;">NORMAL</button>
+          <button onclick="if(window.game&&window.game.selectedTrain){window.game.selectedTrain.stopped=false;window.game.selectedTrain.speedPct=1.4;document.getElementById('speed-slider').value=140;document.getElementById('speed-val').textContent='140%';}"
+            style="flex:1;padding:8px;border-radius:6px;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.3);color:#ff6b2b;font-family:Orbitron,monospace;font-size:10px;cursor:pointer;letter-spacing:1px;">FAST</button>
+          <button onclick="if(window.game&&window.game.selectedTrain){window.game.selectedTrain.stopped=true;document.getElementById('speed-slider').value=0;document.getElementById('speed-val').textContent='0%';}"
+            style="flex:1;padding:8px;border-radius:6px;background:rgba(255,51,102,0.15);border:1px solid rgba(255,51,102,0.3);color:#ff3366;font-family:Orbitron,monospace;font-size:10px;cursor:pointer;letter-spacing:1px;">STOP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Trains -->
+    <div class="control-panel-body ctrl-panel" data-panel="trains" style="display:none;overflow-x:auto;">
+      <div class="train-list" id="train-list">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  OVERLAY: PAUSE
+══════════════════════════════════════════════════════ -->
+<div id="overlay-pause">
+  <div class="pause-box">
+    <div class="pause-title">PAUSED</div>
+    <div class="pause-subtitle">Game suspended</div>
+    <div class="pause-buttons">
+      <button id="btn-resume" class="btn-pause btn-pause-resume">▶ RESUME</button>
+      <button id="btn-pause-menu" class="btn-pause btn-pause-menu">← MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: GAME OVER
+══════════════════════════════════════════════════════ -->
+<div id="screen-gameover" class="screen">
+  <div class="result-box">
+    <div class="result-icon">💥</div>
+    <h2 class="result-title gameover">COLLISION!</h2>
+    <p class="result-message">Train network failure detected</p>
+
+    <div class="result-stats">
+      <div class="result-stat">
+        <div class="result-stat-val" id="go-score">0</div>
+        <div class="result-stat-lbl">Score</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="go-collisions">0</div>
+        <div class="result-stat-lbl">Crashes</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="go-time">0s</div>
+        <div class="result-stat-lbl">Survived</div>
+      </div>
+    </div>
+
+    <div class="result-buttons">
+      <button id="btn-retry" class="btn-result btn-result-retry">🔄 RETRY</button>
+      <button id="btn-go-menu" class="btn-result btn-result-menu">← MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: LEVEL COMPLETE
+══════════════════════════════════════════════════════ -->
+<div id="screen-levelcomplete" class="screen">
+  <div class="result-box">
+    <div class="result-icon">🏆</div>
+    <h2 class="result-title complete">LEVEL CLEAR!</h2>
+    <p class="result-message">Network operated flawlessly</p>
+
+    <div class="result-stars" id="lc-stars">
+      <span class="result-star">⭐</span>
+      <span class="result-star">⭐</span>
+      <span class="result-star">⭐</span>
+    </div>
+
+    <div class="result-stats">
+      <div class="result-stat">
+        <div class="result-stat-val" id="lc-score">0</div>
+        <div class="result-stat-lbl">Score</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="lc-trains">0</div>
+        <div class="result-stat-lbl">Passes</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val" id="lc-time">0s</div>
+        <div class="result-stat-lbl">Time</div>
+      </div>
+    </div>
+
+    <div class="result-buttons">
+      <button id="btn-lc-retry" class="btn-result btn-result-retry">🔄 RETRY</button>
+      <button id="btn-next-level" class="btn-result btn-result-next">NEXT LEVEL →</button>
+      <button id="btn-lc-menu" class="btn-result btn-result-menu">← MENU</button>
+    </div>
+  </div>
+</div>
+
+  <!-- Scanlines Overlay for Pro Look -->
+  <div class="scanlines"></div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

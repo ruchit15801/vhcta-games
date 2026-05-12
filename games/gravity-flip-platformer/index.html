@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gravity Flip Platformer</title>
+    <link rel="icon" href="assets/icons/icon.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Parallax will be rendered in canvas -->
+        
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="stat-box">TIME <span id="time-display">0.0</span>s</div>
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <div class="stat-box">DEATHS <span id="death-display">0</span></div>
+            </div>
+            <div id="top-bar-level">LEVEL <span id="level-display">1</span></div>
+            <!-- Checkpoint Notification -->
+            <div id="notification" class="notification hidden">CHECKPOINT REACHED</div>
+        </div>
+
+        <div id="start-screen" class="overlay">
+            <div class="panel">
+                <div class="thumbnail-container">
+                     <img src="assets/images/thumbnail.png" alt="Thumbnail" id="game-thumb" onerror="this.style.display='none'; document.getElementById('fallback-thumb').style.display='flex'">
+                     <div id="fallback-thumb" style="width:100%;height:100%;background:linear-gradient(45deg,#00f3ff,#ff00ea);display:none;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:24px;text-shadow:0 0 10px #fff;">GRAVITY FLIP</div>
+                </div>
+                <h1 class="neon-text">GRAVITY FLIP</h1>
+                <p>An intricate platformer of precision and timing.<br>Tap or Space to invert gravity when touching a surface.</p>
+                <div class="tutorial-anim">
+                    <div class="tut-player"></div>
+                </div>
+                <button id="start-btn" class="glow-btn">START GAME</button>
+                <button id="toggle-sound-start" class="glow-btn" style="font-size: 1rem; padding: 8px 20px; background: rgba(0,0,0,0.5); margin-bottom:0;">SOUND: ON</button>
+            </div>
+        </div>
+
+        <div id="result-screen" class="overlay hidden">
+            <div class="panel">
+                <h2 id="result-title" class="neon-text">LEVEL CLEAR</h2>
+                <div id="stats-grid">
+                    <div class="stat-item">
+                        <div>TIME</div>
+                        <div class="stat-value" id="result-time">0.00s</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>DEATHS</div>
+                        <div class="stat-value" id="result-deaths">0</div>
+                    </div>
+                </div>
+                <button id="next-btn" class="glow-btn">NEXT LEVEL</button>
+            </div>
+        </div>
+        
+        <div id="pause-screen" class="overlay hidden">
+            <div class="panel">
+                <h2 class="neon-text">PAUSED</h2>
+                <p>Take a breath. The run awaits.</p>
+                <button id="resume-btn" class="glow-btn">RESUME</button>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

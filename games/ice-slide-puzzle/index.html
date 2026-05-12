@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ice Slide Puzzle</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <div class="hud-item">LEVEL: <span id="levelDisplay">1</span></div>
+                <div class="hud-item">MOVES: <span id="movesDisplay">0</span></div>
+            </div>
+
+            <!-- Touch swipe area overlay -->
+            <div id="swipe-overlay"></div>
+
+            <div id="start-screen" class="screen active">
+                <div class="logo">
+                    <div class="ice-text">ICE SLIDE</div>
+                    <div class="sub-text">PUZZLE</div>
+                </div>
+                <button id="startBtn" class="premium-btn">START PUZZLE</button>
+                <p class="instructions">Swipe or use Arrow Keys to move.<br>You won't stop sliding until you hit a wall.<br>Reach the glowing goal to win!</p>
+            </div>
+            
+            <div id="level-complete-screen" class="screen">
+                <h2 id="levelCompleteTitle">LEVEL CLEARED!</h2>
+                <button id="nextLevelBtn" class="premium-btn">NEXT LEVEL</button>
+            </div>
+            
+            <div id="game-over-screen" class="screen">
+                <h2 id="gameOverTitle">GAME OVER!</h2>
+                <button id="restartBtn" class="premium-btn">RESTART</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

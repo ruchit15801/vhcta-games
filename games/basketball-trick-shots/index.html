@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Basketball Trick Shots</title>
+    
+    <!-- Meta tags for SEO and sharing -->
+    <meta name="description" content="Play the ultimate realistic Basketball Trick Shots game. Score epic shots, beat levels, and prove your skills in this premium 3D-styled sports simulator.">
+    <meta property="og:title" content="Basketball Trick Shots">
+    <meta property="og:description" content="Epic realistic physics-based basketball game.">
+    <meta property="og:image" content="./assets/images/thumbnail.png">
+    
+    <!-- App Icons -->
+    <link rel="icon" href="./assets/images/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="./assets/images/icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background Image Preloaded in CSS, but let's keep canvas clear -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Overlay: Main Menu / Tutorial -->
+        <div id="screen-start" class="screen active">
+            <div class="glass-panel">
+                <img src="./assets/images/icon.png" alt="Icon" class="menu-icon">
+                <h1 class="game-title">BASKETBALL<br><span>TRICK SHOTS</span></h1>
+                
+                <div class="tutorial-box">
+                    <h3>HOW TO PLAY</h3>
+                    <div class="instruction">
+                        <div class="icon-drag"></div>
+                        <p>Drag to Aim & Set Power</p>
+                    </div>
+                    <div class="instruction">
+                        <div class="icon-release"></div>
+                        <p>Release to Shoot</p>
+                    </div>
+                    <div class="instruction">
+                        <div class="icon-star"></div>
+                        <p>Swish for Perfect Bonus!</p>
+                    </div>
+                </div>
+
+                <button id="btn-start" class="btn-primary">START GAME</button>
+            </div>
+        </div>
+
+        <!-- In-Game HUD -->
+        <div id="screen-hud" class="screen hidden">
+            <div class="hud-top">
+                <div class="hud-box level-indicator">
+                    <span class="label">LEVEL</span>
+                    <span id="ui-level">1</span>
+                </div>
+                <div class="hud-box score-indicator">
+                    <span class="label">SCORE</span>
+                    <span id="ui-score">0</span>
+                </div>
+            </div>
+            
+            <div class="hud-controls">
+                <button id="btn-pause" class="btn-icon" title="Pause Game">⏸</button>
+                <button id="btn-retry" class="btn-icon" title="Retry Level">↻</button>
+                <button id="btn-sound" class="btn-icon" title="Toggle Sound">🔊</button>
+            </div>
+            
+            <!-- Floating Text Container for Feedback -->
+            <div id="floating-text-container"></div>
+        </div>
+
+        <!-- Level Complete Screen -->
+        <div id="screen-level-complete" class="screen hidden">
+            <div class="glass-panel">
+                <h2 class="title-success">SWISH!</h2>
+                <div class="stats-row">
+                    <span>Level Score:</span>
+                    <span id="ui-level-score" class="highlight">100</span>
+                </div>
+                <div class="stars-container" id="ui-stars">
+                    <!-- Stars will be injected via JS -->
+                </div>
+                <button id="btn-next" class="btn-primary">NEXT LEVEL</button>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="screen-pause" class="screen hidden">
+            <div class="glass-panel">
+                <h2 class="title-success" style="color: #fff; text-shadow: 0 0 20px #fff;">PAUSED</h2>
+                <button id="btn-resume" class="btn-primary" style="margin-bottom: 15px;">RESUME</button>
+                <button id="btn-menu" class="btn-primary" style="background: rgba(255,255,255,0.1); box-shadow: none;">MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assets Preload (Hidden) -->
+    <div style="display:none;">
+        <img id="img-ball" src="./assets/images/basketball.png" alt="ball">
+        <img id="img-bg" src="./assets/images/bg.png" alt="bg">
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/levels.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

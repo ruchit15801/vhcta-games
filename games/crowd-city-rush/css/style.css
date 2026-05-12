@@ -1,0 +1,56 @@
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { background: #0f172a; font-family: 'Outfit', sans-serif; overflow: hidden; touch-action: none; }
+#game-container { position: relative; width: 100vw; height: 100vh; max-width: 600px; margin: 0 auto; background: linear-gradient(180deg, #1e293b, #0f172a); box-shadow: 0 0 30px rgba(0,0,0,0.8); overflow: hidden; }
+canvas { display: block; width: 100%; height: 100%; }
+.screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 10; }
+.screen.active { opacity: 1; pointer-events: all; }
+h1 { color: #fff; font-size: 2.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; }
+h2 { color: #fff; font-size: 3rem; font-weight: 900; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+p { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; text-align: center; }
+button { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; border: none; padding: 18px 50px; font-size: 1.3rem; font-weight: 700; border-radius: 40px; cursor: pointer; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4); text-transform: uppercase; transition: 0.2s; }
+button:active { transform: scale(0.95); }
+#game-ui { background: transparent; backdrop-filter: none; justify-content: flex-start; }
+.top-bar { width: 100%; padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
+.score-box { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); padding: 12px 25px; border-radius: 25px; color: white; font-weight: 700; font-size: 1.4rem; border: 1px solid rgba(255,255,255,0.2); }
+#pause-btn { padding: 12px 20px; font-size: 1.4rem; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; }
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

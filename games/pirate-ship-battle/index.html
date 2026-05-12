@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pirate Ship Battle - Naval Combat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Metamorphous&family=Pirata+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Splash / Loading Screen -->
+        <div id="splash-screen" class="ui-layer" style="background: url('assets/images/thumbnail.svg') center/cover no-repeat;">
+            <div class="splash-content" style="background: rgba(0,0,0,0.6); padding: 50px; border-radius: 20px; border: 2px solid var(--gold);">
+                <div class="logo-container">
+                    <img src="assets/icons/icon.svg" class="game-icon-placeholder" alt="Game Icon">
+                    <h1 class="game-title">PIRATE SHIP BATTLE</h1>
+                    <h2 class="game-subtitle">NAVAL COMBAT</h2>
+                </div>
+                <div class="loading-bar-container">
+                    <div class="loading-bar" id="loading-bar"></div>
+                </div>
+                <button id="start-btn" class="premium-btn hidden">SET SAIL</button>
+            </div>
+        </div>
+
+        <!-- HUD (Heads Up Display) -->
+        <div id="hud" class="ui-layer hidden">
+            <!-- Top Left: Player Status -->
+            <div class="player-status-panel">
+                <div class="health-bar-container">
+                    <div class="health-icon"></div>
+                    <div class="bar-bg">
+                        <div class="bar-fill health-fill" id="health-fill"></div>
+                    </div>
+                </div>
+                <div class="armor-bar-container">
+                    <div class="armor-icon"></div>
+                    <div class="bar-bg">
+                        <div class="bar-fill armor-fill" id="armor-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Center: Level & Score -->
+            <div class="level-score-panel">
+                <div class="level-display" id="level-display">LEVEL 1</div>
+                <div class="score-display">SCORE: <span id="score-display">0</span></div>
+            </div>
+
+            <!-- Top Right: Minimap (Optional, we can draw it on canvas, or leave a container) -->
+            <div class="minimap-container">
+                <canvas id="minimapCanvas" width="120" height="120"></canvas>
+            </div>
+
+            <!-- Bottom UI: Controls (Mobile Only) & Reload Indicators -->
+            <div class="bottom-panel">
+                <div class="mobile-controls-left hidden-desktop">
+                    <div class="joystick-base" id="joystick">
+                        <div class="joystick-knob" id="joystick-knob"></div>
+                    </div>
+                </div>
+
+                <div class="weapon-status-panel">
+                    <div class="reload-indicator left-cannons">
+                        <div class="cannon-icon left"></div>
+                        <div class="reload-ring" id="reload-left"></div>
+                    </div>
+                    <div class="ship-diagram"></div>
+                    <div class="reload-indicator right-cannons">
+                        <div class="cannon-icon right"></div>
+                        <div class="reload-ring" id="reload-right"></div>
+                    </div>
+                </div>
+
+                <div class="mobile-controls-right hidden-desktop">
+                    <button class="action-btn" id="fire-left-btn">L</button>
+                    <button class="action-btn" id="fire-right-btn">R</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="ui-layer hidden">
+            <div class="panel modal-panel">
+                <h2>SHIP DESTROYED</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span>SCORE</span>
+                        <h3 id="final-score">0</h3>
+                    </div>
+                    <div class="stat-box">
+                        <span>LEVEL</span>
+                        <h3 id="final-level">1</h3>
+                    </div>
+                    <div class="stat-box">
+                        <span>SHIPS SUNK</span>
+                        <h3 id="final-kills">0</h3>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="restart-btn" class="premium-btn">PLAY AGAIN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upgrade / Level Complete Screen -->
+        <div id="upgrade-screen" class="ui-layer hidden">
+            <div class="panel modal-panel upgrade-panel">
+                <h2 id="upgrade-title">LEVEL COMPLETE</h2>
+                <p>Choose your upgrade:</p>
+                <div class="upgrade-cards">
+                    <div class="upgrade-card" data-upgrade="health">
+                        <div class="u-icon repair-icon"></div>
+                        <h3>HULL REPAIR</h3>
+                        <p>Restore 50% Health & Max HP +10%</p>
+                    </div>
+                    <div class="upgrade-card" data-upgrade="damage">
+                        <div class="u-icon damage-icon"></div>
+                        <h3>HEAVY CANNONS</h3>
+                        <p>Increase cannon damage by 20%</p>
+                    </div>
+                    <div class="upgrade-card" data-upgrade="reload">
+                        <div class="u-icon reload-icon"></div>
+                        <h3>FAST LOADERS</h3>
+                        <p>Decrease reload time by 15%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Modal -->
+        <div id="instructions-modal" class="ui-layer hidden">
+            <div class="panel modal-panel instructions-panel">
+                <h2>CAPTAIN'S ORDERS</h2>
+                <div class="instructions-content">
+                    <div class="inst-section">
+                        <h3>DESKTOP</h3>
+                        <p><b>W / S:</b> Sails (Forward/Slow)</p>
+                        <p><b>A / D:</b> Steer Ship</p>
+                        <p><b>Q / E:</b> Fire Left/Right Cannons</p>
+                    </div>
+                    <div class="inst-section">
+                        <h3>MOBILE / TABLET</h3>
+                        <p>Use the on-screen <b>Joystick</b> to move.</p>
+                        <p>Tap <b>L / R</b> buttons to fire cannons.</p>
+                    </div>
+                    <div class="inst-section tip">
+                        <p><i>Tip: Cannons only fire from the sides. Line up your broadside!</i></p>
+                    </div>
+                </div>
+                <button id="close-inst-btn" class="premium-btn">UNDERSTOOD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generated Audio will be synthesized in JS -->
+    <script src="js/script.js?v=2"></script>
+</body>
+</html>

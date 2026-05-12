@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Laser Dodge Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <span id="scoreDisplay">SURVIVED: 0S</span>
+                <span id="waveDisplay">WAVE: 1</span>
+            </div>
+
+            <div id="startScreen" class="screen active">
+                <h1>⚡ LASER ARENA</h1>
+                <p>Move your cursor (or finger) to dodge the lasers.</p>
+                <p>Red = Danger zone. Stay in the safe spot!</p>
+                <button id="startBtn">EVADE</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>VAPORIZED!</h1>
+                <p>SURVIVED: <span id="finalTime">0</span>S</p>
+                <p>WAVE REACHED: <span id="finalWave">1</span></p>
+                <button id="restartBtn">RETRY</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fireball Shooter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud">
+                <div class="hud-item">SCORE: <span id="scoreDisplay">0</span></div>
+                <div class="hud-item">SHOTS: <span id="shotsDisplay">10</span></div>
+                <div class="hud-item" id="levelDisplay">LEVEL 1</div>
+            </div>
+            
+            <div id="start-screen" class="screen active">
+                <div class="logo">
+                    <div class="fire-text">FIREBALL</div>
+                    <div class="sub-text">SHOOTER</div>
+                </div>
+                <button id="startBtn" class="premium-btn">START GAME</button>
+                <p class="instructions">Drag to aim. Release to shoot fireballs.<br>Destroy all targets before running out of shots!</p>
+            </div>
+            
+            <div id="game-over-screen" class="screen">
+                <h2 id="gameOverTitle">OUT OF SHOTS!</h2>
+                <div class="stats">
+                    <p>SCORE: <span id="finalScore">0</span></p>
+                </div>
+                <button id="restartBtn" class="premium-btn">PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

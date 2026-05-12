@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#060B14">
+  <title>Delivery Rush Simulator – Crazy Taxi Arcade</title>
+  <meta name="description" content="Delivery Rush Simulator – a fast-paced Crazy Taxi-inspired arcade driving game. Pick up packages, race through the city, deliver before time runs out!">
+  <meta property="og:title" content="Delivery Rush Simulator">
+  <meta property="og:description" content="Fast-paced arcade driving game — deliver packages before time runs out!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" id="ogImage" content="assets/images/thumb.png">
+  <link rel="icon" id="favicon" type="image/png" href="assets/icons/icon.png">
+  <link rel="apple-touch-icon" id="appleIcon" href="assets/icons/icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ════════ GAME CANVAS ════════ -->
+<canvas id="gameCanvas"></canvas>
+
+<!-- ════════ LOADING SCREEN ════════ -->
+<div id="screen-loading" class="screen active">
+  <div class="load-logo">
+    <div class="load-van">🚚</div>
+    <h1 class="load-title">DELIVERY<br><span>RUSH</span></h1>
+    <p class="load-sub">SIMULATOR</p>
+  </div>
+  <div class="load-bar-wrap">
+    <div class="load-bar" id="loadBar"></div>
+  </div>
+  <p class="load-text" id="loadText">Initialising City…</p>
+</div>
+
+<!-- ════════ MAIN MENU ════════ -->
+<div id="screen-menu" class="screen">
+  <div class="menu-scanlines"></div>
+  <div class="menu-glow-bg"></div>
+  <div class="menu-center">
+    <!-- Thumbnail shown here after JS generates it -->
+    <div class="menu-thumb-wrap" id="menuThumbWrap" style="display:none">
+      <img id="gameThumbnail" class="menu-thumb-img" alt="Delivery Rush Simulator">
+    </div>
+    <div class="menu-logo-wrap">
+      <div class="menu-van-icon">🚚</div>
+      <h1 class="menu-title">DELIVERY<br><span class="gold">RUSH</span></h1>
+      <p class="menu-subtitle">S I M U L A T O R</p>
+      <p class="menu-tagline">● CRAZY FAST &nbsp;●&nbsp; CRAZY FUN ●</p>
+    </div>
+    <div class="menu-btns">
+      <button class="btn btn-start" id="btnPlay">
+        <span class="btn-ico">▶</span> START GAME
+      </button>
+      <button class="btn btn-sec" id="btnUpgrades" onclick="G.showUpgrades()">
+        <span class="btn-ico">⚡</span> UPGRADES
+      </button>
+      <button class="btn btn-sec" id="btnHow" onclick="G.showTutorial()">
+        <span class="btn-ico">📖</span> HOW TO PLAY
+      </button>
+      <button class="btn btn-snd" id="btnSnd" onclick="G.toggleSound()">
+        <span id="sndIcon">🔊</span> SOUND
+      </button>
+    </div>
+    <div class="menu-stats-row">
+      <div class="ms-item"><div class="ms-lbl">HIGH SCORE</div><div class="ms-val" id="mHiScore">0</div></div>
+      <div class="ms-sep"></div>
+      <div class="ms-item"><div class="ms-lbl">BEST LEVEL</div><div class="ms-val" id="mBestLvl">1</div></div>
+      <div class="ms-sep"></div>
+      <div class="ms-item"><div class="ms-lbl">DELIVERIES</div><div class="ms-val" id="mDeliveries">0</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ TUTORIAL SCREEN ════════ -->
+<div id="screen-tutorial" class="screen">
+  <div class="tut-box">
+    <h2 class="tut-title">📖 HOW TO PLAY</h2>
+    <div class="tut-slides" id="tutSlides"><!-- Injected by JS --></div>
+    <div class="tut-nav">
+      <button class="btn btn-sm" id="tutPrev" onclick="G.tutPrev()">◀ PREV</button>
+      <div class="tut-dots" id="tutDots"></div>
+      <button class="btn btn-sm" id="tutNext" onclick="G.tutNext()">NEXT ▶</button>
+    </div>
+    <button class="btn btn-start" style="margin-top:16px" onclick="G.startLevel(G.currentLevel||1)">🚀 LET'S GO!</button>
+    <button class="btn btn-skip" onclick="G.startLevel(G.currentLevel||1)">SKIP →</button>
+  </div>
+</div>
+
+<!-- ════════ UPGRADE SCREEN ════════ -->
+<div id="screen-upgrades" class="screen">
+  <div class="upg-box">
+    <h2 class="upg-title">⚡ GARAGE UPGRADES</h2>
+    <div class="upg-coins-row">🪙 COINS: <span id="upgCoins">0</span></div>
+    <div class="upg-grid">
+      <div class="upg-card" id="cardSpeed">
+        <div class="upg-icon">🏎️</div>
+        <div class="upg-name">ENGINE</div>
+        <div class="upg-desc">+20% Top Speed</div>
+        <div class="upg-stars" id="starsSpeed">☆☆☆☆☆</div>
+        <button class="btn btn-upg" id="btnUpgSpeed" onclick="G.upgrade('speed')">
+          <span id="costSpeed">🪙 200</span>
+        </button>
+      </div>
+      <div class="upg-card" id="cardHandling">
+        <div class="upg-icon">🎯</div>
+        <div class="upg-name">HANDLING</div>
+        <div class="upg-desc">+15% Steering</div>
+        <div class="upg-stars" id="starsHandling">☆☆☆☆☆</div>
+        <button class="btn btn-upg" id="btnUpgHandling" onclick="G.upgrade('handling')">
+          <span id="costHandling">🪙 150</span>
+        </button>
+      </div>
+      <div class="upg-card" id="cardNitro">
+        <div class="upg-icon">⚡</div>
+        <div class="upg-name">NITRO</div>
+        <div class="upg-desc">+25% Boost Power</div>
+        <div class="upg-stars" id="starsNitro">☆☆☆☆☆</div>
+        <button class="btn btn-upg" id="btnUpgNitro" onclick="G.upgrade('nitro')">
+          <span id="costNitro">🪙 180</span>
+        </button>
+      </div>
+    </div>
+    <button class="btn btn-sec" style="margin-top:20px" onclick="G.showMenu()">← BACK TO MENU</button>
+  </div>
+</div>
+
+<!-- ════════ GAME HUD ════════ -->
+<div id="game-hud" class="hud hidden">
+
+  <!-- Top-left: Score + Level -->
+  <div class="hud-score" id="hudScore">
+    <div class="hud-lvl">LVL <span id="hLvl">1</span></div>
+    <div class="hud-pts" id="hScore">0</div>
+    <div class="hud-combo" id="hCombo"></div>
+  </div>
+
+  <!-- Top-center: Timer -->
+  <div class="hud-timer-wrap" id="hudTimer">
+    <div class="hud-timer-label">TIME</div>
+    <div class="hud-timer-val" id="hTime">90</div>
+    <div class="hud-timer-track">
+      <div class="hud-timer-fill" id="hTimeFill"></div>
+    </div>
+  </div>
+
+  <!-- Top-right: Delivery info -->
+  <div class="hud-delivery" id="hudDelivery">
+    <div class="hud-del-status" id="hDelStatus">FIND PICKUP</div>
+    <div class="hud-del-count"><span id="hDelivered">0</span>/<span id="hTotal">0</span></div>
+    <div class="hud-del-dist" id="hDelDist"></div>
+  </div>
+
+  <!-- Bottom-left: Speedometer canvas -->
+  <div class="hud-speedo-wrap" id="hudSpeedo">
+    <canvas id="speedoCanvas" width="150" height="150"></canvas>
+    <div class="hud-spd-num" id="hSpdNum">0</div>
+    <div class="hud-spd-unit">KM/H</div>
+  </div>
+
+  <!-- Bottom-center: Nitro bar -->
+  <div class="hud-nitro-wrap" id="hudNitro">
+    <div class="hud-nitro-lbl">⚡ NITRO</div>
+    <div class="hud-nitro-track">
+      <div class="hud-nitro-fill" id="hNitroFill"></div>
+    </div>
+  </div>
+
+  <!-- Bottom-right: Minimap -->
+  <div class="hud-minimap-wrap" id="hudMinimap">
+    <canvas id="minimapCanvas" width="150" height="150"></canvas>
+    <div class="hud-mm-label">CITY MAP</div>
+  </div>
+
+  <!-- Bonus popup -->
+  <div class="hud-bonus" id="hudBonus"></div>
+
+  <!-- Direction arrow -->
+  <div class="hud-arrow-wrap" id="hudArrow">
+    <div class="hud-arrow-ring">
+      <div class="hud-arrow-ptr" id="hArrowPtr">▲</div>
+    </div>
+    <div class="hud-arrow-label" id="hArrowLabel">TARGET</div>
+  </div>
+
+  <!-- Pause button -->
+  <button class="btn-pause" id="btnPause" onclick="G.pause()">⏸</button>
+
+  <!-- Mobile controls — shown only on touch devices -->
+  <div class="m-ctrl hidden" id="mobileCtrl">
+    <!-- Left: Joystick -->
+    <div class="m-joystick-area" id="joyArea">
+      <div class="m-joy-ring"></div>
+      <div class="m-joy-thumb" id="joyThumb"></div>
+    </div>
+    <!-- Right: Action buttons -->
+    <div class="m-btns">
+      <button class="m-btn m-nitro" id="mNitro">⚡<br><span>NITRO</span></button>
+      <button class="m-btn m-brake" id="mBrake">🅱<br><span>BRAKE</span></button>
+      <button class="m-btn m-horn" id="mHorn" ontouchstart="G.audio&&G.audio.horn()">📯<br><span>HORN</span></button>
+    </div>
+  </div>
+
+</div><!-- /game-hud -->
+
+<!-- ════════ PAUSE SCREEN ════════ -->
+<div id="screen-pause" class="screen">
+  <div class="overlay-box">
+    <h2 class="overlay-title">⏸ PAUSED</h2>
+    <button class="btn btn-start" onclick="G.resume()">▶ RESUME</button>
+    <button class="btn btn-sec" onclick="G.restartLevel()">🔄 RESTART</button>
+    <button class="btn btn-sec" onclick="G.showMenu()">🏠 MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ════════ LEVEL COMPLETE ════════ -->
+<div id="screen-complete" class="screen">
+  <div class="overlay-box complete-box">
+    <div class="cmpl-banner">🎉 LEVEL COMPLETE!</div>
+    <div class="cmpl-lvl" id="cmplLvl">LEVEL 1 — FIRST DELIVERY</div>
+    <div class="cmpl-stars" id="cmplStars">⭐⭐⭐</div>
+    <div class="cmpl-stats">
+      <div class="cs-row"><span>📦 Deliveries</span><span id="csDeliveries">0/0</span></div>
+      <div class="cs-row"><span>⏱ Time Bonus</span><span id="csTimeBonus" class="gold">+0</span></div>
+      <div class="cs-row"><span>⚡ Combo</span><span id="csCombo">×1</span></div>
+      <div class="cs-row cs-total"><span>💎 SCORE</span><span id="csScore" class="gold">0</span></div>
+      <div class="cs-row"><span>🪙 Coins Earned</span><span id="csCoins" class="gold">+0</span></div>
+    </div>
+    <button class="btn btn-start" id="btnNext" onclick="G.nextLevel()">NEXT LEVEL ▶</button>
+    <button class="btn btn-sec" onclick="G.restartLevel()">🔄 RETRY</button>
+  </div>
+</div>
+
+<!-- ════════ GAME OVER ════════ -->
+<div id="screen-gameover" class="screen">
+  <div class="overlay-box go-box">
+    <div class="go-title">💀 GAME OVER</div>
+    <div class="go-stats">
+      <div class="cs-row"><span>🏆 Score</span><span id="goScore">0</span></div>
+      <div class="cs-row"><span>📊 Level</span><span id="goLvl">1</span></div>
+      <div class="cs-row"><span>📦 Deliveries</span><span id="goDel">0</span></div>
+    </div>
+    <button class="btn btn-start" onclick="G.restartLevel()">🔄 TRY AGAIN</button>
+    <button class="btn btn-sec" onclick="G.showMenu()">🏠 MENU</button>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

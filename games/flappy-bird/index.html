@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sky Bound | Premium Flappy Bird</title>
+    <meta name="description" content="A premium, smooth, and modern Flappy Bird experience built with Vanilla JavaScript.">
+    
+    <!-- Open Graph / Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sky Bound | Premium Flappy Bird">
+    <meta property="og:description" content="A high-performance, ultra-smooth Flappy Bird experience. Can you beat the high score?">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sky Bound | Premium Flappy Bird">
+    <meta name="twitter:description" content="A high-performance, ultra-smooth Flappy Bird experience.">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23FFD700'/><circle cx='65' cy='35' r='12' fill='white'/><circle cx='70' cy='35' r='5' fill='black'/><path d='M75 50 L100 50 L75 65 Z' fill='%23FF7F50'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Canvas for the game -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="overlay active">
+            <div class="content">
+                <h1 class="title">SKY BOUND</h1>
+                <p class="subtitle">TAP TO FLY</p>
+                <div class="bird-preview"></div>
+                <button id="start-btn" class="main-btn">START GAME</button>
+                <div class="controls-hint">
+                    <span>Space or Click to Jump</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="overlay">
+            <div class="content glass">
+                <h2 class="status">GAME OVER</h2>
+                <div class="scores-box">
+                    <div class="score-item">
+                        <span class="label">SCORE</span>
+                        <span id="final-score" class="value">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">BEST</span>
+                        <span id="high-score" class="value">0</span>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button id="restart-btn" class="main-btn">REPLAY</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Overlay -->
+        <div id="pause-screen" class="overlay">
+            <div class="content glass">
+                <h2 class="status">PAUSED</h2>
+                <button id="resume-btn" class="main-btn">RESUME</button>
+            </div>
+        </div>
+
+        <!-- Tutorial Overlay -->
+        <div id="tutorial-overlay" class="overlay">
+            <div class="content">
+                <div class="tutorial-gesture">
+                    <div class="pulse-circle"></div>
+                    <div class="hand-icon">
+                        <svg viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm0 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="tutorial-text">TAP TO KEEP AIRBORNE</p>
+            </div>
+        </div>
+
+        <!-- In-game HUD -->
+        <div id="hud">
+            <div id="current-score">0</div>
+            <button id="pause-btn" class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

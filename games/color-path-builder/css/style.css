@@ -1,0 +1,296 @@
+:root {
+    --bg-color: #f0f4f8;
+    --text-main: #2c3e50;
+    --ui-bg: rgba(240, 244, 248, 0.9);
+    --grid-bg: #e1e8f0;
+    --grid-line: #cbd5e1;
+    
+    --color-1: #ff4757; /* Red */
+    --color-2: #2ed573; /* Green */
+    --color-3: #1e90ff; /* Blue */
+    --color-4: #ffa502; /* Orange */
+    --color-5: #9b59b6; /* Purple */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    touch-action: none;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.bg-circles {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-circles::before, .bg-circles::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+}
+
+.bg-circles::before {
+    width: 400px; height: 400px;
+    background: var(--color-3);
+    top: -100px; left: -100px;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.bg-circles::after {
+    width: 500px; height: 500px;
+    background: var(--color-5);
+    bottom: -150px; right: -100px;
+    animation: float 25s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    display: block;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    display: none;
+}
+
+#top-bar {
+    position: absolute;
+    top: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+.level-display {
+    background: white;
+    padding: 10px 40px;
+    border-radius: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-main);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    letter-spacing: 2px;
+}
+
+.level-display span {
+    color: var(--color-3);
+    font-size: 28px;
+}
+
+.icon-btn {
+    position: absolute;
+    width: 50px; height: 50px;
+    border-radius: 25px;
+    background: white;
+    border: none;
+    color: var(--text-main);
+    font-size: 24px;
+    display: flex; justify-content: center; align-items: center;
+    pointer-events: auto; cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+#pause-btn { top: 30px; right: 30px; }
+#sound-toggle { top: 30px; right: 90px; }
+#restart-level-btn { top: 30px; left: 30px; }
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--ui-bg);
+    backdrop-filter: blur(15px);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    z-index: 10;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.screen.active {
+    opacity: 1; pointer-events: auto;
+}
+
+.title-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 70px;
+    color: var(--text-main);
+    line-height: 1;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 50px;
+    color: var(--color-3);
+    line-height: 1;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+#level-complete-screen h2, #game-complete-screen h2 {
+    color: var(--color-2);
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #7f8c8d;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.btn {
+    padding: 15px 50px;
+    font-size: 20px; font-weight: 700;
+    border: none; border-radius: 30px;
+    cursor: pointer; margin: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 1px;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--color-3), #0984e3);
+    color: white;
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(30, 144, 255, 0.4);
+}
+
+.secondary-btn {
+    background: white;
+    color: var(--text-main);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.secondary-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+}
+
+.instruction-content {
+    background: white;
+    padding: 30px; border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    max-width: 500px; width: 90%;
+}
+
+.instruction-content p {
+    margin: 15px 0; font-size: 18px; line-height: 1.6;
+    color: var(--text-main);
+}
+
+.stars {
+    font-size: 50px;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 50px; }
+    h2 { font-size: 35px; }
+    .btn { padding: 12px 30px; font-size: 18px; }
+    .level-display { padding: 8px 30px; font-size: 20px; }
+    #pause-btn, #sound-toggle, #restart-level-btn { top: 20px; width: 40px; height: 40px; font-size: 20px;}
+    #pause-btn { right: 20px; }
+    #sound-toggle { right: 70px; }
+    #restart-level-btn { left: 20px; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gravity Switch Run</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="stat-box">
+                    <span class="label">LEVEL</span>
+                    <span class="value" id="level-display">1</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">SPEED</span>
+                    <span class="value" id="speed-display">1.0x</span>
+                </div>
+            </div>
+
+            <div id="score-container">
+                <span id="score">0</span>m
+            </div>
+
+            <button id="sound-toggle" class="btn icon-btn">🔊</button>
+            <button id="pause-btn" class="btn icon-btn">⏸</button>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <img src="assets/icons/icon.png" alt="Gravity Switch Run" class="game-logo">
+            <h1>GRAVITY SWITCH</h1>
+            <p class="subtitle">Run against the laws of physics</p>
+            <button id="start-btn" class="btn primary-btn">INITIALIZE</button>
+            <button id="instructions-btn" class="btn secondary-btn">DATALOG</button>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="screen">
+            <h2>DATALOG</h2>
+            <div class="instruction-content">
+                <p>👆 <strong>TAP ANYWHERE:</strong> Flip gravity to run on the ceiling or floor.</p>
+                <p>⚠️ <strong>AVOID:</strong> Spikes, traps, and falling into the abyss.</p>
+                <p>⚡ <strong>SPEED:</strong> The simulation accelerates as you progress.</p>
+            </div>
+            <button id="back-btn" class="btn secondary-btn">RETURN</button>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen">
+            <h2>SIMULATION PAUSED</h2>
+            <button id="resume-btn" class="btn primary-btn">RESUME</button>
+            <button id="quit-btn" class="btn secondary-btn">ABORT</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2>FATAL ERROR</h2>
+            <p class="final-score">DISTANCE: <span id="final-score-value">0</span>m</p>
+            <p class="best-score">MAX DISTANCE: <span id="best-score-value">0</span>m</p>
+            <button id="retry-btn" class="btn primary-btn">RESTART SIMULATION</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

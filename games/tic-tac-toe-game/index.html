@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Premium Tic Tac Toe game with AI and Multiplayer modes. Features 20+ levels, multiple themes, and stunning animations.">
+    <title>Tic Tac Toe — Premium Edition</title>
+    <link rel="icon" href="assets/icons/game-icon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Particle Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ========== SPLASH SCREEN ========== -->
+    <div id="splashScreen" class="screen active">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <div class="splash-icon-wrap">
+                    <img src="assets/icons/game-icon.png" alt="Tic Tac Toe" class="splash-icon">
+                </div>
+                <h1 class="splash-title">TIC TAC TOE</h1>
+                <p class="splash-subtitle">PREMIUM EDITION</p>
+            </div>
+            <div class="splash-loader">
+                <div class="loader-bar"><div class="loader-fill"></div></div>
+                <p class="loader-text">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN MENU ========== -->
+    <div id="menuScreen" class="screen">
+        <div class="menu-container glass-panel">
+            <div class="menu-header">
+                <img src="assets/icons/game-icon.png" alt="" class="menu-icon">
+                <h1 class="menu-title">TIC TAC TOE</h1>
+                <p class="menu-edition">PREMIUM EDITION</p>
+            </div>
+            <div class="menu-buttons">
+                <button id="btnSinglePlayer" class="btn btn-primary btn-glow">
+                    <span class="btn-icon">🤖</span>
+                    <span class="btn-text">Single Player</span>
+                    <span class="btn-desc">vs AI Opponent</span>
+                </button>
+                <button id="btnMultiplayer" class="btn btn-secondary btn-glow">
+                    <span class="btn-icon">👥</span>
+                    <span class="btn-text">Multiplayer</span>
+                    <span class="btn-desc">Local Two Players</span>
+                </button>
+                <button id="btnHowToPlay" class="btn btn-outline">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">How to Play</span>
+                </button>
+                <button id="btnAchievements" class="btn btn-outline">
+                    <span class="btn-icon">🏆</span>
+                    <span class="btn-text">Achievements</span>
+                </button>
+            </div>
+            <div class="menu-footer">
+                <button id="btnSettings" class="icon-btn" title="Settings">⚙️</button>
+                <button id="btnSoundToggleMenu" class="icon-btn" title="Toggle Sound">🔊</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TUTORIAL SCREEN ========== -->
+    <div id="tutorialScreen" class="screen">
+        <div class="tutorial-container glass-panel">
+            <h2 class="tutorial-title">How to Play</h2>
+            <div class="tutorial-slides">
+                <div class="tutorial-slide active" data-slide="0">
+                    <div class="tutorial-visual">
+                        <div class="tutorial-grid-demo">
+                            <div class="demo-cell"></div><div class="demo-cell"></div><div class="demo-cell"></div>
+                            <div class="demo-cell"></div><div class="demo-cell highlight-cell">
+                                <svg class="demo-x" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80"/><line x1="80" y1="20" x2="20" y2="80"/></svg>
+                            </div><div class="demo-cell"></div>
+                            <div class="demo-cell"></div><div class="demo-cell"></div><div class="demo-cell"></div>
+                        </div>
+                    </div>
+                    <h3>Tap to Place</h3>
+                    <p>Tap any empty cell to place your mark — <strong>X</strong> or <strong>O</strong></p>
+                </div>
+                <div class="tutorial-slide" data-slide="1">
+                    <div class="tutorial-visual">
+                        <div class="tutorial-grid-demo win-demo">
+                            <div class="demo-cell win-cell"><svg class="demo-x" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80"/><line x1="80" y1="20" x2="20" y2="80"/></svg></div>
+                            <div class="demo-cell win-cell"><svg class="demo-x" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80"/><line x1="80" y1="20" x2="20" y2="80"/></svg></div>
+                            <div class="demo-cell win-cell"><svg class="demo-x" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80"/><line x1="80" y1="20" x2="20" y2="80"/></svg></div>
+                            <div class="demo-cell"></div><div class="demo-cell"><svg class="demo-o" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30"/></svg></div><div class="demo-cell"></div>
+                            <div class="demo-cell"></div><div class="demo-cell"></div><div class="demo-cell"><svg class="demo-o" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30"/></svg></div>
+                        </div>
+                    </div>
+                    <h3>Get in a Row to Win</h3>
+                    <p>Align your marks in a <strong>row</strong>, <strong>column</strong>, or <strong>diagonal</strong> to win!</p>
+                </div>
+                <div class="tutorial-slide" data-slide="2">
+                    <div class="tutorial-visual">
+                        <div class="tutorial-modes">
+                            <div class="mode-card">
+                                <span class="mode-icon">🤖</span>
+                                <span>Single Player</span>
+                                <small>Beat AI across 20 levels</small>
+                            </div>
+                            <div class="mode-card">
+                                <span class="mode-icon">👥</span>
+                                <span>Multiplayer</span>
+                                <small>Play with a friend</small>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Choose Your Mode</h3>
+                    <p>Challenge the AI through progressive levels or play with a friend locally!</p>
+                </div>
+                <div class="tutorial-slide" data-slide="3">
+                    <div class="tutorial-visual">
+                        <div class="tutorial-features">
+                            <div class="feature-badge">⏱️ Timer</div>
+                            <div class="feature-badge">⚡ Power-ups</div>
+                            <div class="feature-badge">🏆 Achievements</div>
+                            <div class="feature-badge">🎨 Themes</div>
+                            <div class="feature-badge">📈 Levels</div>
+                            <div class="feature-badge">💡 Hints</div>
+                        </div>
+                    </div>
+                    <h3>Premium Features</h3>
+                    <p>Earn achievements, use power-ups, unlock themes, and progress through 20 unique levels!</p>
+                </div>
+            </div>
+            <div class="tutorial-dots">
+                <span class="dot active" data-dot="0"></span>
+                <span class="dot" data-dot="1"></span>
+                <span class="dot" data-dot="2"></span>
+                <span class="dot" data-dot="3"></span>
+            </div>
+            <div class="tutorial-nav">
+                <button id="btnTutPrev" class="btn btn-outline btn-sm" disabled>← Back</button>
+                <button id="btnTutSkip" class="btn btn-outline btn-sm">Skip</button>
+                <button id="btnTutNext" class="btn btn-primary btn-sm">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== LEVEL SELECT SCREEN ========== -->
+    <div id="levelScreen" class="screen">
+        <div class="level-container glass-panel">
+            <div class="level-header">
+                <button id="btnLevelBack" class="back-btn">← Back</button>
+                <h2>Select Level</h2>
+                <div class="level-stats">
+                    <span id="levelStarsTotal">⭐ 0 / 60</span>
+                </div>
+            </div>
+            <div id="levelGrid" class="level-grid">
+                <!-- Levels generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MULTIPLAYER SETUP SCREEN ========== -->
+    <div id="mpSetupScreen" class="screen">
+        <div class="mp-setup-container glass-panel">
+            <button id="btnMpBack" class="back-btn">← Back</button>
+            <h2>Multiplayer Setup</h2>
+            <div class="mp-players">
+                <div class="mp-player-card">
+                    <div class="mp-avatar x-avatar">X</div>
+                    <label>Player 1</label>
+                    <input type="text" id="p1Name" class="glass-input" placeholder="Player 1" maxlength="12">
+                </div>
+                <div class="mp-vs">VS</div>
+                <div class="mp-player-card">
+                    <div class="mp-avatar o-avatar">O</div>
+                    <label>Player 2</label>
+                    <input type="text" id="p2Name" class="glass-input" placeholder="Player 2" maxlength="12">
+                </div>
+            </div>
+            <div class="mp-options">
+                <label>Grid Size</label>
+                <div class="grid-size-selector">
+                    <button class="grid-size-btn active" data-size="3">3×3</button>
+                    <button class="grid-size-btn" data-size="4">4×4</button>
+                    <button class="grid-size-btn" data-size="5">5×5</button>
+                </div>
+                <label>Timer</label>
+                <div class="timer-selector">
+                    <button class="timer-btn active" data-time="0">Off</button>
+                    <button class="timer-btn" data-time="15">15s</button>
+                    <button class="timer-btn" data-time="30">30s</button>
+                    <button class="timer-btn" data-time="60">60s</button>
+                </div>
+            </div>
+            <button id="btnStartMp" class="btn btn-primary btn-glow btn-lg">Start Game</button>
+        </div>
+    </div>
+
+    <!-- ========== GAME SCREEN ========== -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <!-- Top HUD -->
+            <div class="game-hud">
+                <button id="btnGameBack" class="back-btn">← Menu</button>
+                <div class="game-info">
+                    <span id="gameModeLabel" class="mode-label">Level 1</span>
+                    <span id="gameDiffLabel" class="diff-label">Easy AI</span>
+                </div>
+                <div class="hud-actions">
+                    <button id="btnSoundToggle" class="icon-btn" title="Sound">🔊</button>
+                    <button id="btnTheme" class="icon-btn" title="Theme">🎨</button>
+                </div>
+            </div>
+
+            <!-- Score Panel -->
+            <div class="score-panel glass-panel-sm">
+                <div class="score-player score-x" id="scorePlayerX">
+                    <span class="score-name" id="scoreNameX">Player X</span>
+                    <span class="score-val" id="scoreValX">0</span>
+                </div>
+                <div class="score-draw">
+                    <span class="score-name">Draw</span>
+                    <span class="score-val" id="scoreValDraw">0</span>
+                </div>
+                <div class="score-player score-o" id="scorePlayerO">
+                    <span class="score-name" id="scoreNameO">Player O</span>
+                    <span class="score-val" id="scoreValO">0</span>
+                </div>
+            </div>
+
+            <!-- Turn Indicator -->
+            <div class="turn-indicator" id="turnIndicator">
+                <div class="turn-marker" id="turnMarker">X</div>
+                <span class="turn-text" id="turnText">Your Turn</span>
+                <div class="timer-ring" id="timerRing">
+                    <svg viewBox="0 0 36 36">
+                        <circle class="timer-bg" cx="18" cy="18" r="16"/>
+                        <circle class="timer-fg" id="timerCircle" cx="18" cy="18" r="16"/>
+                    </svg>
+                    <span class="timer-val" id="timerVal"></span>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div id="boardWrapper" class="board-wrapper">
+                <div id="gameBoard" class="game-board grid-3">
+                    <!-- Cells generated by JS -->
+                </div>
+                <canvas id="winLineCanvas" class="win-line-canvas"></canvas>
+            </div>
+
+            <!-- Power-ups -->
+            <div class="powerup-bar" id="powerupBar">
+                <button id="btnUndo" class="powerup-btn" title="Undo Last Move" disabled>
+                    <span class="pu-icon">↩️</span>
+                    <span class="pu-label">Undo</span>
+                    <span class="pu-count" id="undoCount">1</span>
+                </button>
+                <button id="btnHint" class="powerup-btn" title="Get a Hint" disabled>
+                    <span class="pu-icon">💡</span>
+                    <span class="pu-label">Hint</span>
+                    <span class="pu-count" id="hintCount">1</span>
+                </button>
+            </div>
+
+            <!-- Streak -->
+            <div class="streak-bar" id="streakBar">
+                <span class="streak-icon">🔥</span>
+                <span class="streak-text" id="streakText">0 Win Streak</span>
+            </div>
+
+            <!-- Bottom Buttons -->
+            <div class="game-bottom-bar">
+                <button id="btnRestart" class="btn btn-outline btn-sm">🔄 Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== RESULT MODAL ========== -->
+    <div id="resultModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-panel result-panel">
+            <div class="result-icon" id="resultIcon">🏆</div>
+            <h2 class="result-title" id="resultTitle">You Win!</h2>
+            <p class="result-sub" id="resultSub">Excellent play!</p>
+            <div class="result-stars" id="resultStars">
+                <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+            </div>
+            <div class="result-stats">
+                <div class="rstat"><span class="rstat-val" id="rMoves">0</span><span class="rstat-label">Moves</span></div>
+                <div class="rstat"><span class="rstat-val" id="rTime">0s</span><span class="rstat-label">Time</span></div>
+                <div class="rstat"><span class="rstat-val" id="rStreak">0</span><span class="rstat-label">Streak</span></div>
+            </div>
+            <div class="result-achievement" id="resultAchievement"></div>
+            <div class="result-buttons">
+                <button id="btnNextLevel" class="btn btn-primary btn-glow">Next Level →</button>
+                <button id="btnReplay" class="btn btn-outline">Replay</button>
+                <button id="btnResultMenu" class="btn btn-outline">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ACHIEVEMENTS SCREEN ========== -->
+    <div id="achieveScreen" class="screen">
+        <div class="achieve-container glass-panel">
+            <div class="achieve-header">
+                <button id="btnAchieveBack" class="back-btn">← Back</button>
+                <h2>Achievements</h2>
+            </div>
+            <div id="achieveList" class="achieve-list">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SETTINGS MODAL ========== -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-panel settings-panel">
+            <h2>Settings</h2>
+            <div class="setting-row">
+                <span>Sound Effects</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="settingSfx" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <span>Music</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="settingMusic">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <span>Theme</span>
+                <div class="theme-selector">
+                    <button class="theme-btn active" data-theme="neon" title="Neon Dark">
+                        <span class="theme-preview neon-preview"></span>
+                    </button>
+                    <button class="theme-btn" data-theme="gold" title="Royal Gold">
+                        <span class="theme-preview gold-preview"></span>
+                    </button>
+                    <button class="theme-btn" data-theme="glass" title="Minimal Glass">
+                        <span class="theme-preview glass-preview"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="setting-row">
+                <span>Reset Progress</span>
+                <button id="btnResetProgress" class="btn btn-outline btn-sm btn-danger">Reset</button>
+            </div>
+            <button id="btnCloseSettings" class="btn btn-primary btn-sm">Done</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

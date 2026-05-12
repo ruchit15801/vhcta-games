@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Golf Precision Master</title>
+    <link rel="icon" href="assets/icons/icon.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 3D Canvas Context -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer">
+            <!-- HUD -->
+            <div id="hud-top">
+                <div class="hud-panel wind-panel">
+                    <div class="wind-label">WIND</div>
+                    <div id="wind-indicator">
+                        <div id="wind-arrow">↑</div>
+                        <span id="wind-speed">0</span><small>mph</small>
+                    </div>
+                </div>
+                <div class="hud-panel level-panel">
+                    <div class="level-label">HOLE</div>
+                    <div id="level-display">1</div>
+                    <div class="par-label">PAR <span id="par-display">3</span></div>
+                </div>
+                <div class="hud-panel score-panel">
+                    <div class="score-label">STROKES</div>
+                    <div id="score-display">0</div>
+                </div>
+            </div>
+
+            <!-- Power Meter (hidden by default) -->
+            <div id="power-meter-container" class="hidden">
+                <div id="power-meter-bar">
+                    <div id="power-meter-fill"></div>
+                    <div id="power-meter-sweetspot"></div>
+                </div>
+                <div id="power-meter-cursor"></div>
+                <div id="power-label">PULL DOWN & RELEASE</div>
+            </div>
+            
+            <div id="spin-control-container" class="hidden">
+                <div id="spin-ball">
+                    <div id="spin-cursor"></div>
+                </div>
+                <div class="spin-label">SPIN CONTROL</div>
+            </div>
+
+            <!-- Menus -->
+            <!-- Main Menu -->
+            <div id="main-menu" class="menu-overlay">
+                <div class="menu-content">
+                    <h1 class="game-title">GOLF<br>PRECISION<br><span>MASTER</span></h1>
+                    <button id="btn-start" class="btn-primary">PLAY NOW</button>
+                    <button id="btn-tutorial" class="btn-secondary">TUTORIAL</button>
+                </div>
+            </div>
+
+            <!-- Tutorial Menu -->
+            <div id="tutorial-menu" class="menu-overlay hidden">
+                <div class="menu-content">
+                    <h2>HOW TO PLAY</h2>
+                    <ul class="tutorial-list">
+                        <li><span>1</span> <strong>AIM:</strong> Swipe Left/Right to rotate camera.</li>
+                        <li><span>2</span> <strong>POWER:</strong> Tap & hold to pull down. Release to shoot.</li>
+                        <li><span>3</span> <strong>WIND:</strong> Pay attention to wind speed & direction!</li>
+                        <li><span>4</span> <strong>SPIN:</strong> Adjust ball spin for extra roll or backspin.</li>
+                    </ul>
+                    <button id="btn-close-tutorial" class="btn-primary">GOT IT</button>
+                </div>
+            </div>
+
+            <!-- Level Complete Menu -->
+            <div id="level-complete" class="menu-overlay hidden">
+                <div class="menu-content">
+                    <h2 id="result-title">HOLE IN ONE!</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-label">STROKES</span>
+                            <span id="result-strokes" class="stat-value">1</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">PAR</span>
+                            <span id="result-par" class="stat-value">3</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">SCORE</span>
+                            <span id="result-score" class="stat-value">-2</span>
+                        </div>
+                    </div>
+                    <button id="btn-next-level" class="btn-primary">NEXT HOLE ➔</button>
+                </div>
+            </div>
+            
+            <!-- Game Over Menu -->
+            <div id="game-over" class="menu-overlay hidden">
+                <div class="menu-content">
+                    <h2>OUT OF BOUNDS</h2>
+                    <p>You fell into the water or went off course.</p>
+                    <button id="btn-retry" class="btn-primary">RETRY HOLE</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/textures.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

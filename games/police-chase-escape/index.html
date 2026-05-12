@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Police Chase Escape - Realistic Setup</title>
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="bg-effects">
+        <div class="neon-line"></div>
+        <div class="neon-line"></div>
+    </div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="loading-screen" class="screen full-screen">
+            <div class="loader-content">
+                <img src="assets/images/icon.png" alt="Game Icon" class="loader-logo">
+                <h1 class="glitch-text" data-text="POLICE CHASE">POLICE CHASE</h1>
+                <h2 class="sub-title">ESCAPE</h2>
+                <div class="progress-bar-container">
+                    <div id="loading-bar"></div>
+                </div>
+                <p id="loading-text">INITIALIZING CITY...</p>
+            </div>
+        </div>
+
+        <div id="main-menu" class="screen hidden">
+            <div class="menu-left">
+                <h1 class="title">POLICE<br><span class="highlight">CHASE</span><br>ESCAPE</h1>
+                <div class="menu-buttons">
+                    <button id="btn-car-select" class="cyber-btn"><span>SELECT CAR</span></button>
+                    <button id="btn-garage" class="cyber-btn"><span>GARAGE / UPGRADES</span></button>
+                    <button id="btn-levels" class="cyber-btn"><span>LEVEL SELECT</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Car Selection Screen -->
+        <div id="car-select-screen" class="screen hidden">
+            <div class="header-bar">
+                <h2>CHOOSE YOUR RIDE</h2>
+                <button id="btn-back-car" class="text-btn cyber-back">← BACK</button>
+            </div>
+            <div class="car-carousel" id="car-carousel">
+                <!-- Cars generated via JS -->
+            </div>
+            <div class="car-stats-panel">
+                <h3 id="cs-name">STREET RACER</h3>
+                <div class="stat-row">
+                    <label>SPEED</label>
+                    <div class="stat-bar"><div class="fill" id="cs-speed"></div></div>
+                </div>
+                <div class="stat-row">
+                    <label>HANDLING</label>
+                    <div class="stat-bar"><div class="fill" id="cs-handling"></div></div>
+                </div>
+                <div class="stat-row">
+                    <label>NITRO</label>
+                    <div class="stat-bar"><div class="fill" id="cs-nitro"></div></div>
+                </div>
+                <button id="btn-play-selected" class="cyber-btn primary-btn" style="margin-top: 20px;"><span>START ENGINE</span></button>
+            </div>
+        </div>
+
+        <div id="guide-screen" class="screen hidden">
+            <div class="panel cyber-panel">
+                <h2>HOW TO PLAY</h2>
+                <div class="guide-grid">
+                    <div class="guide-item">
+                        <div class="icon-wrap">WS/↑↓</div>
+                        <p>Accelerate/Brake</p>
+                    </div>
+                    <div class="guide-item">
+                        <div class="icon-wrap">AD/←→</div>
+                        <p>Steer & Drift</p>
+                    </div>
+                    <div class="guide-item">
+                        <div class="icon-wrap">SHIFT</div>
+                        <p>Nitro Boost</p>
+                    </div>
+                    <div class="guide-item">
+                        <div class="icon-wrap police-icon">🚨</div>
+                        <p>Evade Police!</p>
+                    </div>
+                </div>
+                <div class="guide-text">
+                    <p>Stay on the road! Colliding with buildings causes damage. Survive the time limit!</p>
+                </div>
+                <button id="btn-start-game-from-guide" class="cyber-btn primary"><span>PLAY NOW</span></button>
+                <button id="btn-close-guide" class="text-btn">Skip</button>
+            </div>
+        </div>
+
+        <div id="level-select" class="screen hidden">
+            <div class="header-bar">
+                <h2>SELECT LEVEL</h2>
+                <button id="btn-back-levels" class="text-btn cyber-back">← BACK</button>
+            </div>
+            <div class="levels-grid" id="levels-container"></div>
+        </div>
+
+        <div id="garage-screen" class="screen hidden">
+            <div class="header-bar">
+                <h2>GARAGE</h2>
+                <div class="cash-wrap">CASH: <span id="garage-cash">$0</span></div>
+                <button id="btn-back-garage" class="text-btn cyber-back">← BACK</button>
+            </div>
+            <div class="garage-content">
+                <div class="upgrades-panel">
+                    <div class="upgrade-item" data-type="speed">
+                        <h3>TOP SPEED</h3>
+                        <div class="bars" id="stat-speed-bars"><span></span><span></span><span></span><span></span><span></span></div>
+                        <button class="upgrade-btn cyber-btn-small" id="upg-speed">BUY $500</button>
+                    </div>
+                    <div class="upgrade-item" data-type="handling">
+                        <h3>HANDLING / DRIFT</h3>
+                        <div class="bars" id="stat-handling-bars"><span></span><span></span><span></span><span></span><span></span></div>
+                        <button class="upgrade-btn cyber-btn-small" id="upg-handling">BUY $500</button>
+                    </div>
+                    <div class="upgrade-item" data-type="nitro">
+                        <h3>NITRO CAPACITY</h3>
+                        <div class="bars" id="stat-nitro-bars"><span></span><span></span><span></span><span></span><span></span></div>
+                        <button class="upgrade-btn cyber-btn-small" id="upg-nitro">BUY $500</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hud-screen" class="screen pointer-events-none hidden">
+            <div id="wanted-level">
+                <div class="star-container" id="hud-stars">☆ ☆ ☆ ☆ ☆</div>
+                <div class="warning-text" id="cop-proximity">EVADING...</div>
+            </div>
+
+            <!-- NEW: Minimap HUD Element -->
+            <div id="minimap-container">
+                <canvas id="minimapCanvas" width="150" height="150"></canvas>
+                <div class="minimap-border"></div>
+            </div>
+
+            <div id="top-hud">
+                <div class="info-box">
+                    <span class="label">LEVEL</span>
+                    <span class="value" id="hud-level">1</span>
+                </div>
+                <div class="info-box timer-box">
+                    <span class="label">ESCAPE IN</span>
+                    <span class="value" id="hud-timer">60.0</span>
+                </div>
+                <div class="info-box">
+                    <span class="label">SCORE</span>
+                    <span class="value" id="hud-score">0</span>
+                </div>
+            </div>
+
+            <div id="speedometer-container">
+                <div class="speed-ring"></div>
+                <div class="speed-value" id="hud-speed">0</div>
+                <div class="speed-unit">KM/H</div>
+                 <div class="nitro-gauge">
+                     <div class="nitro-fill" id="hud-nitro-fill"></div>
+                 </div>
+                 <div class="nitro-label">N2O</div>
+            </div>
+
+            <div id="health-container">
+                <div class="health-label">ARMOR</div>
+                <div class="health-bar">
+                    <div class="health-fill" id="hud-health-fill"></div>
+                </div>
+            </div>
+
+            <div id="screen-fx"></div>
+
+            <div id="mobile-controls" class="hidden pointer-events-auto">
+                <div class="steer-controls">
+                    <button id="btn-left" class="control-btn">◁</button>
+                    <button id="btn-right" class="control-btn">▷</button>
+                </div>
+                <div class="action-controls">
+                    <button id="btn-brake" class="control-btn square">BRK</button>
+                    <button id="btn-nitro" class="control-btn circle special">N2O</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="screen full-screen overlay-screen hidden">
+            <h1 class="busted-text">BUSTED</h1>
+            <p>Your car is totaled or time ran out.</p>
+            <div class="stats-recap">
+                <p>Time Survived: <span id="go-time">0s</span></p>
+                <p>Cash Earned: <span id="go-cash">$0</span></p>
+            </div>
+            <div class="menu-buttons horizontal">
+                <button id="btn-retry" class="cyber-btn"><span>RETRY</span></button>
+                <button id="btn-quit" class="cyber-btn menu-return"><span>MENU</span></button>
+            </div>
+        </div>
+
+        <div id="level-complete-screen" class="screen full-screen overlay-screen hidden">
+            <h1 class="escape-text">ESCAPED</h1>
+            <p>You shook the cops!</p>
+            <div class="stats-recap">
+                <p>Level Bonus: <span id="lc-bonus">$1000</span></p>
+                <p>Drift Score: <span id="lc-drift">0</span></p>
+                <h3 class="total-cash">+ <span id="lc-total">$1000</span></h3>
+            </div>
+            <div class="menu-buttons horizontal">
+                <button id="btn-next-level" class="cyber-btn"><span>NEXT LEVEL</span></button>
+                <button class="cyber-btn menu-return"><span>MENU</span></button>
+            </div>
+        </div>
+    </div>
+
+    <button id="btn-pause" class="icon-toggle hidden">⏸</button>
+    <button id="btn-sound" class="icon-toggle">🔊</button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

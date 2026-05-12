@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description"
+    content="Monster Defense Clash — Ultra Premium Tower Defense Game. Place defenders, fight waves of monsters, unlock abilities and progress through 30 epic levels!" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <!-- Favicon / Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+  <link rel="shortcut icon" href="assets/icons/icon.svg" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Monster Defense Clash" />
+  <meta property="og:image" content="assets/images/thumbnail.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:description"
+    content="Epic tower defense game inspired by Plants vs Zombies — 30 levels, 6 units, boss monsters, abilities and more!" />
+  <title>Monster Defense Clash — Premium Tower Defense</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Inline keyframe for energy flash */
+    @keyframes energyFlash {
+
+      0%,
+      100% {
+        border-color: rgba(139, 92, 246, 0.3);
+        box-shadow: none;
+      }
+
+      50% {
+        border-color: #ef4444;
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+     LOADING SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="loading-screen">
+    <img src="assets/icons/icon.svg" alt="Monster Defense Clash Icon" class="menu-icon-float"
+      style="width:96px;height:96px;border-radius:20px;" />
+    <div class="loading-logo">⚔️ MONSTER DEFENSE CLASH</div>
+    <div class="loading-bar-wrapper">
+      <div class="loading-bar-fill" style="width:0%"></div>
+    </div>
+    <div class="loading-text">Loading assets...</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     MAIN MENU
+     ═══════════════════════════════════════════ -->
+  <div id="main-menu" class="screen">
+    <!-- Thumbnail as background banner -->
+    <div class="menu-thumbnail">
+      <img src="assets/images/thumbnail.svg" alt="Monster Defense Clash Thumbnail"
+        style="width:100%;height:100%;object-fit:cover;opacity:0.35;" />
+    </div>
+
+    <div class="menu-content">
+      <!-- Logo: SVG icon + canvas animated logo -->
+      <div class="game-logo">
+        <div class="logo-icon-wrapper">
+          <img id="game-icon-img" src="assets/icons/icon.svg" alt="MDC Icon"
+            style="width:100px;height:100px;border-radius:22px;box-shadow:0 0 40px rgba(168,85,247,0.8),0 0 80px rgba(168,85,247,0.4);display:block;" />
+        </div>
+        <h1 class="logo-title">Monster<br>Defense Clash</h1>
+        <p class="logo-subtitle">⚔️ Tower Defense War ⚔️</p>
+      </div>
+
+      <!-- Menu Buttons -->
+      <div class="menu-buttons">
+        <button id="btn-play" class="btn-menu btn-primary">
+          ⚔️ &nbsp; PLAY NOW
+        </button>
+        <button id="btn-how-to-play" class="btn-menu btn-secondary"
+          onclick="document.getElementById('tutorial-screen').classList.remove('hidden');document.getElementById('main-menu').classList.add('hidden');">
+          📖 &nbsp; HOW TO PLAY
+        </button>
+      </div>
+
+      <!-- Stats row -->
+      <div class="menu-stats">
+        <div class="stat-badge">
+          <div class="value" id="stat-levels">1</div>
+          <div class="label">Levels Open</div>
+        </div>
+        <div class="stat-badge">
+          <div class="value">30</div>
+          <div class="label">Total Levels</div>
+        </div>
+        <div class="stat-badge">
+          <div class="value" id="stat-stars">0</div>
+          <div class="label">Stars Earned</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     TUTORIAL SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="tutorial-screen" class="screen hidden">
+    <div class="tutorial-container">
+      <h2 class="tutorial-title">⚔️ How to Play</h2>
+
+      <div class="tutorial-steps">
+        <div class="tutorial-step" style="animation-delay:0.05s">
+          <span class="step-icon">🎯</span>
+          <span class="step-title">Select a Unit</span>
+          <p class="step-desc">Tap a defender card from the bottom panel. Each unit has a cost shown in ⚡ Energy.</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.1s">
+          <span class="step-icon">🗺️</span>
+          <span class="step-title">Place on Grid</span>
+          <p class="step-desc">Tap any open grid cell on the battlefield. Defenders auto-attack enemies in range!</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.15s">
+          <span class="step-icon">🧟</span>
+          <span class="step-title">Defend Base</span>
+          <p class="step-desc">Waves of monsters march towards your castle 🏰. Stop them before they destroy your base!
+          </p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.2s">
+          <span class="step-icon">⚡</span>
+          <span class="step-title">Energy System</span>
+          <p class="step-desc">Energy regenerates over time. Killing enemies gives bonus energy. Spend wisely!</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.25s">
+          <span class="step-icon">💥</span>
+          <span class="step-title">Use Abilities</span>
+          <p class="step-desc">Bomb 💥, Freeze ❄️ and Fire 🔥 buttons deal massive damage to all enemies. Use when
+            overwhelmed!</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.3s">
+          <span class="step-icon">⬆️</span>
+          <span class="step-title">Upgrade Towers</span>
+          <p class="step-desc">Tap any placed defender to upgrade damage, speed or range. Sell for 60% energy back.</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.35s">
+          <span class="step-icon">👹</span>
+          <span class="step-title">Enemy Types</span>
+          <p class="step-desc">Goblin (fast, weak), Speeder (very fast), Troll (tanky, slow), Boss (enormous HP +
+            wings)!</p>
+        </div>
+        <div class="tutorial-step" style="animation-delay:0.4s">
+          <span class="step-icon">🌊</span>
+          <span class="step-title">Wave System</span>
+          <p class="step-desc">Survive all waves to win. Difficulty increases every wave. Boss levels every 10 stages!
+          </p>
+        </div>
+      </div>
+
+      <div class="tutorial-actions">
+        <button id="btn-start-game" class="btn-menu btn-primary" style="padding:14px 40px;font-size:0.95rem;">
+          ⚔️ &nbsp; CHOOSE LEVEL
+        </button>
+        <button id="btn-skip-tutorial" class="btn-menu btn-secondary" style="padding:14px 30px;font-size:0.85rem;">
+          SKIP
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     LEVEL SELECT SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="level-select" class="screen hidden">
+    <div class="level-select-container">
+      <div class="level-select-header">
+        <h2 class="level-select-title">🗺️ Select Level</h2>
+        <p style="color:#64748b;font-size:0.8rem;margin-top:4px;">30 levels of increasing challenge</p>
+      </div>
+      <div class="levels-grid" id="levels-grid">
+        <!-- dynamically built -->
+      </div>
+      <button id="btn-back-levels" class="back-btn">← Back to Menu</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     GAME CANVAS CONTAINER
+     ═══════════════════════════════════════════ -->
+  <div id="game-canvas-container">
+    <canvas id="game-canvas"></canvas>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     GAME HUD (top bar)
+     ═══════════════════════════════════════════ -->
+  <div id="game-hud" style="display:none;">
+    <div class="hud-top">
+      <!-- Energy -->
+      <div class="hud-resource" id="hud-energy-container">
+        <span class="res-icon">⚡</span>
+        <span class="res-value" id="hud-energy">150</span>
+      </div>
+
+      <!-- Wave info -->
+      <div class="hud-center">
+        <div class="wave-indicator" id="hud-wave">WAVE 0/0</div>
+        <div class="wave-progress">
+          <div class="wave-progress-fill" id="wave-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="hud-resource">
+        <span class="res-icon">💰</span>
+        <span class="res-value" id="hud-score">0</span>
+      </div>
+
+      <!-- Base health -->
+      <div class="hud-base-health">
+        <span class="base-health-icon">🏰</span>
+        <div class="base-health-bar">
+          <div class="base-health-fill" id="base-health-fill"></div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="hud-buttons">
+        <button class="hud-btn" id="btn-sound" title="Toggle Sound">🔊</button>
+        <button class="hud-btn" id="btn-pause" title="Pause (ESC)">⏸️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     UNIT SELECTION PANEL (bottom)
+     ═══════════════════════════════════════════ -->
+  <div id="unit-panel" class="hidden">
+    <div class="unit-panel-label">UNITS</div>
+    <div class="units-row" id="units-row">
+      <!-- dynamically built -->
+    </div>
+    <div class="abilities-row">
+      <button class="ability-btn" id="ability-bomb" title="Bomb Strike">
+        <div class="cooldown-ring"></div>
+        <span class="ability-icon">💥</span>
+        <span class="ability-label">BOMB</span>
+      </button>
+      <button class="ability-btn" id="ability-freeze" title="Mass Freeze">
+        <div class="cooldown-ring"></div>
+        <span class="ability-icon">❄️</span>
+        <span class="ability-label">FREEZE</span>
+      </button>
+      <button class="ability-btn" id="ability-fire" title="Fire Sweep">
+        <div class="cooldown-ring"></div>
+        <span class="ability-icon">🔥</span>
+        <span class="ability-label">FIRE</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     UPGRADE PANEL (contextual popup)
+     ═══════════════════════════════════════════ -->
+  <div id="upgrade-panel">
+    <!-- dynamically populated -->
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     WAVE ALERT BANNER
+     ═══════════════════════════════════════════ -->
+  <div id="wave-alert" aria-live="assertive">
+    <div class="wave-alert-label">⚠️ INCOMING</div>
+    <div class="wave-alert-num" id="wave-alert-num">WAVE 1!</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     PAUSE SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="pause-screen">
+    <div class="pause-box">
+      <div class="pause-title">⏸ PAUSED</div>
+      <p style="color:#64748b;font-size:0.85rem;">Take a breath, commander.</p>
+      <div class="pause-actions">
+        <button id="btn-resume" class="btn-menu btn-primary" style="padding:14px;font-size:0.9rem;">▶ RESUME</button>
+        <button id="btn-restart" class="btn-menu btn-secondary" style="padding:14px;font-size:0.9rem;">↺
+          RESTART</button>
+        <button id="btn-quit" class="btn-menu btn-secondary"
+          style="padding:14px;font-size:0.9rem;color:#ef4444;border-color:rgba(239,68,68,0.3);">✕ QUIT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     VICTORY SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="victory-screen" class="result-screen">
+    <div class="result-box victory-box">
+      <span class="result-emoji">🏆</span>
+      <h2 class="result-title">VICTORY!</h2>
+      <p class="result-subtitle">Your kingdom stands strong, Commander!</p>
+      <span class="result-stars" id="vs-stars">⭐⭐⭐</span>
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="rs-val" id="vs-score">0</div>
+          <div class="rs-label">Score</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="vs-kills">0</div>
+          <div class="rs-label">Kills</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="vs-time">0:00</div>
+          <div class="rs-label">Time</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="vs-waves">0/0</div>
+          <div class="rs-label">Waves</div>
+        </div>
+      </div>
+      <p id="vs-unlock" style="color:#a855f7;font-weight:700;font-size:0.9rem;margin-bottom:16px;"></p>
+      <div class="result-actions">
+        <button id="btn-victory-next" class="btn-result primary">NEXT LEVEL →</button>
+        <button id="btn-victory-retry" class="btn-result secondary">↺ RETRY</button>
+        <button id="btn-victory-menu" class="btn-result secondary">🏠 MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     DEFEAT SCREEN
+     ═══════════════════════════════════════════ -->
+  <div id="defeat-screen" class="result-screen">
+    <div class="result-box defeat-box">
+      <span class="result-emoji">💀</span>
+      <h2 class="result-title">DEFEATED!</h2>
+      <p class="result-subtitle">The monsters have breached your castle...</p>
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="rs-val" id="ds-score">0</div>
+          <div class="rs-label">Score</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="ds-kills">0</div>
+          <div class="rs-label">Kills</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="ds-time">0:00</div>
+          <div class="rs-label">Survived</div>
+        </div>
+        <div class="result-stat">
+          <div class="rs-val" id="ds-waves">0/0</div>
+          <div class="rs-label">Waves</div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button id="btn-defeat-retry" class="btn-result primary">↺ TRY AGAIN</button>
+        <button id="btn-defeat-menu" class="btn-result secondary">🏠 MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     EFFECTS OVERLAY
+     ═══════════════════════════════════════════ -->
+  <div id="effects-overlay"></div>
+
+  <!-- Script -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>

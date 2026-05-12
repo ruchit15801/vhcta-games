@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Car Escape Rush</title>
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <div id="menu-screen" class="screen active">
+            <img src="assets/images/thumbnail.png" alt="Car Escape Rush" class="thumbnail">
+            <h1>Car Escape Rush</h1>
+            <p>Experience the ultimate 3D car adventure! Master the levels and reach the top.</p>
+            <button id="start-btn">START GAME</button>
+        </div>
+        
+        <!-- Tutorial Screen -->
+        <div id="tutorial-screen" class="screen">
+            <h1 style="color: #43e97b">HOW TO PLAY</h1>
+            <div class="tutorial-container">
+                <div class="instruction-card"><div class="instruction-icon">🕹️</div><div class="instruction-text">Use Joystick to Steer</div></div><div class="instruction-card"><div class="instruction-icon">🏎️</div><div class="instruction-text">Overtake Cars to Score</div></div>
+            </div>
+            <button id="tutorial-ok-btn" class="tutorial-btn">GOT IT!</button>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+        <div id="game-ui" class="screen">
+            <div class="top-bar">
+                <div class="stat-card">
+                    <span class="stat-label">SCORE</span>
+                    <span id="score-display" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">LEVEL</span>
+                    <span id="level-display" class="stat-value">1</span>
+                </div>
+                <div class="stat-card"> <span class="stat-label">HEALTH</span> <div id="health-bar-container"><div id="health-fill"></div></div> </div>
+            </div>
+            <div id="level-up-toast">LEVEL UP!</div>
+            <div id="controls">
+                <div class="joystick-outer" id="joystick-zone"><div class="joystick-inner"></div></div><button class="action-btn" id="action-btn">ACTION</button>
+            </div>
+        </div>
+        <div id="game-over-screen" class="screen">
+            <h1 style="color: #ff0844">GAME OVER</h1>
+            <div class="stat-card" style="margin-bottom: 2rem; width: 200px;">
+                <span class="stat-label">FINAL SCORE</span>
+                <span id="final-score" class="stat-value">0</span>
+            </div>
+            <button id="restart-btn">RETRY</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "game": {
+    "gameName": "Mini Golf",
+    "description": "Pull the power and shot for the best",
+    "size": {
+      "width": 1080,
+      "height": 1920,
+      "orientation": "Portrait"
+    },
+    "tags": ["arcade", "casual", "balloon", "click", "skill", "html5"]
+  }
+}

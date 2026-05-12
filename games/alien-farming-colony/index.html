@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alien Farming Colony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+</head>
+<body>
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="uiLayer">
+        
+        <!-- Top HUD -->
+        <div id="hud" class="panel glass">
+            <div class="stat-box">
+                <div class="stat-icon energy-icon">⚡</div>
+                <div class="stat-value" id="energyValue">100/100</div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill energy-fill" id="energyBar"></div></div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon money-icon">💎</div>
+                <div class="stat-value" id="moneyValue">500</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon level-icon">⭐</div>
+                <div class="stat-value" id="levelValue">Lvl 1</div>
+                <div class="stat-bar-bg"><div class="stat-bar-fill xp-fill" id="xpBar"></div></div>
+            </div>
+        </div>
+
+        <!-- Time & Day -->
+        <div id="timeHud" class="panel glass">
+            <div id="dayDisplay">Day 1</div>
+            <div id="timeDisplay">08:00 AM</div>
+        </div>
+
+        <!-- Tool / Inventory Bar (Bottom) -->
+        <div id="toolbar" class="panel glass">
+            <div class="tool-slot active" data-tool="cursor">
+                <div class="tool-icon">👆</div>
+                <div class="tool-name">Select</div>
+            </div>
+            <div class="tool-slot" data-tool="hoe">
+                <div class="tool-icon">⛏️</div>
+                <div class="tool-name">Till</div>
+            </div>
+            <div class="tool-slot" data-tool="water">
+                <div class="tool-icon">💧</div>
+                <div class="tool-name">Water</div>
+            </div>
+            <div class="tool-slot" data-tool="seed_glow">
+                <div class="tool-icon">🌱</div>
+                <div class="tool-name">Glow Seed</div>
+                <div class="tool-cost">10💎</div>
+            </div>
+            <div class="tool-slot locked" data-tool="seed_energy">
+                <div class="tool-icon">🫐</div>
+                <div class="tool-name">Lvl 3</div>
+            </div>
+            <div class="tool-slot locked" data-tool="seed_star">
+                <div class="tool-icon">✨</div>
+                <div class="tool-name">Lvl 5</div>
+            </div>
+        </div>
+
+        <!-- Right Side Menu Buttons -->
+        <div id="menuButtons">
+            <button class="circle-btn glass" id="btnShop">🛒</button>
+            <button class="circle-btn glass" id="btnUpgrades">🚀</button>
+            <button class="circle-btn glass" id="btnSettings">⚙️</button>
+        </div>
+
+    </div>
+
+    <!-- Intro / Tutorial Screen -->
+    <div id="introScreen" class="modal-overlay active">
+        <div class="modal-content glass-heavy 3d-panel">
+            <h1 class="neon-text title-glow">ALIEN FARMING COLONY</h1>
+            <p class="subtitle">Establish a thriving agricultural base on Kepler-452b.</p>
+            
+            <div class="tutorial-grid">
+                <div class="tut-item">
+                    <div class="tut-icon">⛏️</div>
+                    <p>Till the purple soil</p>
+                </div>
+                <div class="tut-item">
+                    <div class="tut-icon">🌱</div>
+                    <p>Plant alien seeds</p>
+                </div>
+                <div class="tut-item">
+                    <div class="tut-icon">💧</div>
+                    <p>Water to grow</p>
+                </div>
+                <div class="tut-item">
+                    <div class="tut-icon">💎</div>
+                    <p>Harvest & Upgrade</p>
+                </div>
+            </div>
+
+            <button id="btnStartGame" class="btn-primary 3d-btn">START EXPEDITION</button>
+        </div>
+    </div>
+
+    <!-- Shop / Upgrade Modal -->
+    <div id="shopScreen" class="modal-overlay hidden">
+        <div class="modal-content glass-heavy 3d-panel wide-panel">
+            <button class="close-btn" id="btnCloseShop">✖</button>
+            <h2 class="neon-text">COLONY UPGRADES</h2>
+            
+            <div class="upgrade-list">
+                <div class="upgrade-item glass">
+                    <div class="upg-icon">⛏️</div>
+                    <div class="upg-info">
+                        <h3>Plasma Hoe</h3>
+                        <p>Tills faster, uses less energy.</p>
+                    </div>
+                    <button class="btn-buy" data-upgrade="hoe" data-cost="1000">1000💎</button>
+                </div>
+                <div class="upgrade-item glass">
+                    <div class="upg-icon">💧</div>
+                    <div class="upg-info">
+                        <h3>Hydro-Drone</h3>
+                        <p>Automatically waters dry crops.</p>
+                    </div>
+                    <button class="btn-buy" data-upgrade="water" data-cost="2500">2500💎</button>
+                </div>
+                <div class="upgrade-item glass">
+                    <div class="upg-icon">⚡</div>
+                    <div class="upg-info">
+                        <h3>Energy Core</h3>
+                        <p>Increases max energy by 50.</p>
+                    </div>
+                    <button class="btn-buy" data-upgrade="energy" data-cost="1500">1500💎</button>
+                </div>
+                <div class="upgrade-item glass">
+                    <div class="upg-icon">🧑‍🌾</div>
+                    <div class="upg-info">
+                        <h3>Harvest Bot</h3>
+                        <p>Auto-harvests mature crops.</p>
+                    </div>
+                    <button class="btn-buy" data-upgrade="bot" data-cost="5000">5000💎</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/audio.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

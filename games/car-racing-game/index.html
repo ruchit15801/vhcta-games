@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VELOCITY ELITE | Executive Racing Simulation</title>
+    
+    <!-- Professional Game Branding -->
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+    <meta property="og:title" content="VELOCITY ELITE">
+    <meta property="og:description" content="Experience high-fidelity luxury racing in your browser.">
+    <meta property="og:image" content="assets/images/thumbnail.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Experience the ultimate high-end car racing game. Ultra-realistic visuals, 25+ levels, and high-performance gameplay.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer">
+            <!-- Start Screen -->
+            <div id="start-screen" class="overlay active">
+                <div class="content glass">
+                    <div class="hero-banner">
+                        <img src="assets/images/thumbnail.png" alt="Velocity Elite">
+                    </div>
+                    <h1>VELOCITY ELITE</h1>
+                    <p class="subtitle">EXECUTIVE RACING SIMULATION</p>
+                    <div class="menu-buttons">
+                        <button id="btn-start" class="btn btn-primary">START ENGINE</button>
+                        <button id="btn-how" class="btn btn-secondary">SIMULATION MANUAL</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions Screen -->
+            <div id="how-screen" class="overlay">
+                <div class="content glass">
+                    <h2>SIMULATION MANUAL</h2>
+                    <div class="manual-grid">
+                        <div class="manual-item">
+                            <label>STEERING</label>
+                            <span>WASD / ARROW KEYS</span>
+                        </div>
+                        <div class="manual-item">
+                            <label>PROPULSION</label>
+                            <span>SHIFT (NITRO BOOST)</span>
+                        </div>
+                    </div>
+                    <button id="btn-back" class="btn btn-secondary">RETURN</button>
+                </div>
+            </div>
+
+            <!-- HUD (Executive Dashboard) -->
+            <div id="hud" class="hidden">
+                <!-- Rear View Mirror (Elite Sim Feature) -->
+                <div id="rear-view-mirror">
+                    <canvas id="mirrorCanvas"></canvas>
+                </div>
+
+                <div id="vector-msg" class="hidden">SIMULATION MODE ACTIVE (VECTOR CORE)</div>
+                
+                <div class="hud-top">
+                    <!-- Left Stats -->
+                    <div class="stats-group">
+                        <div class="stat-item">
+                            <label>PRECISION SCORE</label>
+                            <span id="score-val">00000</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>SECTOR</label>
+                            <span id="level-val">1</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Speedo (Moved from bottom) -->
+                    <div class="speed-container">
+                        <div class="speedometer">
+                            <span id="speed-val">000</span>
+                            <small>KM/H</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gauges (Moved from center to corners) -->
+                <div class="hud-gauges">
+                    <div class="gauge-panel left">
+                        <div class="bar-label">SYSTEM HEALTH</div>
+                        <div class="bar-bg">
+                            <div id="health-bar-fill" class="bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="gauge-panel right">
+                        <div class="bar-label">NITROGEN RESERVE</div>
+                        <div class="bar-bg">
+                            <div id="nitro-bar-fill" class="bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Up Screen -->
+            <div id="levelup-screen" class="overlay">
+                <div class="content glass">
+                    <h2>SECTOR COMPLETE</h2>
+                    <p id="level-summary">Initializing next circuit architecture...</p>
+                    <button id="btn-next" class="btn btn-primary">PROCEED</button>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div id="gameover-screen" class="overlay">
+                <div class="content glass">
+                    <h1>CRITICAL IMPACT</h1>
+                    <div class="stats-final">
+                        <p>DISTANCE: <span id="final-dist">0</span>M</p>
+                        <p>SCORE: <span id="final-score">0</span></p>
+                    </div>
+                    <button id="btn-restart" class="btn btn-primary">RESTART SYSTEM</button>
+                </div>
+            </div>
+
+            <!-- Pause Overlay -->
+            <div id="pause-screen" class="overlay">
+                <div class="content glass">
+                    <h2>ENGINE PAUSED</h2>
+                    <button id="btn-resume" class="btn btn-primary">RESUME</button>
+                    <button id="btn-quit" class="btn btn-secondary">ABORT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Toggle -->
+        <button id="audio-toggle">
+            <span id="audio-icon">🔊</span>
+        </button>
+
+        <!-- Mobile Controls (only on touch) -->
+        <div id="mobile-controls" class="hidden">
+            <button class="mobile-btn" id="touch-left">←</button>
+            <button class="mobile-btn" id="touch-right">→</button>
+            <button class="mobile-btn" id="touch-nitro">⚡</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/assets.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

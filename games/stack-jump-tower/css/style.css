@@ -1,0 +1,14 @@
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { background-color: #050505; font-family: 'Orbitron', sans-serif; overflow: hidden; touch-action: none; }
+#game-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(to top, #111, #000); }
+canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
+#ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; }
+#scoreDisplay { position: absolute; top: 20px; left: 30px; font-size: 3rem; color: #fff; text-shadow: 0 0 10px #fff; font-weight: 900; letter-spacing: 2px; }
+.screen { background: rgba(10, 15, 20, 0.85); backdrop-filter: blur(10px); border: 2px solid #fff; border-radius: 15px; padding: 3rem; text-align: center; box-shadow: 0 0 30px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1); display: none; pointer-events: auto; transform: scale(0.9); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.screen.active { display: flex; flex-direction: column; gap: 20px; transform: scale(1); animation: pulseGlow 2s infinite alternate; }
+h1 { color: #fff; text-shadow: 0 0 15px #fff; font-size: 3rem; margin-bottom: 10px; }
+.screen p { color: #ccc; font-size: 1.2rem; letter-spacing: 1px; }
+button { background: transparent; border: 2px solid #fff; color: #fff; padding: 15px 40px; font-size: 1.5rem; font-family: 'Orbitron', sans-serif; font-weight: bold; cursor: pointer; margin-top: 20px; border-radius: 5px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) inset; }
+button:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; }
+@keyframes pulseGlow { from { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1); } to { box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2); } }
+@media (max-width: 768px) { h1 { font-size: 2rem; } .screen { padding: 2rem; width: 90%; } #scoreDisplay { font-size: 2rem; top: 10px; left: 15px;} }

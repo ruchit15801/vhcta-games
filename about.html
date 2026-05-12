@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | VHCTA Games â€” Free Online Games</title>
+    <meta name="description" content="Learn about VHCTA Games â€” your premium destination for free online HTML5 games. Discover our story, mission, and the team behind the games.">
+    <meta name="keywords" content="about VHCTA Games, free online games, HTML5 games platform, mobile games, about us">
+    <link rel="canonical" href="https://vhcta.com/about">
+
+    <!-- PWA & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#C9A84C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icon-512.png">
+
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6165378370949443"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF7TQW3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-B0TNF7TQW3');
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="About Us | VHCTA Games">
+    <meta property="og:description" content="Discover VHCTA Games â€” your ultimate destination for free, instant-play HTML5 games.">
+    <meta property="og:image" content="https://vhcta.com/assets/img/og-image.png">
+    <meta property="og:url" content="https://vhcta.com/about">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        /* â”€â”€ Page-specific styles â”€â”€ */
+        .about-hero {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .about-hero .page-eyebrow {
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .75rem;
+            opacity: .85;
+        }
+        .about-hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            background: var(--grad-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .about-hero p {
+            color: var(--t2);
+            font-size: .9rem;
+            line-height: 1.75;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .about-divider {
+            width: 48px; height: 2px;
+            background: var(--grad-gold);
+            border-radius: 2px;
+            margin: 1.25rem auto;
+            box-shadow: 0 0 10px rgba(201,168,76,.4);
+        }
+
+        /* Stat cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 10;
+        }
+        .stat-card {
+            background: var(--s1);
+            border: 1px solid var(--gold-border2);
+            border-radius: var(--r-sm);
+            padding: 1.1rem .9rem;
+            text-align: center;
+            transition: transform .28s var(--ease), box-shadow .28s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(0,0,0,.5), var(--shadow-gold);
+            border-color: rgba(201,168,76,.4);
+        }
+        .stat-card .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            background: var(--grad-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: .3rem;
+        }
+        .stat-card .stat-label {
+            font-size: .72rem;
+            color: var(--t2);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Feature cards */
+        .feature-card {
+            background: var(--s1);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--r-sm);
+            padding: 1.25rem;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            position: relative;
+            z-index: 10;
+            transition: transform .28s var(--ease), border-color .28s;
+        }
+        .feature-card:hover {
+            transform: translateX(4px);
+            border-color: rgba(201,168,76,.4);
+        }
+        .feature-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            background: rgba(201,168,76,.1);
+            border: 1px solid var(--gold-border2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .feature-text h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: .92rem;
+            font-weight: 700;
+            color: var(--t1);
+            margin-bottom: .3rem;
+        }
+        .feature-text p {
+            font-size: .8rem;
+            color: var(--t2);
+            line-height: 1.65;
+        }
+
+        /* Mission card */
+        .mission-card {
+            background: linear-gradient(135deg, rgba(201,168,76,.08) 0%, rgba(201,168,76,.03) 100%);
+            border: 1px solid var(--gold-border2);
+            border-radius: var(--r-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--grad-gold);
+        }
+        .mission-card h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            margin-bottom: .75rem;
+        }
+        .mission-card p {
+            font-size: .87rem;
+            color: var(--t2);
+            line-height: 1.75;
+        }
+
+        .section-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            margin: 1.75rem 0 .85rem;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app-wrapper">
+        <!-- Background -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <div class="bg-shapes">
+            <svg class="shape shape-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4m-2-2v4m10-2h.01M14 12h.01"/>
+            </svg>
+            <svg class="shape shape-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div class="container header-content">
+                                <a href="/" class="logo" style="text-decoration:none;">
+                    <div class="vhcta-logo-wrap">
+                        <svg class="vhcta-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="10" width="28" height="16" rx="5" fill="url(#lgh)" opacity="0.15"/>
+                            <rect x="4" y="10" width="28" height="16" rx="5" stroke="url(#lgh)" stroke-width="1.6" fill="none"/>
+                            <path d="M11 18h4M13 16v4" stroke="url(#lgh)" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="24" cy="16" r="1.3" fill="url(#lgh)" opacity="0.7"/>
+                            <circle cx="27" cy="18.5" r="1.3" fill="url(#lgh)"/>
+                            <circle cx="24" cy="21" r="1.3" fill="url(#lgh)" opacity="0.7"/>
+                            <defs>
+                                <linearGradient id="lgh" x1="4" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#F0D080"/>
+                                    <stop offset="50%" stop-color="#C9A84C"/>
+                                    <stop offset="100%" stop-color="#8B6914"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="vhcta-wordmark">VHCTA<span class="vhcta-sub">GAMES</span></span>
+                    </div>
+                </a>
+                <nav class="header-nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/about" class="nav-link active">About</a>
+                    <a href="/contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+
+            <!-- Hero -->
+            <div class="about-hero">
+                <p class="page-eyebrow">ðŸŽ® Our Story</p>
+                <h1>About<br>VHCTA Games</h1>
+                <div class="about-divider"></div>
+                <p>We are passionate game enthusiasts dedicated to bringing you the best free HTML5 gaming experience â€” no downloads, no logins, just pure fun on any device.</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-num">100+</div>
+                    <div class="stat-label">Games Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">FREE</div>
+                    <div class="stat-label">Always & Forever</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">ALL</div>
+                    <div class="stat-label">Devices Supported</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">4.8â˜…</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+            </div>
+
+            <!-- Mission -->
+            <div class="mission-card">
+                <h2>ðŸŽ¯ Our Mission</h2>
+                <p>At VHCTA Games, our mission is simple â€” make gaming accessible to everyone. We believe great games should be available to anyone, anywhere, without barriers like heavy downloads, account registrations, or paywalls. Every game on our platform is instantly playable in your browser.</p>
+            </div>
+
+            <!-- Why Us -->
+            <p class="section-label">Why VHCTA Games?</p>
+
+            <div class="feature-card">
+                <div class="feature-icon">âš¡</div>
+                <div class="feature-text">
+                    <h3>Instant Play â€” No Downloads</h3>
+                    <p>Every game launches directly in your browser. Just click and play â€” no app stores, no installs, no waiting.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">ðŸ“±</div>
+                <div class="feature-text">
+                    <h3>Mobile-First Design</h3>
+                    <p>All games are optimized for touchscreens. Whether on your phone, tablet, or desktop â€” the experience is seamless.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">ðŸ†</div>
+                <div class="feature-text">
+                    <h3>Premium Game Library</h3>
+                    <p>Carefully curated titles across Action, Puzzle, Racing, Strategy, Arcade, and Sports genres â€” quality over quantity.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">ðŸ”’</div>
+                <div class="feature-text">
+                    <h3>Privacy-First Approach</h3>
+                    <p>We respect your privacy. No intrusive sign-ups, no selling your data. Your game progress is saved locally on your device.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">ðŸŒ</div>
+                <div class="feature-text">
+                    <h3>Always Growing</h3>
+                    <p>New games are added regularly. Our library keeps expanding with fresh, exciting titles to keep you entertained.</p>
+                </div>
+            </div>
+
+            <!-- Contact CTA -->
+            <div class="mission-card" style="margin-top:1.5rem; text-align:center;">
+                <h2>ðŸ“¬ Get In Touch</h2>
+                <p style="margin-bottom:1rem;">Have questions, suggestions, or feedback? We'd love to hear from you!</p>
+                <a href="/contact" style="display:inline-block; background:var(--grad-gold); color:#000; font-weight:700; font-size:.9rem; padding:.75rem 2rem; border-radius:50px; text-decoration:none; transition:transform .25s var(--ease), box-shadow .25s; box-shadow:0 6px 20px rgba(201,168,76,.3);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(201,168,76,.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(201,168,76,.3)'">Contact Us â†’</a>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container footer-inner">
+                <div class="footer-logo-row">
+                    <img src="/assets/logo.png" class="footer-logo-img" alt="VHCTA Games Logo">
+                    <span class="footer-brand">VHCTA<span>GAMES</span></span>
+                </div>
+                <p class="footer-tagline">Premium free online games â€” play instantly, no downloads.</p>
+                <nav class="footer-nav">
+                    <a href="/">Home</a>
+                    <a href="/about">About Us</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms &amp; Conditions</a>
+                </nav>
+                <div class="footer-divider"></div>
+                <p class="footer-copy">&copy; 2026 VHCTA Games. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+</body>
+
+</html>
+
+

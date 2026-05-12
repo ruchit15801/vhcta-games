@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | VHCTA Games â€” Get In Touch</title>
+    <meta name="description" content="Contact VHCTA Games. Send us your feedback, game suggestions, or any questions. We're here to help and love hearing from our players!">
+    <meta name="keywords" content="contact VHCTA Games, get in touch, game support, feedback, VHCTA Games contact">
+    <link rel="canonical" href="https://vhcta.com/contact">
+
+    <!-- PWA & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#C9A84C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icon-512.png">
+
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6165378370949443"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF7TQW3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-B0TNF7TQW3');
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Contact Us | VHCTA Games">
+    <meta property="og:description" content="Reach out to VHCTA Games â€” we'd love to hear your feedback and suggestions!">
+    <meta property="og:image" content="https://vhcta.com/assets/img/og-image.png">
+    <meta property="og:url" content="https://vhcta.com/contact">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        /* â”€â”€ Contact Page Styles â”€â”€ */
+        .contact-hero {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .contact-hero .page-eyebrow {
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .75rem;
+            opacity: .85;
+        }
+        .contact-hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            background: var(--grad-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            margin-bottom: .75rem;
+        }
+        .contact-hero p {
+            color: var(--t2);
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+        .contact-divider {
+            width: 48px; height: 2px;
+            background: var(--grad-gold);
+            border-radius: 2px;
+            margin: 1rem auto 1.5rem;
+            box-shadow: 0 0 10px rgba(201,168,76,.4);
+        }
+
+        /* Info cards */
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .contact-info-card {
+            background: var(--s1);
+            border: 1px solid var(--gold-border);
+            border-radius: var(--r-sm);
+            padding: .95rem .75rem;
+            text-align: center;
+            transition: transform .25s var(--ease), border-color .25s;
+        }
+        .contact-info-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(201,168,76,.4);
+        }
+        .contact-info-card .ci-icon { font-size: 1.5rem; margin-bottom: .4rem; display: block; }
+        .contact-info-card .ci-label { font-size: .65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: .2rem; }
+        .contact-info-card .ci-value { font-size: .75rem; color: var(--t2); word-break: break-all; }
+
+        /* Form card */
+        .contact-form-card {
+            background: var(--s1);
+            border: 1px solid var(--gold-border2);
+            border-radius: var(--r-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .contact-form-card h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            margin-bottom: 1.25rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--t2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: .45rem;
+        }
+        .form-group label span.required { color: var(--gold); margin-left: 2px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--s2);
+            border: 1px solid var(--gold-border);
+            border-radius: 10px;
+            padding: .72rem 1rem;
+            color: var(--t1);
+            font-size: .88rem;
+            font-family: 'Outfit', sans-serif;
+            outline: none;
+            transition: border-color .25s, box-shadow .25s, background .25s;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--t2);
+            opacity: .6;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(201,168,76,.5);
+            box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+            background: var(--s3);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            background: var(--grad-gold);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            letter-spacing: .5px;
+            transition: transform .28s var(--ease), box-shadow .28s;
+            box-shadow: 0 6px 20px rgba(201,168,76,.3);
+            margin-top: .5rem;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(201,168,76,.45);
+        }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success / error states */
+        .form-message {
+            border-radius: 10px;
+            padding: .85rem 1rem;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: none;
+            animation: msgIn .35s var(--ease);
+        }
+        @keyframes msgIn { from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;} }
+        .form-message.success {
+            background: rgba(93,202,165,.1);
+            border: 1px solid rgba(93,202,165,.35);
+            color: #5DCAA5;
+        }
+        .form-message.error {
+            background: rgba(240,149,149,.1);
+            border: 1px solid rgba(240,149,149,.35);
+            color: #F09595;
+        }
+
+        /* Field validation error */
+        .field-error {
+            font-size: .72rem;
+            color: #F09595;
+            margin-top: .3rem;
+            display: none;
+        }
+        .form-group.has-error input,
+        .form-group.has-error textarea,
+        .form-group.has-error select {
+            border-color: rgba(240,149,149,.5);
+        }
+        .form-group.has-error .field-error { display: block; }
+
+        /* Char counter */
+        .char-counter {
+            font-size: .68rem;
+            color: var(--t2);
+            text-align: right;
+            margin-top: .25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app-wrapper">
+        <!-- Background -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <div class="bg-shapes">
+            <svg class="shape shape-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div class="container header-content">
+                                <a href="/" class="logo" style="text-decoration:none;">
+                    <div class="vhcta-logo-wrap">
+                        <svg class="vhcta-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="10" width="28" height="16" rx="5" fill="url(#lgh)" opacity="0.15"/>
+                            <rect x="4" y="10" width="28" height="16" rx="5" stroke="url(#lgh)" stroke-width="1.6" fill="none"/>
+                            <path d="M11 18h4M13 16v4" stroke="url(#lgh)" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="24" cy="16" r="1.3" fill="url(#lgh)" opacity="0.7"/>
+                            <circle cx="27" cy="18.5" r="1.3" fill="url(#lgh)"/>
+                            <circle cx="24" cy="21" r="1.3" fill="url(#lgh)" opacity="0.7"/>
+                            <defs>
+                                <linearGradient id="lgh" x1="4" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#F0D080"/>
+                                    <stop offset="50%" stop-color="#C9A84C"/>
+                                    <stop offset="100%" stop-color="#8B6914"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="vhcta-wordmark">VHCTA<span class="vhcta-sub">GAMES</span></span>
+                    </div>
+                </a>
+                <nav class="header-nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/contact" class="nav-link active">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+
+            <!-- Hero -->
+            <div class="contact-hero">
+                <p class="page-eyebrow">ðŸ“¬ Reach Out</p>
+                <h1>Contact<br>Us</h1>
+                <div class="contact-divider"></div>
+                <p>We love hearing from our players. Got feedback, a game suggestion, or need help? Drop us a message!</p>
+            </div>
+
+            <!-- Contact Info Cards -->
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <span class="ci-icon">ðŸ“§</span>
+                    <div class="ci-label">Email</div>
+                    <div class="ci-value">support@VHCTA Games.in</div>
+                </div>
+                <div class="contact-info-card">
+                    <span class="ci-icon">â±ï¸</span>
+                    <div class="ci-label">Response</div>
+                    <div class="ci-value">Within 24â€“48 hrs</div>
+                </div>
+                <div class="contact-info-card">
+                    <span class="ci-icon">ðŸŒ</span>
+                    <div class="ci-label">Platform</div>
+                    <div class="ci-value">Web, Mobile, Tablet</div>
+                </div>
+                <div class="contact-info-card">
+                    <span class="ci-icon">ðŸŽ®</span>
+                    <div class="ci-label">Support</div>
+                    <div class="ci-value">Games & General</div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-card">
+                <h2>âœ‰ï¸ Send a Message</h2>
+                <form id="contact-form" novalidate>
+
+                    <div class="form-group" id="fg-name">
+                        <label for="contact-name">Your Name <span class="required">*</span></label>
+                        <input type="text" id="contact-name" name="name" placeholder="Enter your full name" maxlength="80" autocomplete="name">
+                        <div class="field-error" id="err-name">Please enter your name.</div>
+                    </div>
+
+                    <div class="form-group" id="fg-email">
+                        <label for="contact-email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="contact-email" name="email" placeholder="you@example.com" maxlength="120" autocomplete="email">
+                        <div class="field-error" id="err-email">Please enter a valid email address.</div>
+                    </div>
+
+                    <div class="form-group" id="fg-subject">
+                        <label for="contact-subject">Subject <span class="required">*</span></label>
+                        <select id="contact-subject" name="subject">
+                            <option value="" disabled selected>Select a topic...</option>
+                            <option value="Game Issue">ðŸž Game Issue / Bug Report</option>
+                            <option value="Game Suggestion">ðŸ’¡ Game Suggestion</option>
+                            <option value="General Feedback">â­ General Feedback</option>
+                            <option value="Partnership">ðŸ¤ Partnership / Collaboration</option>
+                            <option value="Advertising">ðŸ“¢ Advertising Inquiry</option>
+                            <option value="Other">ðŸ“Œ Other</option>
+                        </select>
+                        <div class="field-error" id="err-subject">Please select a subject.</div>
+                    </div>
+
+                    <div class="form-group" id="fg-message">
+                        <label for="contact-message">Message <span class="required">*</span></label>
+                        <textarea id="contact-message" name="message" placeholder="Write your message here (min. 20 characters)..." maxlength="1000"></textarea>
+                        <div class="char-counter"><span id="char-count">0</span> / 1000</div>
+                        <div class="field-error" id="err-message">Message must be at least 20 characters.</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        Send Message ðŸš€
+                    </button>
+
+                    <div class="form-message success" id="form-success">
+                        âœ… Thank you! Your message has been sent successfully. We'll get back to you within 24â€“48 hours.
+                    </div>
+                    <div class="form-message error" id="form-error">
+                        âŒ Something went wrong. Please try again or email us directly at support@VHCTA Games.in
+                    </div>
+                </form>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container footer-inner">
+                <div class="footer-logo-row">
+                    <img src="/assets/logo.png" class="footer-logo-img" alt="VHCTA Games Logo">
+                    <span class="footer-brand">VHCTA<span>GAMES</span></span>
+                </div>
+                <p class="footer-tagline">Premium free online games â€” play instantly, no downloads.</p>
+                <nav class="footer-nav">
+                    <a href="/">Home</a>
+                    <a href="/about">About Us</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms &amp; Conditions</a>
+                </nav>
+                <div class="footer-divider"></div>
+                <p class="footer-copy">&copy; 2026 VHCTA Games. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // â”€â”€ Character counter â”€â”€
+        const msgEl = document.getElementById('contact-message');
+        const charCount = document.getElementById('char-count');
+        msgEl.addEventListener('input', () => {
+            charCount.textContent = msgEl.value.length;
+        });
+
+        // â”€â”€ Validation helpers â”€â”€
+        function setError(groupId, errId, show) {
+            const g = document.getElementById(groupId);
+            const e = document.getElementById(errId);
+            if (show) { g.classList.add('has-error'); e.style.display = 'block'; }
+            else       { g.classList.remove('has-error'); e.style.display = 'none'; }
+        }
+
+        function validateForm() {
+            let valid = true;
+            const name    = document.getElementById('contact-name').value.trim();
+            const email   = document.getElementById('contact-email').value.trim();
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value.trim();
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            setError('fg-name',    'err-name',    !name);
+            setError('fg-email',   'err-email',   !emailRe.test(email));
+            setError('fg-subject', 'err-subject', !subject);
+            setError('fg-message', 'err-message', message.length < 20);
+
+            if (!name || !emailRe.test(email) || !subject || message.length < 20) valid = false;
+            return valid;
+        }
+
+        // â”€â”€ Submit handler â”€â”€
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const successEl = document.getElementById('form-success');
+            const errorEl   = document.getElementById('form-error');
+            successEl.style.display = 'none';
+            errorEl.style.display   = 'none';
+
+            if (!validateForm()) return;
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled    = true;
+            btn.textContent = 'Sending... â³';
+
+            // Collect form data
+            const payload = {
+                name:    document.getElementById('contact-name').value.trim(),
+                email:   document.getElementById('contact-email').value.trim(),
+                subject: document.getElementById('contact-subject').value,
+                message: document.getElementById('contact-message').value.trim(),
+                timestamp: new Date().toISOString(),
+                source: window.location.href
+            };
+
+            try {
+                // Use Formspree (free) for email delivery
+                // Replace "YOUR_FORM_ID" with your Formspree form ID after signing up at formspree.io
+                const response = await fetch('https://formspree.io/f/xeoqpznq', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    successEl.style.display = 'block';
+                    document.getElementById('contact-form').reset();
+                    charCount.textContent = '0';
+                    // Remove all error states
+                    ['fg-name','fg-email','fg-subject','fg-message'].forEach(id => {
+                        document.getElementById(id).classList.remove('has-error');
+                    });
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (err) {
+                errorEl.style.display = 'block';
+            } finally {
+                btn.disabled    = false;
+                btn.textContent = 'Send Message ðŸš€';
+            }
+        });
+
+        // â”€â”€ Live validation on blur â”€â”€
+        document.getElementById('contact-name').addEventListener('blur', () => {
+            const v = document.getElementById('contact-name').value.trim();
+            setError('fg-name', 'err-name', !v);
+        });
+        document.getElementById('contact-email').addEventListener('blur', () => {
+            const v = document.getElementById('contact-email').value.trim();
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            setError('fg-email', 'err-email', !re.test(v));
+        });
+        document.getElementById('contact-subject').addEventListener('change', () => {
+            const v = document.getElementById('contact-subject').value;
+            setError('fg-subject', 'err-subject', !v);
+        });
+        document.getElementById('contact-message').addEventListener('blur', () => {
+            const v = document.getElementById('contact-message').value.trim();
+            setError('fg-message', 'err-message', v.length < 20);
+        });
+    </script>
+</body>
+
+</html>
+
+

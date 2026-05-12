@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="holeBg" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </radialGradient>
+    <radialGradient id="holeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#000000"/>
+      <stop offset="90%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#ff3366"/>
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#holeBg)" />
+  
+  <!-- Outer Glow -->
+  <circle cx="256" cy="256" r="180" fill="url(#holeGlow)" filter="url(#glow)"/>
+  
+  <!-- Core Black Hole -->
+  <circle cx="256" cy="256" r="130" fill="#000000"/>
+  
+  <!-- Buildings Falling In -->
+  <g transform="translate(256, 256)">
+    <!-- Building 1 -->
+    <g transform="rotate(45) translate(90, 0) scale(0.6)">
+      <rect x="-40" y="-80" width="80" height="160" fill="#457b9d" rx="5"/>
+      <rect x="-30" y="-70" width="15" height="20" fill="#a8dadc"/>
+      <rect x="0" y="-70" width="15" height="20" fill="#a8dadc"/>
+      <rect x="-30" y="-30" width="15" height="20" fill="#a8dadc"/>
+      <rect x="0" y="-30" width="15" height="20" fill="#a8dadc"/>
+    </g>
+    <!-- Car 1 -->
+    <g transform="rotate(160) translate(110, 0) scale(0.5)">
+      <rect x="-30" y="-15" width="60" height="30" fill="#e63946" rx="10"/>
+      <rect x="-10" y="-10" width="20" height="20" fill="#fff"/>
+    </g>
+    <!-- Tree 1 -->
+    <g transform="rotate(270) translate(140, 0) scale(0.8)">
+      <circle cx="0" cy="0" r="20" fill="#4caf50"/>
+      <circle cx="-10" cy="-10" r="15" fill="#81c784"/>
+    </g>
+  </g>
+  
+  <!-- Accents -->
+  <path d="M 50 100 Q 150 -20 300 50" stroke="rgba(0, 229, 255, 0.4)" stroke-width="4" fill="none" stroke-dasharray="10, 10"/>
+  <path d="M 450 400 Q 300 550 200 450" stroke="rgba(255, 51, 102, 0.4)" stroke-width="6" fill="none" stroke-dasharray="15, 10"/>
+</svg>

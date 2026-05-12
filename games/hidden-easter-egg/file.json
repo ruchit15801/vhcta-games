@@ -1,0 +1,12 @@
+{
+  "game": {
+    "gameName": "Hidden Easter Egg",
+    "description": "Hidden Easter Egg is a fun and relaxing 2D hidden object game that challenges your observation skills. In each level, players must carefully search colorful scenes to find Easter eggs that are cleverly hidden with low opacity and subtle transparency.",
+    "size": {
+      "width": 1920,
+      "height": 1080,
+      "orientation": "Landscape"
+    },
+    "tags": ["arcade", "casual", "egg", "hide", "find", "html5"]
+  }
+}

@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Sky gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#07020f"/>
+      <stop offset="35%"  stop-color="#1a0a4e"/>
+      <stop offset="70%"  stop-color="#2d1b69"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+    <!-- Ground gradient -->
+    <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#14532d"/>
+      <stop offset="50%"  stop-color="#166534"/>
+      <stop offset="100%" stop-color="#0f3a22"/>
+    </linearGradient>
+    <!-- Path gradient -->
+    <linearGradient id="pathGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#78350f"/>
+      <stop offset="50%"  stop-color="#92400e"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <!-- Tower glow -->
+    <radialGradient id="towerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="rgba(168,85,247,0.6)"/>
+      <stop offset="100%" stop-color="rgba(168,85,247,0)"/>
+    </radialGradient>
+    <!-- Boss glow -->
+    <radialGradient id="bossGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="rgba(239,68,68,0.7)"/>
+      <stop offset="100%" stop-color="rgba(239,68,68,0)"/>
+    </radialGradient>
+    <!-- Title gradient -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#fde68a"/>
+      <stop offset="50%"  stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <!-- Left overlay for towers -->
+    <linearGradient id="leftFade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(10,5,30,0.6)"/>
+      <stop offset="100%" stop-color="rgba(10,5,30,0)"/>
+    </linearGradient>
+    <!-- Right overlay for monsters -->
+    <linearGradient id="rightFade" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(60,5,5,0.5)"/>
+      <stop offset="100%" stop-color="rgba(60,5,5,0)"/>
+    </linearGradient>
+    <!-- Center vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.5)"/>
+    </radialGradient>
+    <filter id="glow4" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow8" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow12" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7c3aed" flood-opacity="0.8"/>
+    </filter>
+    <filter id="blur2">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- ── SKY ── -->
+  <rect width="1200" height="630" fill="url(#skyGrad)"/>
+
+  <!-- Stars -->
+  <circle cx="100"  cy="50"  r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="220"  cy="30"  r="1"   fill="white" opacity="0.6"/>
+  <circle cx="350"  cy="65"  r="2"   fill="white" opacity="0.9"/>
+  <circle cx="480"  cy="20"  r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="600"  cy="45"  r="1"   fill="white" opacity="0.5"/>
+  <circle cx="720"  cy="30"  r="2"   fill="white" opacity="0.8"/>
+  <circle cx="850"  cy="55"  r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="950"  cy="25"  r="1"   fill="white" opacity="0.7"/>
+  <circle cx="1070" cy="60"  r="2"   fill="white" opacity="0.9"/>
+  <circle cx="1150" cy="35"  r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="160"  cy="130" r="1"   fill="white" opacity="0.4"/>
+  <circle cx="420"  cy="110" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="920"  cy="100" r="1"   fill="white" opacity="0.6"/>
+  <circle cx="1100" cy="120" r="1.5" fill="white" opacity="0.5"/>
+
+  <!-- Moon -->
+  <circle cx="90" cy="80" r="35" fill="#fde68a" opacity="0.15" filter="url(#glow12)"/>
+  <circle cx="90" cy="80" r="28" fill="#fde68a" opacity="0.25"/>
+  <circle cx="90" cy="80" r="20" fill="#fef3c7" opacity="0.4"/>
+
+  <!-- Background mountains -->
+  <path d="M0 380 L80 290 L160 340 L260 240 L380 310 L480 220 L600 300 L700 200 L820 280 L940 170 L1060 260 L1160 190 L1200 230 L1200 380 Z"
+        fill="#1e1b4b" opacity="0.8"/>
+  <path d="M0 380 L100 320 L200 360 L320 280 L440 330 L560 260 L680 320 L800 240 L920 300 L1060 220 L1200 290 L1200 380 Z"
+        fill="#2d2a6e" opacity="0.6"/>
+
+  <!-- ── GROUND ── -->
+  <rect x="0" y="370" width="1200" height="260" fill="url(#groundGrad)"/>
+
+  <!-- Lane paths (5 lanes) -->
+  <rect x="140" y="370" width="1060" height="50"  fill="url(#pathGrad)" opacity="0.55"/>
+  <rect x="140" y="422" width="1060" height="2"   fill="rgba(255,255,255,0.1)"/>
+  <rect x="140" y="424" width="1060" height="46"  fill="url(#pathGrad)" opacity="0.45"/>
+  <rect x="140" y="472" width="1060" height="2"   fill="rgba(255,255,255,0.1)"/>
+  <rect x="140" y="474" width="1060" height="46"  fill="url(#pathGrad)" opacity="0.55"/>
+  <rect x="140" y="522" width="1060" height="2"   fill="rgba(255,255,255,0.1)"/>
+  <rect x="140" y="524" width="1060" height="46"  fill="url(#pathGrad)" opacity="0.45"/>
+  <rect x="140" y="572" width="1060" height="2"   fill="rgba(255,255,255,0.1)"/>
+  <rect x="140" y="574" width="1060" height="56"  fill="url(#pathGrad)" opacity="0.55"/>
+
+  <!-- ═══════════════════════
+       CASTLE / BASE (left side)
+       ═══════════════════════ -->
+  <!-- Castle wall -->
+  <rect x="0" y="350" width="145" height="280" fill="#1e1b4b"/>
+  <rect x="0" y="350" width="145" height="280" fill="rgba(139,92,246,0.15)"/>
+  <!-- Castle battlements -->
+  <rect x="0"   y="330" width="28" height="28" fill="#312e81"/>
+  <rect x="34"  y="330" width="28" height="28" fill="#312e81"/>
+  <rect x="68"  y="330" width="28" height="28" fill="#312e81"/>
+  <rect x="102" y="330" width="28" height="28" fill="#312e81"/>
+  <!-- Castle gate -->
+  <path d="M42 630 L42 510 Q72 480 102 510 L102 630 Z" fill="#0a0a1a"/>
+  <!-- Torch fires -->
+  <circle cx="25"  cy="380" r="7" fill="#f97316" filter="url(#glow8)" opacity="0.9"/>
+  <circle cx="120" cy="380" r="7" fill="#f97316" filter="url(#glow8)" opacity="0.9"/>
+  <circle cx="25"  cy="430" r="6" fill="#f97316" filter="url(#glow8)" opacity="0.8"/>
+  <circle cx="120" cy="430" r="6" fill="#f97316" filter="url(#glow8)" opacity="0.8"/>
+  <circle cx="25"  cy="480" r="7" fill="#f97316" filter="url(#glow8)" opacity="0.9"/>
+  <circle cx="120" cy="480" r="7" fill="#f97316" filter="url(#glow8)" opacity="0.9"/>
+  <circle cx="25"  cy="530" r="6" fill="#f97316" filter="url(#glow8)" opacity="0.8"/>
+  <circle cx="120" cy="530" r="6" fill="#f97316" filter="url(#glow8)" opacity="0.8"/>
+  <!-- Castle shield icon -->
+  <path d="M72 430 L95 442 L95 468 Q95 485 72 495 Q49 485 49 468 L49 442 Z"
+        fill="#7c3aed" stroke="#f59e0b" stroke-width="2" filter="url(#glow8)"/>
+  <text x="72" y="472" text-anchor="middle" font-size="20" fill="#fde68a">🏰</text>
+
+  <!-- ═══════════════════════
+       DEFENSE TOWERS (left-center)
+       ═══════════════════════ -->
+
+  <!-- Tower 1 - Archer (Lane 1) -->
+  <ellipse cx="245" cy="408" rx="22" ry="7" fill="rgba(0,0,0,0.35)"/>
+  <!-- tower base -->
+  <rect x="228" y="370" width="34" height="38" rx="5" fill="#166534"/>
+  <!-- tower top/head -->
+  <circle cx="245" cy="362" r="16" fill="#4ade80"/>
+  <!-- tower glow -->
+  <circle cx="245" cy="355" rx="30" ry="30" fill="rgba(34,197,94,0.25)" filter="url(#blur2)"/>
+  <!-- bow detail -->
+  <path d="M258 368 Q268 362 258 356" fill="none" stroke="#86efac" stroke-width="2"/>
+  <!-- arrow -->
+  <line x1="260" y1="362" x2="300" y2="370" stroke="#fde68a" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- Tower 2 - Mage (Lane 2) -->
+  <ellipse cx="245" cy="460" rx="22" ry="7" fill="rgba(0,0,0,0.35)"/>
+  <rect x="228" y="420" width="34" height="40" rx="5" fill="#4c1d95"/>
+  <circle cx="245" cy="412" r="16" fill="#a855f7"/>
+  <!-- wizard hat -->
+  <path d="M238 408 L245 390 L252 408 Z" fill="#3b0764"/>
+  <!-- orb -->
+  <circle cx="262" cy="415" r="8" fill="#c084fc" filter="url(#glow4)"/>
+
+  <!-- Tower 3 - Knight (Lane 3) -->
+  <ellipse cx="245" cy="512" rx="22" ry="7" fill="rgba(0,0,0,0.35)"/>
+  <rect x="228" y="472" width="34" height="40" rx="5" fill="#1e3a8a"/>
+  <circle cx="245" cy="464" r="16" fill="#3b82f6"/>
+  <!-- sword -->
+  <rect x="243" y="448" width="4" height="28" rx="2" fill="#e2e8f0"/>
+  <rect x="236" y="455" width="18" height="4" rx="2" fill="#f59e0b"/>
+
+  <!-- Tower 4 - Cannon (Lane 4) -->
+  <ellipse cx="245" cy="564" rx="22" ry="7" fill="rgba(0,0,0,0.35)"/>
+  <rect x="228" y="522" width="34" height="40" rx="5" fill="#78350f"/>
+  <circle cx="245" cy="514" r="16" fill="#b45309"/>
+  <!-- cannon barrel -->
+  <rect x="248" y="511" width="28" height="8" rx="3" fill="#404040"/>
+  <circle cx="245" cy="514" r="8" fill="#525252"/>
+
+  <!-- Tower 5 - Tesla (Lane 5) -->
+  <ellipse cx="245" cy="618" rx="22" ry="7" fill="rgba(0,0,0,0.35)"/>
+  <rect x="228" y="574" width="34" height="44" rx="5" fill="#164e63"/>
+  <circle cx="245" cy="566" r="16" fill="#06b6d4"/>
+  <!-- tesla orb -->
+  <circle cx="245" cy="558" r="10" fill="#67e8f9" filter="url(#glow8)"/>
+
+  <!-- ═══════════════════════
+       PROJECTILES (beams, arrows)
+       ═══════════════════════ -->
+  <!-- Arrow beams from towers -->
+  <!-- Cannon trail -->
+  <circle cx="480" cy="394" r="9" fill="#f59e0b" filter="url(#glow12)" opacity="0.95"/>
+  <ellipse cx="450" cy="394" rx="25" ry="5" fill="#f97316" opacity="0.5"/>
+
+  <!-- Magic bolt -->
+  <circle cx="520" cy="446" r="7" fill="#c084fc" filter="url(#glow8)" opacity="0.95"/>
+  <line x1="266" y1="446" x2="520" y2="446" stroke="#a855f7" stroke-width="2" opacity="0.4" stroke-dasharray="8,6"/>
+
+  <!-- Arrow -->
+  <line x1="265" y1="395" x2="500" y2="405" stroke="#86efac" stroke-width="2" opacity="0.6"/>
+  <polygon points="500,402 508,405 500,408" fill="#86efac" opacity="0.7"/>
+
+  <!-- Tesla bolt -->
+  <path d="M265 520 L330 515 L320 525 L400 518 L390 528 L480 522" fill="none" stroke="#67e8f9" stroke-width="2.5" opacity="0.8" filter="url(#glow4)"/>
+
+  <!-- Explosion at impact (center battlefield) -->
+  <circle cx="590" cy="448" r="35" fill="rgba(249,115,22,0.3)" filter="url(#glow12)"/>
+  <circle cx="590" cy="448" r="20" fill="rgba(251,146,60,0.5)"/>
+  <circle cx="590" cy="448" r="10" fill="#fde68a"/>
+  <!-- explosion sparks -->
+  <line x1="590" y1="418" x2="590" y2="405" stroke="#f97316" stroke-width="2.5" opacity="0.8"/>
+  <line x1="610" y1="430" x2="624" y2="421" stroke="#f97316" stroke-width="2"   opacity="0.7"/>
+  <line x1="618" y1="455" x2="632" y2="460" stroke="#fde68a" stroke-width="2"   opacity="0.7"/>
+  <line x1="570" y1="430" x2="556" y2="421" stroke="#f97316" stroke-width="2"   opacity="0.7"/>
+  <line x1="562" y1="458" x2="548" y2="464" stroke="#fde68a" stroke-width="2"   opacity="0.6"/>
+
+  <!-- ═══════════════════════
+       ENEMIES (right side)
+       ═══════════════════════ -->
+  <!-- BOSS (biggest, most prominent) -->
+  <!-- Boss shadow -->
+  <ellipse cx="960" cy="492" rx="50" ry="16" fill="rgba(0,0,0,0.5)"/>
+  <!-- Boss body -->
+  <ellipse cx="960" cy="452" rx="44" ry="52" fill="#7c3aed" filter="url(#glow8)"/>
+  <!-- Boss inner body -->
+  <ellipse cx="960" cy="448" rx="36" ry="44" fill="#9333ea"/>
+  <!-- Boss wings -->
+  <path d="M916 440 Q880 400 850 390 Q870 420 880 450 Z" fill="rgba(139,92,246,0.7)"/>
+  <path d="M1004 440 Q1040 400 1070 390 Q1050 420 1040 450 Z" fill="rgba(139,92,246,0.7)"/>
+  <!-- Boss crown -->
+  <path d="M936 405 L942 385 L952 398 L960 378 L968 398 L978 385 L984 405 Z"
+        fill="#f59e0b" filter="url(#glow4)"/>
+  <!-- Boss head -->
+  <ellipse cx="960" cy="408" rx="28" ry="28" fill="#c084fc"/>
+  <!-- Boss eyes -->
+  <circle cx="948" cy="405" r="9"  fill="#ef4444" filter="url(#redGlow)"/>
+  <circle cx="972" cy="405" r="9"  fill="#ef4444" filter="url(#redGlow)"/>
+  <circle cx="948" cy="405" r="4"  fill="#000"/>
+  <circle cx="972" cy="405" r="4"  fill="#000"/>
+  <!-- Boss aura -->
+  <circle cx="960" cy="452" r="65" fill="rgba(192,132,252,0.12)" filter="url(#blur2)"/>
+  <circle cx="960" cy="452" r="80" fill="rgba(192,132,252,0.08)" filter="url(#blur2)"/>
+
+  <!-- Troll (lane 3) -->
+  <ellipse cx="830" cy="518" rx="32" ry="10" fill="rgba(0,0,0,0.4)"/>
+  <rect x="804" y="470" width="52" height="48" rx="8" fill="#7f1d1d" filter="url(#glow4)"/>
+  <ellipse cx="830" cy="462" rx="28" ry="26" fill="#fca5a5"/>
+  <!-- troll horns -->
+  <path d="M815 450 L808 430 L820 445 Z" fill="#78350f"/>
+  <path d="M845 450 L852 430 L840 445 Z" fill="#78350f"/>
+  <!-- troll eyes -->
+  <circle cx="820" cy="460" r="6" fill="#ef4444"/>
+  <circle cx="840" cy="460" r="6" fill="#ef4444"/>
+
+  <!-- Goblin (lane 1) - hit by arrow, stumbling -->
+  <ellipse cx="720" cy="406" rx="18" ry="6" fill="rgba(0,0,0,0.35)"/>
+  <ellipse cx="720" cy="380" rx="16" ry="16" fill="#86efac"/>
+  <!-- goblin ears -->
+  <path d="M706 376 L698 364 L710 372 Z" fill="#86efac"/>
+  <path d="M734 376 L742 364 L730 372 Z" fill="#86efac"/>
+  <!-- goblin eyes (angry) -->
+  <circle cx="714" cy="378" r="4" fill="#ef4444"/>
+  <circle cx="726" cy="378" r="4" fill="#ef4444"/>
+  <!-- hit flash -->
+  <circle cx="720" cy="388" r="20" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Speeder (lane 4) - fast lines -->
+  <ellipse cx="870" cy="570" rx="20" ry="6" fill="rgba(0,0,0,0.3)"/>
+  <ellipse cx="870" cy="548" rx="16" ry="18" fill="#fde68a"/>
+  <circle cx="870" cy="540" r="12" fill="#fbbf24"/>
+  <!-- speed lines -->
+  <line x1="900" y1="545" x2="930" y2="545" stroke="#fde68a" stroke-width="2.5" opacity="0.5"/>
+  <line x1="905" y1="551" x2="940" y2="549" stroke="#fde68a" stroke-width="2"   opacity="0.4"/>
+  <line x1="908" y1="558" x2="935" y2="557" stroke="#fde68a" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Small goblins far right -->
+  <ellipse cx="1080" cy="418" rx="12" ry="12" fill="#86efac" opacity="0.8"/>
+  <ellipse cx="1110" cy="470" rx="12" ry="12" fill="#86efac" opacity="0.7"/>
+  <ellipse cx="1070" cy="524" rx="14" ry="14" fill="#fca5a5" opacity="0.7"/>
+  <ellipse cx="1130" cy="570" rx="12" ry="12" fill="#fde68a" opacity="0.8"/>
+
+  <!-- ═══════════════════════
+       OVERLAYS & VIGNETTE
+       ═══════════════════════ -->
+  <rect x="0"    y="0" width="300"  height="630" fill="url(#leftFade)"/>
+  <rect x="900"  y="0" width="300"  height="630" fill="url(#rightFade)"/>
+  <rect x="0"    y="0" width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- ═══════════════════════
+       GAME TITLE TEXT
+       ═══════════════════════ -->
+  <!-- Title background glow -->
+  <rect x="200" y="100" width="800" height="180" rx="20" fill="rgba(0,0,0,0.55)"/>
+  <rect x="200" y="100" width="800" height="180" rx="20" fill="rgba(124,58,237,0.1)" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+
+  <!-- MONSTER -->
+  <text x="600" y="168" text-anchor="middle"
+        font-family="Arial Black, Impact, sans-serif"
+        font-size="62" font-weight="900" letter-spacing="4"
+        fill="url(#titleGrad)" filter="url(#textShadow)">MONSTER</text>
+
+  <!-- DEFENSE CLASH -->
+  <text x="600" y="230" text-anchor="middle"
+        font-family="Arial Black, Impact, sans-serif"
+        font-size="52" font-weight="900" letter-spacing="6"
+        fill="#f8fafc" filter="url(#glow4)">DEFENSE CLASH</text>
+
+  <!-- Subtitle / tagline -->
+  <text x="600" y="264" text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="20" font-weight="600" letter-spacing="5"
+        fill="#a855f7" opacity="0.9">⚔️  TOWER DEFENSE WAR  ⚔️</text>
+
+  <!-- Bottom info bar -->
+  <rect x="0" y="590" width="1200" height="40" fill="rgba(0,0,0,0.65)"/>
+  <!-- Left badge: 30 LEVELS -->
+  <rect x="20" y="598" width="120" height="24" rx="6" fill="rgba(124,58,237,0.7)"/>
+  <text x="80" y="615" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#fde68a" letter-spacing="1">30 LEVELS</text>
+  <!-- Middle badge: 6 UNITS -->
+  <rect x="155" y="598" width="100" height="24" rx="6" fill="rgba(6,182,212,0.7)"/>
+  <text x="205" y="615" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#f8fafc" letter-spacing="1">6 UNITS</text>
+  <!-- Badge: BOSS FIGHTS -->
+  <rect x="270" y="598" width="120" height="24" rx="6" fill="rgba(239,68,68,0.7)"/>
+  <text x="330" y="615" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#f8fafc" letter-spacing="1">BOSS FIGHTS</text>
+  <!-- Badge: ABILITIES -->
+  <rect x="405" y="598" width="110" height="24" rx="6" fill="rgba(34,197,94,0.7)"/>
+  <text x="460" y="615" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#f8fafc" letter-spacing="1">ABILITIES</text>
+  <!-- Right: HTML5 -->
+  <text x="1180" y="615" text-anchor="end" font-family="Arial" font-size="13" fill="rgba(255,255,255,0.5)" letter-spacing="1">HTML5 CANVAS</text>
+</svg>

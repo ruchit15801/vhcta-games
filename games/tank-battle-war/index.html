@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tank Battle War</title>
+    <meta name="description" content="Premium 3D-style realistic tank battle simulator.">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg">
+    <meta property="og:image" content="assets/images/thumbnail.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Render Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- UI Layers -->
+        
+        <!-- Login Screen -->
+        <div id="ui-login" class="ui-layer active">
+            <div class="panel">
+                <h1 class="game-title" style="font-size: 3rem;" data-text="FIELD ACCESS">FIELD ACCESS</h1>
+                <div class="login-form">
+                    <div class="input-group">
+                        <label for="pilot-name">COMMANDER ID</label>
+                        <input type="text" id="pilot-name" placeholder="Enter Soldier Name..." autocomplete="off">
+                    </div>
+                    <div class="menu-buttons">
+                        <button id="btn-login-submit" class="btn-primary">AUTHENTICATE</button>
+                        <button id="btn-login-guest" class="btn-secondary">GUEST ACCESS</button>
+                    </div>
+                </div>
+            </div>
+            <div class="particles-bg"></div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="ui-main-menu" class="ui-layer hidden">
+            <div class="menu-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;">
+                <h1 class="game-title" data-text="TANK BATTLE WAR">TANK BATTLE WAR</h1>
+                <div class="tank-preview" style="margin-bottom: 2rem;">
+                    <img src="assets/images/thumbnail.svg" alt="Tank Battle War" style="max-width: 350px; width: 100%; border-radius: 12px; box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(69, 162, 158, 0.6); border: 2px solid var(--primary);">
+                </div>
+                <div class="menu-buttons" style="max-width: 300px;">
+                    <button id="btn-start" class="btn-primary">START CAMPAIGN</button>
+                    <button id="btn-how-to" class="btn-secondary">HOW TO PLAY</button>
+                </div>
+            </div>
+            <div class="particles-bg"></div>
+        </div>
+
+        <!-- How To Play / Instructions -->
+        <div id="ui-instructions" class="ui-layer hidden">
+            <div class="panel">
+                <h2>TACTICAL BRIEFING</h2>
+                <div class="instruction-grid">
+                    <div class="inst-item">
+                        <div class="icon">WASD / Stick</div>
+                        <p>Move Tank Hull</p>
+                    </div>
+                    <div class="inst-item">
+                        <div class="icon">Mouse / Stick</div>
+                        <p>Aim Turret</p>
+                    </div>
+                    <div class="inst-item">
+                        <div class="icon">Click / Fire</div>
+                        <p>Shoot Shells</p>
+                    </div>
+                </div>
+                <p class="intel">INTEL: Upgrade your armor and damage at the shop between levels. Watch out for heavy boss tanks!</p>
+                <div class="menu-buttons">
+                    <button id="btn-inst-start" class="btn-primary">COMMENCE MISSION</button>
+                    <button id="btn-inst-back" class="btn-secondary">BACK TO BASE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- In-Game HUD -->
+        <div id="ui-hud" class="ui-layer hidden pointer-events-none">
+            <div class="hud-top">
+                <div class="hud-item health-container">
+                    <div class="icon">❤️</div>
+                    <div class="bar-bg"><div id="hud-health-bar" class="bar-fill health"></div></div>
+                    <span id="hud-hp-text">100/100</span>
+                </div>
+                <div class="hud-center">
+                    <div id="hud-level" class="level-display">LEVEL 1</div>
+                    <div id="hud-score" class="score-display">SCORE: 0</div>
+                </div>
+                <div class="hud-item enemy-container">
+                    <div class="icon">💀</div>
+                    <span id="hud-enemies-text">3 REMAINING</span>
+                </div>
+            </div>
+            <div class="hud-bottom">
+                <div class="reload-container">
+                    <div id="hud-reload-text">READY</div>
+                    <div class="bar-bg"><div id="hud-reload-bar" class="bar-fill reload"></div></div>
+                </div>
+            </div>
+            
+            <!-- Minimap -->
+            <div class="minimap-container">
+                <canvas id="minimap-canvas" width="150" height="150"></canvas>
+            </div>
+        </div>
+
+        <!-- Mobile Controls (Visible only on touch/mobile) -->
+        <div id="ui-mobile-controls" class="ui-layer hidden">
+            <div id="joystick-left" class="virtual-joystick">
+                <div class="stick"></div>
+            </div>
+        </div>
+
+        <!-- Upgrade Shop (Between Levels) -->
+        <div id="ui-upgrade" class="ui-layer hidden">
+            <div class="panel large">
+                <h2 class="neon-text">HANGER - UPGRADES</h2>
+                <div class="currency-display">FUNDS: $<span id="shop-funds">0</span></div>
+                
+                <div class="upgrades-grid">
+                    <div class="upgrade-card" data-type="damage">
+                        <div class="u-icon dmg-icon"></div>
+                        <h3>AP SHELLS</h3>
+                        <p class="u-desc">Increases damage output.</p>
+                        <div class="u-stats">Lvl: <span class="u-lvl">1</span></div>
+                        <button class="btn-buy" data-cost="500">BUY ($500)</button>
+                    </div>
+                    <div class="upgrade-card" data-type="armor">
+                        <div class="u-icon hlt-icon"></div>
+                        <h3>REACTIVE ARMOR</h3>
+                        <p class="u-desc">Increases maximum HP.</p>
+                        <div class="u-stats">Lvl: <span class="u-lvl">1</span></div>
+                        <button class="btn-buy" data-cost="500">BUY ($500)</button>
+                    </div>
+                    <div class="upgrade-card" data-type="speed">
+                        <div class="u-icon spd-icon"></div>
+                        <h3>ENGINE TUNING</h3>
+                        <p class="u-desc">Increases movement & fire rate.</p>
+                        <div class="u-stats">Lvl: <span class="u-lvl">1</span></div>
+                        <button class="btn-buy" data-cost="500">BUY ($500)</button>
+                    </div>
+                </div>
+                
+                <div class="menu-buttons">
+                    <button id="btn-next-level" class="btn-primary pulse">NEXT MISSION</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over -->
+        <div id="ui-game-over" class="ui-layer hidden">
+            <div class="panel">
+                <h1 class="danger-text">MISSION FAILED</h1>
+                <p class="stats-text">Level Reached: <span id="go-level">1</span></p>
+                <p class="stats-text">Total Score: <span id="go-score">0</span></p>
+                <div class="menu-buttons">
+                    <button id="btn-restart" class="btn-primary">RETRY MISSION</button>
+                    <button id="btn-home" class="btn-secondary">MAIN MENU</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Victory Screen -->
+        <div id="ui-victory" class="ui-layer hidden">
+            <div class="panel">
+                <h1 class="victory-text">CAMPAIGN COMPLETE</h1>
+                <p class="stats-text">You survived all 40 levels!</p>
+                <p class="stats-text">Final Score: <span id="vic-score">0</span></p>
+                <div class="menu-buttons">
+                    <button id="btn-vic-home" class="btn-primary">RETURN TO BASE</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-sound-toggle" class="sound-toggle">🔊</button>
+    </div>
+
+    <!-- Procedural audio synth worker -->
+    <script src="js/script.js"></script>
+</body>
+</html>

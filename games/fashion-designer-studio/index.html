@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fashion Designer Studio</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/icon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <div id="game-container">
+        
+        <!-- Tutorial / Welcome Screen -->
+        <div id="tutorial-screen" class="screen active">
+            <div class="tutorial-content">
+                <div class="logo-3d">
+                    <h1>FASHION</h1>
+                    <h2>DESIGNER STUDIO</h2>
+                </div>
+                <div class="tutorial-steps">
+                    <div class="step">
+                        <span class="icon">👗</span>
+                        <p>Select & Style Luxury Clothes</p>
+                    </div>
+                    <div class="step">
+                        <span class="icon">✨</span>
+                        <p>Match the Latest Trends</p>
+                    </div>
+                    <div class="step">
+                        <span class="icon">🏆</span>
+                        <p>Win Fashion Challenges</p>
+                    </div>
+                </div>
+                <button id="btn-start" class="btn-premium">START DESIGNING</button>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="main-menu" class="screen">
+            <div class="top-bar">
+                <div class="player-stats">
+                    <div class="stat"><span class="icon">⭐</span> Level <span id="player-level">1</span></div>
+                    <div class="stat"><span class="icon">💎</span> <span id="player-coins">500</span></div>
+                </div>
+                <button id="btn-settings" class="btn-icon">⚙️</button>
+            </div>
+            
+            <div class="menu-content">
+                <div class="challenge-card">
+                    <div class="challenge-image"></div>
+                    <div class="challenge-info">
+                        <h3 id="current-challenge-title">The Paris Gala</h3>
+                        <p id="current-challenge-desc">Style a breathtaking look for the red carpet.</p>
+                        <div class="tags" id="current-challenge-tags">
+                            <span class="tag">Formal</span>
+                            <span class="tag">Elegant</span>
+                        </div>
+                        <button id="btn-enter-challenge" class="btn-premium">ENTER CHALLENGE</button>
+                    </div>
+                </div>
+                
+                <div class="menu-grid">
+                    <button class="grid-btn" id="btn-wardrobe">
+                        <span class="icon">🧥</span>
+                        <span>Wardrobe</span>
+                    </button>
+                    <button class="grid-btn" id="btn-shop">
+                        <span class="icon">🛍️</span>
+                        <span>Boutique</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Studio Interface -->
+        <div id="studio-screen" class="screen">
+            <div class="studio-top">
+                <button id="btn-back-menu" class="btn-icon">⬅️</button>
+                <div class="challenge-brief">
+                    <h4>The Paris Gala</h4>
+                    <div class="progress-bar"><div class="fill" id="trend-match-fill" style="width: 0%"></div></div>
+                    <small>Trend Match</small>
+                </div>
+                <button id="btn-submit-look" class="btn-premium small">SUBMIT</button>
+            </div>
+
+            <!-- 3D Model Viewport -->
+            <div class="viewport-container">
+                <canvas id="model-canvas" width="400" height="800"></canvas>
+                <div class="lighting-overlay"></div>
+            </div>
+
+            <!-- UI Panels -->
+            <div class="studio-bottom">
+                <div class="category-tabs" id="category-tabs">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="items-grid" id="items-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="result-content">
+                <h2 id="result-title">Look Score</h2>
+                <div class="score-display">
+                    <span class="stars" id="result-stars">⭐⭐⭐⭐⭐</span>
+                    <h1 id="result-score">5.8</h1>
+                </div>
+                <div class="rewards">
+                    <p>Rewards Earned</p>
+                    <div class="reward-amount">+<span id="reward-coins">250</span> 💎</div>
+                </div>
+                <button id="btn-continue" class="btn-premium">CONTINUE</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Sudoku Ultimate</title>
+    <link rel="icon" type="image/png" href="assets/icons/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+    
+    <div id="game-container">
+        <!-- Main Menu -->
+        <div id="main-menu" class="screen active">
+            <div class="logo">
+                <h1>SUDOKU</h1>
+                <h2 class="subtitle">ULTIMATE SOLVER</h2>
+            </div>
+            <button id="btn-start" class="btn-3d primary">PLAY GAME</button>
+            <button id="btn-sandbox" class="btn-3d secondary">AUTO SOLVER</button>
+            <button id="btn-toggle-sound" class="btn-3d small">Sound: ON</button>
+        </div>
+
+        <!-- Gameplay UI -->
+        <div id="gameplay" class="screen">
+            <div class="hud">
+                <div class="hud-top">
+                    <div class="level-info">LEVEL <span id="level-display">1</span></div>
+                    <div class="score-info">SCORE <span id="score-display">0</span></div>
+                </div>
+                <div class="hud-stats">
+                    <div class="health-bar" id="health-container">
+                        <!-- Hearts appended here -->
+                    </div>
+                    <div class="timer" id="timer-display">00:00</div>
+                    <div class="combo" id="combo-display">x1</div>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="sudoku-board"></div>
+                <div id="tutorial-overlay" class="hidden">
+                    <div class="tutorial-box">
+                        <p id="tutorial-text">Welcome to Neon Sudoku! Select an empty cell.</p>
+                        <button id="btn-tut-skip" class="btn-small">Skip</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-container">
+                <div class="numpad">
+                    <button class="num-key" data-val="1">1</button>
+                    <button class="num-key" data-val="2">2</button>
+                    <button class="num-key" data-val="3">3</button>
+                    <button class="num-key" data-val="4">4</button>
+                    <button class="num-key" data-val="5">5</button>
+                    <button class="num-key" data-val="6">6</button>
+                    <button class="num-key" data-val="7">7</button>
+                    <button class="num-key" data-val="8">8</button>
+                    <button class="num-key" data-val="9">9</button>
+                </div>
+                <div class="action-pad">
+                    <button id="btn-erase" class="action-key erase">⌫ ERASE</button>
+                    <button id="btn-hint" class="action-key hint">💡 HINT (<span id="hint-count">3</span>)</button>
+                    <button id="btn-solve" class="action-key solve hidden">⚡ SOLVE</button>
+                </div>
+                <div class="game-actions">
+                    <button id="btn-pause" class="btn-small">⏸ PAUSE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Menu -->
+        <div id="pause-screen" class="screen hidden overlay">
+            <h2>PAUSED</h2>
+            <button id="btn-resume" class="btn-3d primary">RESUME</button>
+            <button id="btn-restart" class="btn-3d secondary">RESTART</button>
+            <button id="btn-quit" class="btn-3d danger">QUIT</button>
+        </div>
+
+        <!-- Level Complete Screen -->
+        <div id="level-complete" class="screen hidden overlay">
+            <h2 class="win-title">LEVEL CLEARED!</h2>
+            <div class="stats-box">
+                <p>Score: <span id="finish-score">0</span></p>
+                <p>Time: <span id="finish-time">00:00</span></p>
+                <p>Max Combo: <span id="finish-combo">x1</span></p>
+            </div>
+            <button id="btn-next-level" class="btn-3d primary">NEXT LEVEL</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over" class="screen hidden overlay">
+            <h2 class="lose-title">GAME OVER</h2>
+            <p>You ran out of lives or time!</p>
+            <p>Level Reached: <span id="fail-level">1</span></p>
+            <button id="btn-retry" class="btn-3d primary">TRY AGAIN</button>
+            <button id="btn-menu" class="btn-3d secondary">MAIN MENU</button>
+        </div>
+    </div>
+
+    <!-- FX Canvas layered on top for particle effects without blocking clicks -->
+    <canvas id="fxCanvas"></canvas>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Maze Escape Runner</title>
+    
+    <!-- Meta tags for SEO and sharing -->
+    <meta name="description" content="Play the ultimate realistic Maze Escape Runner game. Score epic escapes, beat levels, and prove your skills in this premium 3D-styled arcade simulator.">
+    <meta property="og:title" content="Maze Escape Runner">
+    <meta property="og:description" content="Epic futuristic physics-based arcade maze game.">
+    <meta property="og:image" content="./assets/images/thumbnail.svg">
+    
+    <!-- App Icons -->
+    <link rel="icon" href="./assets/images/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./assets/images/icon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="game-container">
+        
+        <!-- Background 3D Layer -->
+        <div id="background-layer">
+            <div class="grid-floor"></div>
+        </div>
+
+        <!-- Canvas Engine -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            
+            <!-- Title Screen -->
+            <div id="screen-title" class="screen active">
+                <div class="logo-container">
+                    <h1 class="glow-text title-main">MAZE ESCAPE</h1>
+                    <h2 class="title-sub">RUNNER</h2>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-start" class="premium-btn">
+                        <span class="btn-text">PLAY NOW</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <button id="btn-howto" class="premium-btn secondary">
+                        <span class="btn-text">HOW TO PLAY</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- How To Play Screen -->
+            <div id="screen-howto" class="screen hidden">
+                <div class="panel">
+                    <h2>HOW TO PLAY</h2>
+                    <div class="instructions">
+                        <div class="inst-item">
+                            <div class="icon player-icon"></div>
+                            <p><strong>Move:</strong> Arrow Keys / WASD or Touch Joystick</p>
+                        </div>
+                        <div class="inst-item">
+                            <div class="icon exit-icon"></div>
+                            <p><strong>Goal:</strong> Find the glowing exit to escape</p>
+                        </div>
+                        <div class="inst-item">
+                            <div class="icon enemy-icon"></div>
+                            <p><strong>Avoid:</strong> Red Chasers and traps</p>
+                        </div>
+                        <div class="inst-item">
+                            <div class="icon powerup-icon"></div>
+                            <p><strong>Powerups:</strong> Collect for speed and shield</p>
+                        </div>
+                    </div>
+                    <button id="btn-back-menu" class="premium-btn">
+                        <span class="btn-text">BACK</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- HUD (Heads Up Display) -->
+            <div id="screen-hud" class="screen hidden">
+                <div class="hud-top">
+                    <div class="hud-box">
+                        <span class="hud-label">LEVEL</span>
+                        <span id="hud-level" class="hud-value">1</span>
+                    </div>
+                    <div class="hud-box">
+                        <span class="hud-label">SCORE</span>
+                        <span id="hud-score" class="hud-value">0</span>
+                    </div>
+                    <div class="hud-box">
+                        <span class="hud-label">TIME</span>
+                        <span id="hud-time" class="hud-value">00:00</span>
+                    </div>
+                    <button id="btn-pause" class="icon-btn">⏸</button>
+                </div>
+                <div class="hud-bottom">
+                    <!-- Virtual Joystick for Mobile -->
+                    <div id="joystick-zone">
+                        <div id="joystick-base">
+                            <div id="joystick-stick"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause Modal -->
+            <div id="screen-pause" class="screen hidden modal">
+                <div class="panel">
+                    <h2>PAUSED</h2>
+                    <button id="btn-resume" class="premium-btn">
+                        <span class="btn-text">RESUME</span>
+                    </button>
+                    <button id="btn-quit" class="premium-btn secondary">
+                        <span class="btn-text">QUIT</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Level Complete Modal -->
+            <div id="screen-level-complete" class="screen hidden modal">
+                <div class="panel">
+                    <h2>LEVEL CLEARED!</h2>
+                    <div class="stats">
+                        <p>Time Bonus: <span id="stat-time">0</span></p>
+                        <p>Total Score: <span id="stat-score">0</span></p>
+                    </div>
+                    <button id="btn-next-level" class="premium-btn">
+                        <span class="btn-text">NEXT LEVEL</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Over Modal -->
+            <div id="screen-game-over" class="screen hidden modal">
+                <div class="panel">
+                    <h2 class="danger-text">GAME OVER</h2>
+                    <p>You reached Level <span id="game-over-level">1</span></p>
+                    <p>Final Score: <span id="game-over-score">0</span></p>
+                    <button id="btn-retry" class="premium-btn">
+                        <span class="btn-text">TRY AGAIN</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Audio Manager -->
+    <script src="js/audio.js"></script>
+    <!-- Game Engine -->
+    <script src="js/engine.js"></script>
+    <script src="js/maze.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

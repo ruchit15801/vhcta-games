@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Dungeon Card Battle | World Best Edition</title>
+    <meta name="description" content="A premium 3D fantasy deck-building rogue-like game.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <meta property="og:image" content="assets/images/thumbnail.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Lora:ital,wght@0,400;0,700;1,400&family=MedievalSharp&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Canvas for Background and Particles -->
+        <canvas id="fx-canvas"></canvas>
+        <div id="vignette"></div>
+
+        <!-- Global Top Bar (Persistent HUD) -->
+        <div id="global-hud" class="hide">
+            <div class="hud-left">
+                <div class="gold-box"><span class="icon">💰</span> <span id="gold-value">50</span></div>
+                <div id="relic-container">
+                    <!-- Relics icons here -->
+                </div>
+            </div>
+            <div class="hud-center">
+                <div class="floor-display">FLOOR <span id="current-floor">1</span></div>
+            </div>
+            <div class="hud-right">
+                <div class="deck-btn-wrapper">
+                    <button id="btn-view-deck" class="icon-btn">🎴</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- UI Overlays -->
+        <div id="ui-layer">
+            
+            <!-- Screens -->
+            <div id="screen-menu" class="screen active">
+                <div class="logo-container">
+                    <img src="assets/icons/icon.svg" alt="Game Icon" class="main-menu-icon">
+                    <h1 class="logo-text">DUNGEON</h1>
+                    <h2 class="sub-logo">CARD BATTLE</h2>
+                    <div class="glow-sphere"></div>
+                </div>
+                <div class="menu-buttons">
+                    <button id="btn-start" class="premium-btn main-btn">Enter Dungeon</button>
+                </div>
+                <div class="version-tag">V2.0 WORLD BEST EDITION</div>
+            </div>
+
+            <div id="screen-tutorial" class="screen hide">
+                <div class="panel premium-panel tutorial-panel">
+                    <h2 class="panel-title">Ancient Scrolls</h2>
+                    <div class="tutorial-content">
+                        <div class="tut-item">
+                            <span class="tut-icon">⚔️</span>
+                            <div class="tut-text"><b>COMBAT:</b> Use limited energy (⚡) to play strategy cards.</div>
+                        </div>
+                        <div class="tut-item">
+                            <span class="tut-icon">✨</span>
+                            <div class="tut-text"><b>PROGRESS:</b> Build your deck, earn gold, and collect powerful relics.</div>
+                        </div>
+                        <div class="tut-item">
+                            <span class="tut-icon">☠️</span>
+                            <div class="tut-text"><b>CHALLENGE:</b> Status effects like Strength and Poison matter!</div>
+                        </div>
+                    </div>
+                    <div class="tut-actions">
+                        <button id="btn-tutorial-start" class="premium-btn">Begin Journey</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="screen-map" class="screen hide">
+                <div class="map-scroll">
+                    <h2 class="map-title shadow-text">Choose Your Path</h2>
+                    <div class="node-container" id="map-nodes">
+                        <!-- Procedurally generated nodes -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-combat" class="screen hide">
+                <div class="combat-scene">
+                    <!-- Enemy Side -->
+                    <div class="enemy-platform">
+                        <div class="enemy-area" id="enemy-container">
+                            <div class="intent-bubble" id="enemy-intent">
+                                <span id="intent-icon">⚔️</span> <span id="intent-value">5</span>
+                            </div>
+                            <div class="entity-wrapper">
+                                <div class="enemy-sprite" id="enemy-sprite"></div>
+                                <div class="damage-number" id="enemy-dmg-txt"></div>
+                            </div>
+                            <div class="status-bar" id="enemy-status"></div>
+                            <div class="vitals">
+                                <div class="health-bar-container">
+                                    <div class="health-bar-fill enemy-fill" id="enemy-hp-fill"></div>
+                                    <span class="health-text" id="enemy-hp-text">40/40</span>
+                                    <div class="block-indicator hide" id="enemy-block"><span>🛡️</span><span id="enemy-block-val">0</span></div>
+                                </div>
+                                <div class="name-tag" id="enemy-name">Goblin</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player Side -->
+                    <div class="player-platform">
+                        <div class="player-area">
+                            <div class="status-bar" id="hero-status"></div>
+                            <div class="entity-wrapper">
+                                <div class="hero-sprite" id="hero-sprite"></div>
+                                <div class="damage-number" id="hero-dmg-txt"></div>
+                            </div>
+                            <div class="vitals">
+                                <div class="health-bar-container">
+                                    <div class="health-bar-fill" id="player-hp-fill"></div>
+                                    <span class="health-text" id="player-hp-text">80/80</span>
+                                    <div class="block-indicator hide" id="player-block"><span>🛡️</span><span id="player-block-val">0</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Combat Controls / Hand Area -->
+                <div id="combat-controls">
+                    <div class="energy-section">
+                        <div class="energy-orb">
+                            <div class="energy-inner">
+                                <div class="energy-wave"></div>
+                                <span id="energy-text">3/3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hand-section">
+                        <div id="hand-container"></div>
+                    </div>
+
+                    <div class="piles-section">
+                        <div class="pile-box draw" id="draw-pile">
+                            <span class="count" id="draw-count">0</span>
+                            <span class="label">DRAW</span>
+                        </div>
+                        <button id="btn-end-turn" class="premium-btn end-turn-btn">End Turn</button>
+                        <div class="pile-box discard" id="discard-pile">
+                            <span class="count" id="discard-count">0</span>
+                            <span class="label">DISCARD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-reward" class="screen hide">
+                <div class="reward-overlay">
+                    <h2 class="reward-title">VICTORY</h2>
+                    <div class="reward-loot">
+                        <div class="gold-reward"><span class="icon">💰</span> <span id="loot-gold">25</span> GOLD</div>
+                    </div>
+                    <div class="card-choices-box">
+                        <h3>Choose a Card</h3>
+                        <div id="reward-cards" class="reward-card-container"></div>
+                    </div>
+                    <button id="btn-skip-reward" class="premium-btn outline">Continue</button>
+                </div>
+            </div>
+
+            <div id="screen-shop" class="screen hide">
+                <div class="shop-panel">
+                    <h2 class="shop-title">The Merchant</h2>
+                    <div class="shop-content">
+                        <div class="shop-section">
+                            <h3>Cards for Sale</h3>
+                            <div id="shop-cards" class="shop-item-grid"></div>
+                        </div>
+                        <div class="shop-section">
+                            <h3>Relics</h3>
+                            <div id="shop-relics" class="shop-item-grid"></div>
+                        </div>
+                    </div>
+                    <button id="btn-exit-shop" class="premium-btn">Return to Map</button>
+                </div>
+            </div>
+
+            <div id="screen-gameover" class="screen hide">
+                <div class="game-over-panel">
+                    <h1 class="death-text">DEATH CLAIMS YOU</h1>
+                    <p>Your journey ended on Floor <span id="final-floor">1</span></p>
+                    <button id="btn-restart" class="premium-btn main-btn">Resurrect</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Deck Viewer Overlay -->
+        <div id="deck-viewer" class="overlay hide">
+            <div class="overlay-content">
+                <h2 class="overlay-title">Your Deck</h2>
+                <div id="deck-grid" class="card-grid"></div>
+                <button id="btn-close-deck" class="premium-btn small">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

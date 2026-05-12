@@ -1,0 +1,91 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Cinematic Gradients -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#020814;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#05142a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d2345;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a2012;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#041008;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Neon Bloom filters -->
+    <filter id="bloom" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="20" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="#00e5ff" />
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="630" fill="url(#sky)" />
+  <path d="M0 480 L1200 480 L1200 630 L0 630 Z" fill="url(#ground)" />
+  
+  <!-- Atmospheric Parallax Hills -->
+  <path d="M0 480 Q300 150 600 450 Q900 100 1200 480 Z" fill="#030b1a" opacity="0.8" />
+  <path d="M0 480 Q400 320 800 460 Q1050 250 1250 480 Z" fill="#041225" opacity="0.9" />
+
+  <!-- The "Low Angle" Track -->
+  <g opacity="0.3">
+    <path d="M-100 630 L400 480 L800 480 L1300 630 Z" fill="#111" />
+    <path d="M400 480 L0 630" stroke="#444" stroke-width="12" />
+    <path d="M800 480 L1200 630" stroke="#444" stroke-width="12" />
+  </g>
+
+  <!-- MOON & ATMOSPHERE -->
+  <circle cx="1000" cy="120" r="100" fill="rgba(255,250,230,0.08)" filter="url(#bloom)" />
+  <circle cx="1000" cy="120" r="45" fill="rgba(255,250,230,0.6)" />
+  
+  <!-- SIGNAL BLOOM (Cinematic Red) -->
+  <g transform="translate(150, 320)" filter="url(#bloom)">
+    <rect x="-4" y="0" width="8" height="180" fill="#333" />
+    <circle cx="0" cy="40" r="22" fill="rgba(239,68,68,0.4)" />
+    <circle cx="0" cy="40" r="8" fill="#ef4444" />
+  </g>
+
+  <!-- THE JOR DAR TRAIN (Action Shot) -->
+  <g transform="translate(600, 480) rotate(-5)">
+    <!-- Perspective Wagon (Tail) -->
+    <rect x="-800" y="-80" width="400" height="70" rx="10" fill="#4d110a" opacity="0.6" />
+    
+    <!-- Main High-Speed Locomotive -->
+    <rect x="-350" y="-140" width="600" height="130" rx="20" fill="url(#metal_loco)" style="filter: drop-shadow(0 0 50px rgba(0,229,255,0.3));" />
+    <defs>
+       <linearGradient id="metal_loco" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e74c3c" />
+          <stop offset="100%" stop-color="#7b241c" />
+       </linearGradient>
+    </defs>
+    
+    <!-- Front Cockpit Glass -->
+    <path d="M220 -130 L280 -130 L280 -20 Q280 0 250 0 L220 0 Z" fill="rgba(0,229,255,0.4)" />
+    <rect x="230" y="-120" width="40" height="110" rx="5" fill="rgba(255,255,255,0.2)" />
+    
+    <!-- Headlight Bloom -->
+    <g transform="translate(260, -30)" filter="url(#bloom)">
+       <circle cx="0" cy="0" r="45" fill="rgba(255,255,200,0.4)" />
+       <circle cx="0" cy="0" r="15" fill="#fff" />
+    </g>
+    
+    <!-- Speed Streaks (Motion Blur simulation) -->
+    <line x1="-400" y1="-100" x2="200" y2="-100" stroke="#ffd700" stroke-width="4" opacity="0.6" />
+    <line x1="-350" y1="-85" x2="150" y2="-85" stroke="#ffd700" stroke-width="2" opacity="0.3" />
+  </g>
+
+  <!-- CINEMATIC TYPOGRAPHY -->
+  <g transform="translate(600, 260)" text-anchor="middle" font-family="'Orbitron', sans-serif" font-weight="900">
+    <text y="0" font-size="110" fill="#fff" letter-spacing="15" style="filter: url(#textGlow);">TRAIN CONTROL</text>
+    <text y="75" font-size="42" fill="#00e5ff" letter-spacing="35" opacity="0.9">MANAGER</text>
+    <rect y="105" x="-250" width="500" height="3" fill="#00e5ff" opacity="0.5" />
+  </g>
+  
+  <!-- Bottom Label -->
+  <text x="600" y="580" font-family="Rajdhani" font-size="28" fill="rgba(255,255,255,0.4)" text-anchor="middle" letter-spacing="15">PREMIUM RAIL SIMULATION</text>
+</svg>

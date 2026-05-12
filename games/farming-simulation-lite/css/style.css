@@ -1,0 +1,514 @@
+:root {
+    --primary: #4CAF50;
+    --primary-dark: #2E7D32;
+    --accent: #FFC107;
+    --bg-gradient: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+    --glass: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --text-color: #ffffff;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Outfit', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #222;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-gradient);
+    display: flex;
+    flex-direction: column;
+}
+
+/* HUD Styling */
+#hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-pill, .level-pill {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 6px 12px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--shadow);
+    color: var(--text-color);
+    font-weight: 800;
+    pointer-events: auto;
+    font-size: 14px;
+}
+
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    object-fit: contain;
+}
+
+.xp-bar-container {
+    width: clamp(60px, 15vw, 120px);
+    height: 8px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+
+#xp-fill {
+    height: 100%;
+    width: 40%;
+    background: var(--accent);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.hud-side {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.side-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    font-size: 24px;
+    pointer-events: auto;
+    transition: transform 0.2s;
+}
+
+.side-btn:active {
+    transform: scale(0.9);
+}
+
+/* Canvas Styling */
+canvas {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: grab;
+}
+
+canvas:active {
+    cursor: grabbing;
+}
+
+/* Bottom UI Bar */
+#bottom-ui {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    z-index: 100;
+}
+
+.action-bar {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--glass-border);
+    padding: 8px;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    box-shadow: var(--shadow);
+}
+
+
+.action-btn {
+    background: white;
+    border-radius: 16px;
+    border: none;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.action-btn .btn-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.action-btn span {
+    font-size: 10px;
+    font-weight: 800;
+    color: #444;
+}
+
+.action-btn:active {
+    transform: scale(0.95) translateY(2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Modal Styling */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s;
+}
+
+.modal {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 32px;
+    overflow: hidden;
+    animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-header {
+    background: var(--primary);
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-content {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Tutorial Screen */
+#tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-gradient);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.tutorial-card {
+    padding: 40px;
+}
+
+.tutorial-card h1 {
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.tutorial-card h1 span {
+    color: var(--accent);
+}
+
+.tutorial-steps {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    background: var(--glass);
+    padding: 15px;
+    border-radius: 20px;
+    text-align: left;
+}
+
+.step-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: #444;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    margin-right: 15px;
+}
+
+#start-game-btn {
+    background: var(--accent);
+    color: #444;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+#start-game-btn:active {
+    transform: scale(0.95);
+}
+
+/* Shop Items */
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 10px;
+}
+
+.item-info {
+    text-align: left;
+}
+
+.item-stats {
+    font-size: 12px;
+    color: #666;
+}
+
+.buy-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.buy-btn:disabled {
+    background: #ccc;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 3000;
+    animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    20% { opacity: 1; transform: translate(-50%, 0); }
+    80% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+/* Floating Text */
+.floating-text {
+    position: fixed;
+    pointer-events: none;
+    font-weight: 800;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    z-index: 500;
+    animation: floatUp 1s ease-out forwards;
+}
+
+@keyframes floatUp {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-50px); }
+}
+
+/* Mission UI */
+.mission-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.mission-item p {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar .fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.5s ease-out;
+}
+
+/* Modal Enhancements */
+.primary-btn {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.stats-box {
+    background: #f0f4f0;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 10px 0;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+/* Celebration Screen */
+.celebrate {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.celebrate-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+.reward {
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: 800;
+    margin: 20px 0;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1.1); }
+    50% { transform: translateY(-20px) scale(1); }
+}
+
+.security-warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

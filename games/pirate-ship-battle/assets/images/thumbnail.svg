@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <defs>
+    <radialGradient id="sky" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c2b3e"/>
+      <stop offset="100%" stop-color="#050a10"/>
+    </radialGradient>
+    <linearGradient id="ocean" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a30"/>
+      <stop offset="100%" stop-color="#020812"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="fire" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ff0000"/>
+      <stop offset="50%" stop-color="#ff8800"/>
+      <stop offset="100%" stop-color="#ffcc00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  
+  <!-- Moon -->
+  <circle cx="1000" cy="200" r="100" fill="#fff" filter="url(#glow)" opacity="0.8"/>
+  <circle cx="980" cy="180" r="20" fill="#ddd" opacity="0.5"/>
+  <circle cx="1030" cy="220" r="30" fill="#ddd" opacity="0.3"/>
+
+  <!-- Ocean -->
+  <path d="M 0 400 Q 320 350 640 400 T 1280 400 L 1280 720 L 0 720 Z" fill="url(#ocean)"/>
+  <path d="M 0 450 Q 320 400 640 450 T 1280 450 L 1280 720 L 0 720 Z" fill="#081426" opacity="0.6"/>
+
+  <!-- Ship Hull -->
+  <path d="M 300 400 C 350 550 750 550 800 400 L 850 350 L 250 350 Z" fill="#2b1b12"/>
+  <!-- Deck Details -->
+  <rect x="700" y="280" width="100" height="70" fill="#1e130c"/>
+  <path d="M 250 350 L 300 300 L 320 350 Z" fill="#1e130c"/>
+  
+  <!-- Cannons Firing -->
+  <circle cx="450" cy="450" r="40" fill="url(#fire)" filter="url(#glow)"/>
+  <circle cx="600" cy="450" r="50" fill="url(#fire)" filter="url(#glow)"/>
+  <circle cx="750" cy="450" r="40" fill="url(#fire)" filter="url(#glow)"/>
+
+  <!-- Masts & Sails -->
+  <rect x="450" y="100" width="20" height="250" fill="#111"/>
+  <rect x="650" y="50" width="25" height="300" fill="#111"/>
+  
+  <path d="M 350 150 Q 500 200 550 150 Q 500 250 350 250 Z" fill="#eee" stroke="#333" stroke-width="5"/>
+  <path d="M 320 250 Q 500 300 550 250 Q 500 350 320 350 Z" fill="#eee" stroke="#333" stroke-width="5"/>
+
+  <path d="M 520 100 Q 700 150 780 100 Q 700 200 520 200 Z" fill="#eee" stroke="#333" stroke-width="5"/>
+  <path d="M 480 200 Q 700 250 800 200 Q 700 300 480 300 Z" fill="#eee" stroke="#333" stroke-width="5"/>
+
+  <!-- Title Text -->
+  <text x="640" y="650" font-family="Cinzel, serif, Arial" font-size="80" font-weight="bold" fill="#ffd700" text-anchor="middle" filter="url(#glow)" letter-spacing="5">PIRATE SHIP BATTLE</text>
+  <text x="640" y="650" font-family="Cinzel, serif, Arial" font-size="80" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="5">PIRATE SHIP BATTLE</text>
+</svg>

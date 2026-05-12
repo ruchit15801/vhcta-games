@@ -1,0 +1,12 @@
+{
+  "game": {
+    "gameName": "pop_the_balloons",
+    "description": "Drag the balloons and pop it with the same color.",
+    "size": {
+      "width": 1080,
+      "height": 1920,
+      "orientation": "Portrait"
+    },
+    "tags": ["arcade", "casual", "balloon", "click", "skill", "html5"]
+  }
+}

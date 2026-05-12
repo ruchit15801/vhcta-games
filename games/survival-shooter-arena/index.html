@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Survival Shooter Arena | Premium Action</title>
+    
+    <!-- SEO & Favicon -->
+    <meta name="description" content="Engage in high-octane neon combat in Survival Shooter Arena. Upgrade your arsenal, survive the waves, and dominate the leaderboard.">
+    <meta name="keywords" content="shooter, action, arena, survival, neon, cyberpunk, html5 game">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050510'/><circle cx='50' cy='50' r='35' stroke='%2300f2ff' stroke-width='5' fill='none' stroke-dasharray='10 5'/><path d='M40 40 L60 60 M60 40 L40 60' stroke='%23ff00ea' stroke-width='8' stroke-linecap='round'/><circle cx='50' cy='50' r='10' fill='%23fff'><animate attributeName='opacity' values='1;0.5;1' dur='2s' repeatCount='indefinite'/></circle></svg>">
+
+    <!-- Social Media Meta (Social Thumbnail) -->
+    <meta property="og:title" content="Survival Shooter Arena">
+    <meta property="og:description" content="Ultimate Neon Protocol: Upgrade. Survive. Eliminate.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- HUD Layer -->
+        <div id="hud">
+            <div class="xp-container">
+                <div id="xp-fill" class="xp-fill"></div>
+            </div>
+
+            <div class="health-container hud-item">
+                <div id="health-fill" class="health-fill"></div>
+            </div>
+
+            <div id="minimap" class="hud-item">
+                <canvas id="minimapCanvas"></canvas>
+            </div>
+
+            <div class="ammo-counter hud-item">
+                <span class="ammo-label">AMMO</span>
+                <span id="ammo-val">--</span>
+            </div>
+            
+            <div id="wave-counter" style="grid-column: 2; grid-row: 1; font-family: 'Orbitron'; font-size: 1.2rem; color: var(--neon-pink); text-align: center;">
+                WAVE <span id="wave-num">1</span>
+            </div>
+        </div>
+
+        <!-- Mobile Controls Overlay -->
+        <div id="mobile-controls">
+            <div id="move-joystick" class="joystick-base">
+                <div class="joystick-knob"></div>
+            </div>
+            <div id="fire-joystick" class="joystick-base" style="left: auto; right: 50px;">
+                <div class="joystick-knob" style="background: radial-gradient(circle at 30% 30%, var(--neon-pink), #ff0055); box-shadow: 0 0 20px var(--neon-pink);"></div>
+            </div>
+        </div>
+
+        <!-- Overlays -->
+        <!-- Start Screen -->
+        <div id="start-overlay" class="overlay">
+            <div class="panel pulse">
+                <!-- Premium Logo/Thumbnail placeholder -->
+                <div class="game-banner">
+                    <svg viewBox="0 0 400 150" class="main-logo">
+                        <defs>
+                            <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#00f2ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ff00ea;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <text x="50%" y="45%" text-anchor="middle" class="logo-text main" filter="url(#glow)">SURVIVAL</text>
+                        <text x="50%" y="85%" text-anchor="middle" class="logo-text sub" filter="url(#glow)">ARENA</text>
+                        <path d="M50 110 L350 110" stroke="url(#neonGrad)" stroke-width="2" stroke-dasharray="5 5" />
+                    </svg>
+                </div>
+                
+                <h1 class="title hidden">SURVIVAL ARENA</h1>
+                <p class="subtitle">NEON STRIKE PROTOCOL</p>
+                
+                <div style="text-align: left; margin: 20px 0; font-size: 0.9rem; color: #ccc;">
+                    <p>• <b>WASD</b> or <b>LEFT JOYSTICK</b> to Move</p>
+                    <p>• <b>MOUSE</b> or <b>RIGHT JOYSTICK</b> to Aim & Fire</p>
+                    <p>• <b>SPACE / SHIFT</b> to Dash</p>
+                    <p>• Survive the waves. Collect XP. Upgrade.</p>
+                </div>
+
+                <button id="start-btn" class="btn">INITIALIZE</button>
+            </div>
+        </div>
+
+        <!-- Upgrade Screen -->
+        <div id="skill-overlay" class="overlay hidden">
+            <div class="panel">
+                <h2 class="title" style="font-size: 1.5rem;">LEVEL UP</h2>
+                <p class="subtitle">CHOOSE YOUR AUGMENTATION</p>
+                
+                <div id="skill-list">
+                    <!-- Skills will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="death-overlay" class="overlay hidden">
+            <div class="panel">
+                <h2 class="title" style="color: var(--neon-red);">PROTOCOL TERMINATED</h2>
+                <p class="subtitle">ARENA BREACHED</p>
+                
+                <div style="margin: 20px 0;">
+                    <p>WAVES SURVIVED: <span id="final-wave" style="color: var(--neon-blue);">0</span></p>
+                    <p>KILLS: <span id="final-kills" style="color: var(--neon-pink);">0</span></p>
+                </div>
+
+                <button id="restart-btn" class="btn">REBOOT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Audio (Hidden) -->
+    <audio id="bg-music" src="" loop></audio>
+
+    <!-- Scripts -->
+    <script src="js/input.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

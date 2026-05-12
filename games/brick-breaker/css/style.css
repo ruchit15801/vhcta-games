@@ -1,0 +1,263 @@
+:root {
+    --cyan: #00f2ff;
+    --pink: #ff00ff;
+    --gold: #ffea00;
+    --dark: #010103;
+    --glass: rgba(10, 15, 30, 0.85);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    touch-action: none;
+}
+
+body {
+    background-color: var(--dark);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 1. Background System */
+#global-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#global-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+    filter: blur(2px);
+    animation: zoomOut 20s infinite alternate linear;
+}
+
+#scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+    background-size: 100% 3px, 3px 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 2. Responsive Canvas Scaling (ROBUST) */
+#canvas-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+#gameCanvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* ENABLES ASPECT RATIO PRESERVATION WITHOUT CUT-OFF */
+    display: block;
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.6);
+}
+
+/* 3. UI Layering (Modern Glassmorphism) */
+.ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ui-layer.hidden, .hidden {
+    display: none !important;
+}
+
+#game-hud {
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 40px;
+    height: auto;
+    bottom: auto;
+}
+
+.hud-box {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(15px);
+    padding: 12px 30px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 140px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.hud-box .label {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.hud-box span:not(.label) {
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+/* Modals */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8) translateY(30px); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.glass-modal {
+    pointer-events: auto;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(25px);
+    padding: clamp(1.5rem, 5vw, 4rem);
+    border-radius: 2.5rem;
+    text-align: center;
+    box-shadow: 0 0 120px rgba(0,0,0,0.95);
+    max-width: 90%;
+    animation: fadeInScale 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.menu-logo {
+    width: 120px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px var(--cyan));
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    background: linear-gradient( var(--cyan), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 12px;
+    margin-bottom: 3rem;
+    opacity: 0.5;
+}
+
+.glow-btn {
+    background: transparent;
+    border: 3px solid var(--cyan);
+    color: var(--cyan);
+    padding: 1.25rem 4rem;
+    font-size: 1.4rem;
+    font-weight: 900;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 2px;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+.glow-btn:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 50px var(--cyan);
+    transform: scale(1.05);
+}
+
+.hint { margin-top: 1.5rem; opacity: 0.3; font-size: 0.8rem; letter-spacing: 2px; }
+
+@keyframes zoomOut {
+    from { transform: scale(1.1); }
+    to { transform: scale(1); }
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .hud-box { min-width: 100px; padding: 8px 15px; }
+    .hud-box span:not(.label) { font-size: 1.1rem; }
+    h1 { font-size: 2.2rem; }
+    .glass-modal { padding: 2.5rem; }
+}
+
+@media (max-height: 500px) {
+    .menu-logo { width: 60px; }
+    #game-hud { padding-top: 10px; }
+}
+
+
+/* Ultimate Polish & Mobile Responsiveness */
+
+/* Fix Tutorial Button Spacing */
+#tutorial-ok-btn {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 300px;
+}
+
+/* High-DPI Canvas Rendering (makes graphics super crisp) */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+/* Mobile Media Queries */
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    p { font-size: 1rem; }
+    .thumbnail { width: 140px; height: 140px; }
+    button { padding: 14px 30px; font-size: 1.1rem; }
+    .stat-value { font-size: 1.2rem; }
+    .stat-card { padding: 8px 15px; }
+    .joystick-outer { width: 110px; height: 110px; }
+    .joystick-inner { width: 40px; height: 40px; }
+    .action-btn { width: 75px; height: 75px; font-size: 0.8rem; }
+    #level-up-toast { font-size: 2.5rem; }
+    .instruction-icon { width: 40px; height: 40px; font-size: 1.5rem; }
+    .instruction-text { font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+    .thumbnail { display: none; } /* Hide thumbnail on very short screens to save space */
+    h1 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
+    #tutorial-ok-btn { margin-top: 1.5rem; }
+}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#141e30" />
+            <stop offset="100%" stop-color="#243b55" />
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d4af37" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#141e30" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#000" flood-opacity="0.9"/>
+        </filter>
+        <filter id="glow-filter">
+            <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <rect width="1280" height="720" fill="url(#bg)"/>
+    <circle cx="640" cy="360" r="400" fill="url(#glow)"/>
+    
+    <!-- Cards Array -->
+    <g filter="url(#shadow)" transform="translate(300, 200) rotate(-20) scale(1.5)">
+        <rect width="120" height="180" fill="#2c3e50" rx="10" stroke="#d4af37" stroke-width="6"/>
+        <circle cx="60" cy="90" r="30" fill="#e74c3c"/>
+    </g>
+    <g filter="url(#shadow)" transform="translate(800, 250) rotate(25) scale(1.4)">
+        <rect width="120" height="180" fill="#2c3e50" rx="10" stroke="#d4af37" stroke-width="6"/>
+        <path d="M60 40 L90 140 L30 140 Z" fill="#3498db"/>
+    </g>
+    <g filter="url(#shadow)" transform="translate(500, 150) scale(1.8)">
+        <rect width="140" height="200" fill="#1a252f" rx="12" stroke="#d4af37" stroke-width="8"/>
+        <rect x="15" y="15" width="110" height="170" fill="#0f0c29" rx="5"/>
+        <!-- Intricate magical symbol -->
+        <path d="M70 40 L100 100 L70 160 L40 100 Z" fill="none" stroke="#9b59b6" stroke-width="5" filter="url(#glow-filter)"/>
+        <circle cx="70" cy="100" r="20" fill="#f1c40f" filter="url(#glow-filter)"/>
+    </g>
+
+    <!-- Title Overlay -->
+    <g transform="translate(640, 600)" text-anchor="middle" font-family="Arial, serif" font-weight="bold">
+        <text y="0" font-size="80" fill="#fff" filter="url(#shadow)">DUNGEON</text>
+        <text y="60" font-size="50" fill="#d4af37" filter="url(#shadow)" letter-spacing="10">CARD BATTLE</text>
+    </g>
+</svg>

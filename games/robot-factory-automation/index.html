@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Robot Factory Automation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link id="favicon" rel="icon" type="image/png" href="assets/images/icon.png">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Top HUD Panel -->
+        <div id="top-hud">
+            <div class="hud-box level-box">
+                <div class="hud-label">LEVEL</div>
+                <div class="hud-value" id="val-level">1</div>
+            </div>
+            <div class="hud-box resource-box">
+                <div class="hud-label text-cyan">IRON</div>
+                <div class="hud-value" id="val-iron">0</div>
+            </div>
+            <div class="hud-box resource-box">
+                <div class="hud-label text-orange">COPPER</div>
+                <div class="hud-value" id="val-copper">0</div>
+            </div>
+            <div class="hud-box resource-box">
+                <div class="hud-label text-green">PARTS</div>
+                <div class="hud-value" id="val-parts">0</div>
+            </div>
+            <div class="hud-box power-box">
+                <div class="hud-label text-yellow">POWER</div>
+                <div class="power-bar-container">
+                    <div class="power-bar" id="bar-power"></div>
+                </div>
+                <div class="hud-value text-small" id="val-power">10/10 MW</div>
+            </div>
+            <div class="hud-box upgrade-box" id="btn-upgrades">
+                <div class="icn">⬆️</div>
+                <div class="hud-label">UPGRADES</div>
+            </div>
+        </div>
+
+        <!-- Objective Panel -->
+        <div id="objective-panel">
+            <div class="panel-header">CURRENT OBJECTIVE</div>
+            <div class="obj-text" id="obj-text">Produce 50 Iron Ores</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="bar-objective"></div>
+            </div>
+            <div class="obj-stats" id="obj-stats">0 / 50</div>
+        </div>
+
+        <!-- Left Tools Panel -->
+        <div id="left-tools">
+            <div class="tool-btn active" id="tool-cursor" title="Select / Inspect">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.64,21.97C13.14,22.21 12.54,22 12.31,21.5L10.13,16.76L7.62,18.78C7.45,18.92 7.24,19 7,19A1,1 0 0,1 6,18V3A1,1 0 0,1 7,2C7.24,2 7.47,2.09 7.64,2.23L19.65,11.54C20,11.83 20.09,12.31 19.82,12.68C19.62,12.96 19.33,13.11 19,13.11H14.86L17,17.89C17.24,18.41 17,19 16.5,19.23L13.64,21.97Z"/></svg>
+            </div>
+            <div class="tool-btn" id="tool-rotate" title="Rotate Machine [R]">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12H20A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4V7L16,3L12,-1V2M20,12A8,8 0 0,1 12,20V23L8,19L12,15V18A6,6 0 0,0 18,12H20Z"/></svg>
+            </div>
+            <div class="tool-btn danger" id="tool-delete" title="Bulldozer / Delete [X]">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+            </div>
+        </div>
+
+        <!-- Bottom Build Menu -->
+        <div id="build-menu">
+            <div class="build-scroll">
+                <div class="build-item" data-type="conveyor">
+                    <div class="build-icon icon-conveyor"></div>
+                    <div class="build-name">Conveyor</div>
+                    <div class="build-cost">1 Iron</div>
+                </div>
+                <div class="build-item" data-type="miner_iron">
+                    <div class="build-icon icon-miner text-cyan">I</div>
+                    <div class="build-name">Iron Miner</div>
+                    <div class="build-cost">5 Iron, 10 Pow</div>
+                </div>
+                 <div class="build-item" data-type="miner_copper">
+                    <div class="build-icon icon-miner text-orange">C</div>
+                    <div class="build-name">Cop. Miner</div>
+                    <div class="build-cost">5 Iron, 10 Pow</div>
+                </div>
+                <div class="build-item" data-type="processor">
+                    <div class="build-icon icon-processor"></div>
+                    <div class="build-name">Processor</div>
+                    <div class="build-cost">10 Copper</div>
+                </div>
+                <div class="build-item" data-type="assembler">
+                    <div class="build-icon icon-assembler"></div>
+                    <div class="build-name">Assembler</div>
+                    <div class="build-cost">20 Parts</div>
+                </div>
+                <div class="build-item" data-type="generator">
+                    <div class="build-icon icon-generator"></div>
+                    <div class="build-name">Solar Gen</div>
+                    <div class="build-cost">30 Iron</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inspector Panel -->
+        <div id="inspector-panel" class="hidden">
+            <div class="panel-header">MACHINE INTEL</div>
+            <div class="ins-title" id="ins-title">Conveyor Belt</div>
+            <div class="ins-img" id="ins-img"></div>
+            <div class="ins-stat">
+                <span>Efficiency:</span>
+                <span id="ins-eff" class="text-green">100%</span>
+            </div>
+            <div class="ins-stat">
+                <span>Power Draw:</span>
+                <span id="ins-power" class="text-yellow">1 MW</span>
+            </div>
+            <div class="ins-text" id="ins-io">I/O: None</div>
+            <div class="ins-text text-small text-gray" id="ins-desc">Transports items across the factory floor.</div>
+        </div>
+
+        <!-- Upgrades Modal -->
+        <div id="modal-upgrades" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">FACTORY UPGRADES <span class="close-btn" id="btn-close-upgrades">✖</span></div>
+                <div class="upgrades-list">
+                    <div class="upgrade-card" data-upgrade="speed">
+                        <div class="upg-icon">⚡</div>
+                        <div class="upg-info">
+                            <div class="upg-title">Overclocking</div>
+                            <div class="upg-desc">Increases all machine processing speed by 20%.</div>
+                        </div>
+                        <div class="upg-action">
+                            <div class="upg-cost">Cost: 50 Parts</div>
+                            <button class="btn-buy" id="btn-upg-speed">UPGRADE</button>
+                        </div>
+                    </div>
+                    <div class="upgrade-card" data-upgrade="efficiency">
+                        <div class="upg-icon">🌿</div>
+                        <div class="upg-info">
+                            <div class="upg-title">Eco-Circuits</div>
+                            <div class="upg-desc">Reduces machine power consumption by 25%.</div>
+                        </div>
+                        <div class="upg-action">
+                            <div class="upg-cost">Cost: 100 Copper</div>
+                            <button class="btn-buy" id="btn-upg-eff">UPGRADE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Complete Modal -->
+        <div id="modal-level" class="modal hidden">
+            <div class="modal-content text-center">
+                <div class="level-glowing-title">LEVEL COMPLETE!</div>
+                <div class="level-stats">
+                    <p>Current Factory Efficiency: <span class="text-green">Optimal</span></p>
+                    <p>New blueprints unlocked.</p>
+                </div>
+                <button class="btn-main mt-20" id="btn-next-level">PROCEED TO NEXT SECTOR</button>
+            </div>
+        </div>
+
+        <!-- Tutorial / Intro Screen -->
+        <div id="screen-tutorial">
+            <div class="intro-bg"></div>
+            <div class="intro-content">
+                <div class="logo-box">
+                    <img src="assets/images/icon.png" class="app-icon-logo" alt="Icon">
+                    <div class="logo-text">ROBOT FACTORY<br><span class="text-accent">AUTOMATION</span></div>
+                </div>
+                <div class="tutorial-grid">
+                    <div class="tut-card">
+                        <div class="tut-icon text-cyan">⛏️</div>
+                        <h3>1. EXTRACT</h3>
+                        <p>Build Miners on ore deposits. Miners require Power to function.</p>
+                    </div>
+                    <div class="tut-card">
+                        <div class="tut-icon text-orange"> conveyor </div>
+                        <h3>2. LOGISTICS</h3>
+                        <p>Connect machines using Conveyor Belts. Use Rotate [R] to aim them.</p>
+                    </div>
+                    <div class="tut-card">
+                        <div class="tut-icon text-green">⚙️</div>
+                        <h3>3. AUTOMATE</h3>
+                        <p>Route ores into Processors, then into Assemblers to create advanced parts.</p>
+                    </div>
+                </div>
+                <div class="sound-toggle-box">
+                    <label>
+                        <input type="checkbox" id="chk-sound" checked> 
+                        <span class="custom-checkbox"></span> Enable Industrial Audio
+                    </label>
+                </div>
+                <button class="btn-main btn-glow" id="btn-start">INITIALIZE FACTORY</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

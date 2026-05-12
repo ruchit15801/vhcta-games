@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hole Eat City - Premium Smooth</title>
+<link rel="icon" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#2f3640;font-family:'Poppins',sans-serif;overflow:hidden;height:100vh;}
+#splash{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(45deg, #1e272e, #2f3640);z-index:100;transition:opacity .5s;}
+#splash.hidden{opacity:0;pointer-events:none;}
+#splash img.thumb{width:min(320px,85vw);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin-bottom:20px;}
+#btnPlay{background:#00d2ff;color:#fff;border:none;padding:15px 50px;border-radius:30px;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 8px 15px rgba(0,210,255,0.4);transition:0.3s;}
+#btnPlay:hover{transform:scale(1.1);}
+
+#hud{position:fixed;top:0;left:0;width:100%;padding:20px;display:flex;justify-content:space-between;z-index:20;pointer-events:none;color:#fff;}
+.stat-box{background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);padding:10px 20px;border-radius:15px;font-size:20px;font-weight:800;border:1px solid rgba(255,255,255,0.1);}
+#score{color:#00d2ff;}
+
+canvas{display:block;touch-action:none;}
+
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50;color:#fff;}
+#overlay.show{display:flex;}
+.ov-btn{background:#00d2ff;color:#fff;border:none;padding:12px 40px;border-radius:25px;font-size:18px;font-weight:700;cursor:pointer;margin:10px;}
+</style>
+</head>
+<body>
+<div id="splash">
+    <img class="thumb" src="thumbnail.png" alt="Hole Eat City">
+    <button id="btnPlay">EAT CITY</button>
+</div>
+<div id="hud">
+    <div class="stat-box">Score: <span id="score">0</span></div>
+    <div class="stat-box">Size: <span id="size">1.0x</span></div>
+</div>
+<canvas id="c"></canvas>
+<div id="overlay">
+    <h2 id="ovTitle">CITY CONSUMED!</h2>
+    <button class="ov-btn" onclick="location.reload()">PLAY AGAIN</button>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const sizeEl = document.getElementById('size');
+
+let W, H, score = 0, gameActive = false;
+let hole = { x: 0, y: 0, r: 40, targetR: 40 };
+let objects = [];
+let camera = { x: 0, y: 0, scale: 1 };
+
+function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    hole.x = W / 2;
+    hole.y = H / 2;
+}
+window.addEventListener('resize', resize);
+resize();
+
+const COLORS = ['#e74c3c', '#f1c40f', '#2ecc71', '#9b59b6', '#3498db', '#e67e22'];
+
+function spawnObjects() {
+    objects = [];
+    for (let i = 0; i < 200; i++) {
+        objects.push({
+            x: (Math.random() - 0.5) * 4000,
+            y: (Math.random() - 0.5) * 4000,
+            r: 15 + Math.random() * 60,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            type: Math.random() < 0.2 ? 'car' : 'box',
+            eaten: false
+        });
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    
+    // Smooth camera following hole
+    camera.x += (hole.x - camera.x) * 0.1;
+    camera.y += (hole.y - camera.y) * 0.1;
+    
+    // Zoom out as hole grows
+    let targetScale = Math.max(0.5, 1 - (hole.r - 40) / 400);
+    camera.scale += (targetScale - camera.scale) * 0.05;
+
+    ctx.save();
+    ctx.translate(W / 2, H / 2);
+    ctx.scale(camera.scale, camera.scale);
+    ctx.translate(-camera.x, -camera.y);
+
+    // Ground Grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 2;
+    for (let x = -2000; x <= 2000; x += 100) {
+        ctx.beginPath(); ctx.moveTo(x, -2000); ctx.lineTo(x, 2000); ctx.stroke();
+    }
+    for (let y = -2000; y <= 2000; y += 100) {
+        ctx.beginPath(); ctx.moveTo(-2000, y); ctx.lineTo(2000, y); ctx.stroke();
+    }
+
+    // Objects
+    objects.forEach(o => {
+        if (o.eaten) return;
+        
+        // Distance check for eating
+        let d = Math.hypot(o.x - hole.x, o.y - hole.y);
+        if (d < hole.r) {
+            if (o.r < hole.r * 0.8) {
+                o.eaten = true;
+                score += Math.floor(o.r);
+                hole.targetR += o.r * 0.1;
+                scoreEl.innerText = score;
+                sizeEl.innerText = (hole.targetR / 40).toFixed(1) + 'x';
+            }
+        }
+
+        ctx.fillStyle = o.color;
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = 'rgba(0,0,0,0.3)';
+        if (o.type === 'car') {
+            ctx.fillRect(o.x - o.r, o.y - o.r / 2, o.r * 2, o.r);
+        } else {
+            ctx.beginPath();
+            ctx.roundRect(o.x - o.r/2, o.y - o.r/2, o.r, o.r, 8);
+            ctx.fill();
+        }
+    });
+
+    // Hole
+    hole.r += (hole.targetR - hole.r) * 0.1;
+    ctx.beginPath();
+    ctx.arc(hole.x, hole.y, hole.r, 0, Math.PI * 2);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,210,255,0.5)';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    ctx.restore();
+
+    if (gameActive) requestAnimationFrame(draw);
+}
+
+let pointer = { x: W/2, y: H/2 };
+window.addEventListener('mousemove', e => {
+    if (!gameActive) return;
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
+});
+window.addEventListener('touchmove', e => {
+    if (!gameActive) return;
+    pointer.x = e.touches[0].clientX;
+    pointer.y = e.touches[0].clientY;
+});
+
+// Move hole toward pointer
+function moveHole() {
+    if (!gameActive) return;
+    let dx = (pointer.x - W/2) / camera.scale;
+    let dy = (pointer.y - H/2) / camera.scale;
+    hole.x += dx * 0.1;
+    hole.y += dy * 0.1;
+    setTimeout(moveHole, 16);
+}
+
+document.getElementById('btnPlay').onclick = () => {
+    document.getElementById('splash').classList.add('hidden');
+    gameActive = true;
+    spawnObjects();
+    draw();
+    moveHole();
+};
+</script>
+</body>
+</html>

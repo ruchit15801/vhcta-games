@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bridge Construction Simulator</title>
+    <!-- Preload fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Game Icon & Thumbnail Metadata -->
+    <link rel="icon" href="assets/icons/icon.png" type="image/png">
+    <meta property="og:image" content="assets/images/thumbnail.png">
+    <meta property="og:title" content="Bridge Construction Simulator">
+</head>
+<body>
+
+    <!-- Background Image -->
+    <div id="game-background"></div>
+
+    <!-- Main Game Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Game HUD -->
+    <div id="ui-layer" class="hidden">
+        
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="level-info pane-3d">
+                <span id="level-text">LEVEL 1</span>
+            </div>
+            <div class="budget-info pane-3d">
+                <span class="label">BUDGET:</span>
+                <span id="budget-text">$10,000</span>
+                <div class="budget-bar">
+                    <div id="budget-fill"></div>
+                </div>
+            </div>
+            <div class="right-controls">
+                <button id="btn-sound" class="btn-circular" aria-label="Toggle Sound">🔊</button>
+                <button id="btn-menu" class="btn-circular" aria-label="Menu">☰</button>
+            </div>
+        </div>
+
+        <!-- Material Selection (Left/Bottom) -->
+        <div class="material-panel pane-3d">
+            <div class="panel-title">MATERIALS</div>
+            <button class="mat-btn active" data-mat="road">
+                <div class="mat-icon road-icon"></div>
+                <div class="mat-details">
+                    <span class="mat-name">ROAD</span>
+                    <span class="mat-cost">$100/m</span>
+                </div>
+            </button>
+            <button class="mat-btn" data-mat="wood">
+                <div class="mat-icon wood-icon"></div>
+                <div class="mat-details">
+                    <span class="mat-name">WOOD</span>
+                    <span class="mat-cost">$50/m</span>
+                </div>
+            </button>
+            <button class="mat-btn" data-mat="steel">
+                <div class="mat-icon steel-icon"></div>
+                <div class="mat-details">
+                    <span class="mat-name">STEEL</span>
+                    <span class="mat-cost">$200/m</span>
+                </div>
+            </button>
+            <button class="mat-btn" data-mat="rope">
+                <div class="mat-icon rope-icon"></div>
+                <div class="mat-details">
+                    <span class="mat-name">ROPE</span>
+                    <span class="mat-cost">$30/m</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Action Tools (Right/Bottom) -->
+        <div class="action-panel">
+            <div class="tool-group pane-3d">
+                <button id="btn-undo" class="tool-btn" title="Undo">↩</button>
+                <button id="btn-delete" class="tool-btn" title="Delete Mode">🗑️</button>
+                <button id="btn-clear" class="tool-btn danger" title="Clear All">💥</button>
+            </div>
+            
+            <button id="btn-simulate" class="play-btn pane-3d-play">
+                <span class="play-icon">▶</span>
+                <span class="play-text">TEST</span>
+            </button>
+        </div>
+        
+    </div>
+
+    <!-- Simulation Overlays -->
+    <div id="sim-overlay" class="hidden">
+        <div class="sim-top pane-3d">
+            <span class="sim-status">SIMULATING PHYSICS...</span>
+            <span id="stress-indicator">MAX STRESS: <span id="max-stress-val">0%</span></span>
+        </div>
+        <button id="btn-stop-sim" class="stop-btn pane-3d-stop">◼ STOP ENGINE</button>
+    </div>
+
+    <!-- Game Guide / Intro Screen -->
+    <div id="guide-screen" class="overlay-screen active">
+        <div class="window-3d">
+            <img src="assets/images/thumbnail.png" alt="Game Thumbnail" class="intro-thumbnail">
+            <div class="window-content">
+                <h1>BRIDGE ENGINEER PRO</h1>
+                <p class="subtitle">Physics Simulation System V1.0</p>
+                <div class="instructions">
+                    <div class="inst-item">
+                        <span class="inst-icon">🏗️</span>
+                        <p>Construct a stable bridge using Road, Wood, Steel, or Rope.</p>
+                    </div>
+                    <div class="inst-item">
+                        <span class="inst-icon">💰</span>
+                        <p>Manage your budget efficiently for higher ratings.</p>
+                    </div>
+                    <div class="inst-item">
+                        <span class="inst-icon">🚗</span>
+                        <p>Ensure the vehicles can safely cross without structural failure.</p>
+                    </div>
+                </div>
+                <button id="btn-start-game" class="primary-btn pulse">COMMENCE PROJECT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Complete / Failed Screen -->
+    <div id="result-screen" class="overlay-screen hidden">
+        <div class="window-3d">
+            <h1 id="result-title">TEST PASSED</h1>
+            <div class="result-stats">
+                <div class="stat">
+                    <span>BUDGET SPENT:</span>
+                    <span id="result-budget">$0</span>
+                </div>
+                <div class="stat">
+                    <span>MAX STRUCTURAL STRESS:</span>
+                    <span id="result-stress">0%</span>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button id="btn-retry" class="secondary-btn">RETRY DESIGN</button>
+                <button id="btn-next-level" class="primary-btn">NEXT LEVEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

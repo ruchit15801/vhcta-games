@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+    <defs>
+        <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#2b1055"/>
+            <stop offset="100%" stop-color="#050314"/>
+        </radialGradient>
+        <linearGradient id="neonPink" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff0844"/>
+            <stop offset="100%" stop-color="#ffb199"/>
+        </linearGradient>
+        <linearGradient id="neonBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f2fe"/>
+            <stop offset="100%" stop-color="#4facfe"/>
+        </linearGradient>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="25" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <filter id="shadow">
+            <feDropShadow dx="0" dy="15" stdDeviation="20" flood-color="#000" flood-opacity="0.9"/>
+        </filter>
+    </defs>
+    
+    <rect width="1280" height="720" fill="url(#bg)"/>
+    
+    <!-- Grid floor -->
+    <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="2">
+        <path d="M0,450 L1280,450 M0,500 L1280,500 M0,560 L1280,560 M0,630 L1280,630 M0,720 L1280,720"/>
+        <path d="M640,400 L640,720 M540,400 L140,720 M740,400 L1140,720 M440,400 L-360,720 M840,400 L1640,720"/>
+    </g>
+
+    <!-- 3D Maze elements -->
+    <g transform="translate(0, -50)">
+        <path d="M300,300 L980,300 L980,500 L800,500 L800,400 L480,400 L480,500 L300,500 Z" fill="url(#neonBlue)" fill-opacity="0.1" stroke="url(#neonBlue)" stroke-width="15" stroke-linejoin="round" filter="url(#glow)"/>
+        
+        <!-- Depth -->
+        <path d="M300,300 L300,350 L980,350 L980,300 Z" fill="#000" fill-opacity="0.5"/>
+    </g>
+
+    <!-- Text -->
+    <text x="640" y="220" font-family="'Orbitron', sans-serif" font-weight="900" font-size="100" fill="#fff" text-anchor="middle" filter="url(#shadow)">MAZE ESCAPE</text>
+    <text x="640" y="220" font-family="'Orbitron', sans-serif" font-weight="900" font-size="100" fill="url(#neonBlue)" text-anchor="middle" filter="url(#glow)">MAZE ESCAPE</text>
+    <text x="640" y="290" font-family="'Montserrat', sans-serif" font-weight="800" font-size="40" fill="url(#neonPink)" text-anchor="middle" filter="url(#glow)" letter-spacing="10">RUNNER</text>
+
+    <!-- Player Character -->
+    <circle cx="640" cy="550" r="40" fill="url(#neonPink)" filter="url(#glow)"/>
+    <circle cx="640" cy="550" r="20" fill="#fff"/>
+</svg>

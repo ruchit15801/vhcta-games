@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <meta property="og:image" content="assets/images/thumbnail.svg">
+    <title>Time Travel Puzzle</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Cinematic Overlay for Past/Future Transition -->
+        <div id="cinematic-overlay"></div>
+        <div id="glitch-overlay"></div>
+        
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Elements -->
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="level-indicator">
+                    <span class="label">LEVEL</span>
+                    <span id="level-text">01</span>
+                </div>
+                <div class="timeline-indicator" id="timeline-indicator">
+                    <div class="indicator-ring"></div>
+                    <span id="timeline-text">PAST</span>
+                </div>
+                <div class="right-controls">
+                    <button id="btn-hint" class="icon-btn">💡</button>
+                    <button id="btn-restart" class="icon-btn">🔄</button>
+                    <button id="btn-sound" class="icon-btn">🔊</button>
+                    <button id="btn-pause" class="icon-btn">⏸</button>
+                </div>
+            </div>
+            
+            <div id="hint-panel" class="hidden">
+                <p id="hint-text">Move the stone in the Past to clear the path in the Future.</p>
+            </div>
+        </div>
+
+        <!-- Touch Controls for Mobile/Tablet -->
+        <div id="mobile-controls">
+            <div class="dpad">
+                <button id="btn-left" class="control-btn">◀</button>
+                <button id="btn-right" class="control-btn">▶</button>
+            </div>
+            <div class="action-pad">
+                <button id="btn-jump" class="control-btn action">A</button>
+                <button id="btn-time" class="control-btn time-btn">TIME</button>
+            </div>
+        </div>
+
+        <!-- Screens -->
+        <div id="start-screen" class="screen active">
+            <div class="logo-container">
+                <h1 class="game-title">CHRONO<br><span class="title-sub">ECHOES</span></h1>
+                <p class="tagline">Change the past. Save the future.</p>
+            </div>
+            <button id="btn-start" class="primary-btn">BEGIN JOURNEY</button>
+            <button id="btn-tutorial" class="secondary-btn">HOW TO PLAY</button>
+        </div>
+
+        <div id="tutorial-screen" class="screen hidden">
+            <h2>Chronicles of Time</h2>
+            <div class="tutorial-steps">
+                <div class="step">
+                    <div class="step-icon">A / D</div>
+                    <p>Move left and right</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">W / SPACE</div>
+                    <p>Jump across platforms</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon highlight">SHIFT</div>
+                    <p>Switch between Past & Future</p>
+                </div>
+                <div class="step">
+                    <p class="tutorial-note">Actions in the PAST affect objects in the FUTURE.</p>
+                </div>
+            </div>
+            <button id="btn-close-tutorial" class="primary-btn">UNDERSTOOD</button>
+        </div>
+
+        <div id="pause-screen" class="screen hidden">
+            <h2>PAUSED</h2>
+            <button id="btn-resume" class="primary-btn">RESUME</button>
+            <button id="btn-menu" class="secondary-btn">MAIN MENU</button>
+        </div>
+
+        <div id="level-complete-screen" class="screen hidden">
+            <h2 class="success-text">TIMELINE RESTORED</h2>
+            <div class="stats">
+                <p>Time Shifts: <span id="stat-shifts">0</span></p>
+            </div>
+            <button id="btn-next-level" class="primary-btn">NEXT LEVEL</button>
+        </div>
+    </div>
+
+    <script src="js/assets.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

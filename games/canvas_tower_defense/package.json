@@ -1,0 +1,18 @@
+{
+  "name": "tower_defense_siege",
+  "version": "1.0.0",
+  "description": "Modern Tower Defense game in the style of Endless Siege",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.60.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^4.0.0"
+  }
+}

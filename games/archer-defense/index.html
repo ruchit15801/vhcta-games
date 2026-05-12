@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Archer Defense</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/thumb.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="scoreDisplay">WAVE: 1</div>
+            <div id="healthBarContainer"><div id="healthBar"></div></div>
+            
+            <div id="startScreen" class="screen active">
+                <h1>ARCHER DEFENSE</h1>
+                <p>Drag anywhere to pull back the bow.</p>
+                <p>Release to shoot arrows at the invaders.</p>
+                <button id="startBtn">DEFEND</button>
+            </div>
+
+            <div id="gameOverScreen" class="screen">
+                <h1>CASTLE FALLEN</h1>
+                <p>WAVES SURVIVED: <span id="finalScore">0</span></p>
+                <button id="restartBtn">RETRY</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

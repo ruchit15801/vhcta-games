@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#2e1065"/>
+      <stop offset="50%" stop-color="#1a0a4e"/>
+      <stop offset="100%" stop-color="#0a0a1a"/>
+    </radialGradient>
+    <radialGradient id="shieldOuter" cx="50%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </radialGradient>
+    <radialGradient id="shieldInner" cx="50%" cy="25%" r="70%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="60%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#3b0764"/>
+    </radialGradient>
+    <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fca5a5"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </radialGradient>
+    <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="purpleGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blueGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="swordGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="40%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded background -->
+  <rect width="512" height="512" rx="90" fill="url(#bgGrad)"/>
+
+  <!-- Starfield -->
+  <circle cx="80"  cy="60"  r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="160" cy="40"  r="1"   fill="white" opacity="0.5"/>
+  <circle cx="340" cy="55"  r="2"   fill="white" opacity="0.8"/>
+  <circle cx="420" cy="35"  r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="450" cy="90"  r="1"   fill="white" opacity="0.5"/>
+  <circle cx="70"  cy="120" r="1.5" fill="white" opacity="0.4"/>
+  <circle cx="470" cy="150" r="1"   fill="white" opacity="0.6"/>
+  <circle cx="50"  cy="380" r="1"   fill="white" opacity="0.5"/>
+  <circle cx="460" cy="390" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="90"  cy="440" r="1"   fill="white" opacity="0.4"/>
+  <circle cx="430" cy="430" r="1.5" fill="white" opacity="0.6"/>
+
+  <!-- Outer aura rings (animated pulse feel via layered opacity) -->
+  <circle cx="256" cy="240" r="228" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.25"/>
+  <circle cx="256" cy="240" r="210" fill="none" stroke="#f59e0b" stroke-width="1"   opacity="0.20"/>
+
+  <!-- Shield shadow -->
+  <path d="M256 88 L388 152 L388 272 Q388 358 256 435 Q124 358 124 272 L124 152 Z"
+        fill="rgba(0,0,0,0.5)" transform="translate(8,12)"/>
+
+  <!-- Shield outer (gold) -->
+  <path d="M256 88 L388 152 L388 272 Q388 358 256 435 Q124 358 124 272 L124 152 Z"
+        fill="url(#shieldOuter)" filter="url(#goldGlow)"/>
+
+  <!-- Shield inner (purple) -->
+  <path d="M256 112 L364 168 L364 272 Q364 340 256 408 Q148 340 148 272 L148 168 Z"
+        fill="url(#shieldInner)"/>
+
+  <!-- Shield center emboss top strip -->
+  <path d="M256 112 L364 168 L364 195 L148 195 L148 168 Z" fill="rgba(255,255,255,0.08)"/>
+
+  <!-- Shield decorative border detail -->
+  <path d="M256 88 L388 152 L388 272 Q388 358 256 435 Q124 358 124 272 L124 152 Z"
+        fill="none" stroke="#fde68a" stroke-width="2.5" opacity="0.9"/>
+
+  <!-- Inner shield border -->
+  <path d="M256 112 L364 168 L364 272 Q364 340 256 408 Q148 340 148 272 L148 168 Z"
+        fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1.5"/>
+
+  <!-- Crown on top of shield -->
+  <path d="M218 110 L228 82 L244 100 L256 72 L268 100 L284 82 L294 110 Z"
+        fill="url(#crownGrad)" filter="url(#goldGlow)"/>
+  <!-- Crown gems -->
+  <circle cx="228" cy="88"  r="5" fill="#ef4444" filter="url(#redGlow)"/>
+  <circle cx="256" cy="78"  r="6" fill="#06b6d4" filter="url(#blueGlow)"/>
+  <circle cx="284" cy="88"  r="5" fill="#22c55e"/>
+
+  <!-- Sword blade -->
+  <polygon points="250,130 262,130 259,390 253,390" fill="url(#swordGrad)" filter="url(#goldGlow)"/>
+  <!-- Sword tip -->
+  <polygon points="250,130 262,130 256,105" fill="#f8fafc"/>
+  <!-- Sword guard (crossguard) -->
+  <rect x="208" y="228" width="96" height="20" rx="8" fill="url(#crownGrad)" filter="url(#goldGlow)"/>
+  <!-- Guard details -->
+  <rect x="208" y="232" width="96" height="6" rx="3" fill="rgba(255,255,255,0.3)"/>
+  <!-- Sword pommel -->
+  <circle cx="256" cy="382" r="16" fill="url(#crownGrad)" filter="url(#goldGlow)"/>
+  <circle cx="256" cy="382" r="8"  fill="#fde68a"/>
+
+  <!-- Monster eyes left -->
+  <circle cx="195" cy="305" r="16" fill="url(#eyeGlow)" filter="url(#redGlow)"/>
+  <circle cx="195" cy="305" r="7"  fill="#1a0a1a"/>
+  <circle cx="191" cy="301" r="3"  fill="rgba(255,255,255,0.7)"/>
+
+  <!-- Monster eyes right -->
+  <circle cx="317" cy="305" r="16" fill="url(#eyeGlow)" filter="url(#redGlow)"/>
+  <circle cx="317" cy="305" r="7"  fill="#1a0a1a"/>
+  <circle cx="313" cy="301" r="3"  fill="rgba(255,255,255,0.7)"/>
+
+  <!-- Monster claw marks on shield left -->
+  <path d="M170 260 Q162 270 170 280" fill="none" stroke="rgba(239,68,68,0.7)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M175 265 Q167 276 175 285" fill="none" stroke="rgba(239,68,68,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M181 262 Q172 274 181 283" fill="none" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Monster claw marks on shield right -->
+  <path d="M342 260 Q350 270 342 280" fill="none" stroke="rgba(239,68,68,0.7)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M337 265 Q345 276 337 285" fill="none" stroke="rgba(239,68,68,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M331 262 Q340 274 331 283" fill="none" stroke="rgba(239,68,68,0.5)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Lightning bolt left -->
+  <path d="M155 170 L170 170 L160 196 L180 196 L158 230" fill="none" stroke="#67e8f9" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#blueGlow)" opacity="0.85"/>
+
+  <!-- Lightning bolt right -->
+  <path d="M357 170 L342 170 L352 196 L332 196 L354 230" fill="none" stroke="#67e8f9" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#blueGlow)" opacity="0.85"/>
+
+  <!-- Bottom label -->
+  <rect x="156" y="452" width="200" height="38" rx="10" fill="rgba(124,58,237,0.8)" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="256" y="477" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="18" font-weight="900" fill="#fde68a" letter-spacing="3">MDC</text>
+</svg>

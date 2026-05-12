@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hacker Defense Tower</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Game Icon & Thumbnail for preview (using as favicon and meta tags) -->
+    <link rel="icon" href="assets/images/game_icon_1776864112240.png" type="image/png">
+    <meta property="og:image" content="assets/images/game_thumbnail_1776864130867.png">
+</head>
+<body>
+
+    <div id="game-container">
+        
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Main Menu / Start Screen -->
+        <div id="start-screen" class="ui-screen active">
+            <div class="hologram-effect"></div>
+            <img src="assets/images/game_icon_1776864112240.png" alt="Game Icon" class="game-logo">
+            <h1 class="glitch" data-text="HACKER DEFENSE">HACKER DEFENSE</h1>
+            <h2 class="subtitle">TOWER INITIATIVE</h2>
+            
+            <div class="instructions-panel">
+                <h3>> SYSTEM BRIEFING_</h3>
+                <p>Deploy cyber-defenses to protect the Main Server Core from incoming Malware, Viruses, and Ransomware.</p>
+                <ul>
+                    <li><span class="highlight">TAP</span> open nodes to build defenses.</li>
+                    <li><span class="highlight">UPGRADE</span> towers to increase power.</li>
+                    <li><span class="highlight">SURVIVE</span> all incoming waves.</li>
+                </ul>
+            </div>
+            
+            <button id="btn-start" class="cyber-btn">
+                <span class="btn-glitch"></span>
+                <span class="btn-text">INITIALIZE DEFENSE</span>
+            </button>
+            <div class="sound-toggle-menu">
+                <label>
+                    <input type="checkbox" id="sound-checkbox" checked>
+                    <span class="custom-checkbox"></span> Enable Audio Feedback
+                </label>
+            </div>
+        </div>
+
+        <!-- HUD (Heads Up Display) -->
+        <div id="hud" class="ui-screen hidden">
+            <div class="top-bar">
+                <div class="hud-item health-box">
+                    <span class="icon">❤️</span>
+                    <div class="health-bar-container">
+                        <div id="core-health-fill" class="health-fill"></div>
+                    </div>
+                    <span id="core-health-text" class="value">20/20</span>
+                </div>
+                
+                <div class="hud-item resource-box">
+                    <span class="icon">💎</span>
+                    <span id="data-points" class="value">500</span>
+                    <span class="label">DATA</span>
+                </div>
+
+                <div class="hud-item wave-box">
+                    <span class="icon">🌊</span>
+                    <span id="wave-counter" class="value">1/10</span>
+                    <span class="label">WAVE</span>
+                </div>
+            </div>
+
+            <!-- Build Menu (Hidden by default, positioned near tapped node) -->
+            <div id="build-menu" class="context-menu hidden">
+                <div class="menu-header">DEPLOY DEFENSE</div>
+                <div class="tower-options">
+                    <div class="tower-option" data-type="firewall" data-cost="100">
+                        <img src="assets/images/tower_firewall_1776864174400.png?v=2" alt="Firewall">
+                        <div class="details">
+                            <span class="name">Firewall</span>
+                            <span class="cost">100 💎</span>
+                        </div>
+                    </div>
+                    <div class="tower-option" data-type="antivirus" data-cost="150">
+                        <img src="assets/images/tower_antivirus_1776864190756.png?v=2" alt="Antivirus">
+                        <div class="details">
+                            <span class="name">Antivirus</span>
+                            <span class="cost">150 💎</span>
+                        </div>
+                    </div>
+                    <div class="tower-option" data-type="encryption" data-cost="200">
+                        <img src="assets/images/tower_encryption_1776864210548.png?v=2" alt="Encryption">
+                        <div class="details">
+                            <span class="name">Encryption Node</span>
+                            <span class="cost">200 💎</span>
+                        </div>
+                    </div>
+                    <div class="tower-option" data-type="ai" data-cost="300">
+                        <img src="assets/images/tower_ai_1776864235540.png?v=2" alt="AI Defense">
+                        <div class="details">
+                            <span class="name">AI Defense Unit</span>
+                            <span class="cost">300 💎</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="close-btn" id="close-build-menu">CANCEL</button>
+            </div>
+
+            <!-- Upgrade Menu (Hidden by default) -->
+            <div id="upgrade-menu" class="context-menu hidden">
+                <div class="menu-header">SYSTEM UPGRADE</div>
+                <div class="upgrade-info">
+                    <span id="selected-tower-name" class="tower-name">Firewall</span>
+                    <span id="selected-tower-level" class="tower-lvl">Lvl 1</span>
+                </div>
+                <div class="upgrade-actions">
+                    <button id="btn-upgrade" class="action-btn upgrade">
+                        UPGRADE (<span id="upgrade-cost">150</span> 💎)
+                    </button>
+                    <button id="btn-sell" class="action-btn sell">
+                        SELL (<span id="sell-value">50</span> 💎)
+                    </button>
+                </div>
+                <button class="close-btn" id="close-upgrade-menu">CLOSE</button>
+            </div>
+
+            <!-- Wave Start Button -->
+            <button id="btn-next-wave" class="cyber-btn small-btn">
+                <span class="btn-text">CALL NEXT WAVE</span>
+            </button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="ui-screen hidden">
+            <div class="hologram-effect red-alert"></div>
+            <h1 class="glitch red" data-text="SYSTEM COMPROMISED">SYSTEM COMPROMISED</h1>
+            <p>The main server has been breached.</p>
+            <p>Waves Survived: <span id="final-wave">0</span></p>
+            <button id="btn-restart" class="cyber-btn">
+                <span class="btn-text">REBOOT SYSTEM</span>
+            </button>
+        </div>
+
+        <!-- Win Screen -->
+        <div id="win-screen" class="ui-screen hidden">
+            <div class="hologram-effect green-alert"></div>
+            <h1 class="glitch green" data-text="SYSTEM SECURED">SYSTEM SECURED</h1>
+            <p>All cyber threats have been neutralized.</p>
+            <button id="btn-play-again" class="cyber-btn">
+                <span class="btn-text">RUN DIAGNOSTICS (PLAY AGAIN)</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

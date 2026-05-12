@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Digital Pet Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.jpg" type="image/jpeg">
+    <meta property="og:image" content="assets/images/thumbnail.jpg">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background Layer -->
+        <div id="background" class="bg-room"></div>
+
+        <!-- Canvas for Pet Animation -->
+        <canvas id="petCanvas"></canvas>
+
+        <!-- Top HUD (Level, XP, Coins) -->
+        <div id="hud-layer" class="hidden">
+            <div class="hud-top">
+                <div class="level-badge" id="level-badge">
+                    <span class="lvl-text">LVL</span>
+                    <span id="player-level" class="lvl-num">1</span>
+                </div>
+                <div class="xp-bar-container">
+                    <div class="xp-fill" id="xp-fill"></div>
+                </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span id="coin-balance">100</span>
+                </div>
+            </div>
+
+            <!-- Stats Panel (Left) -->
+            <div class="stats-panel">
+                <div class="stat-row"><span class="icon">🍖</span><div class="stat-bar"><div id="bar-hunger" class="stat-fill color-orange"></div></div></div>
+                <div class="stat-row"><span class="icon">🎾</span><div class="stat-bar"><div id="bar-happiness" class="stat-fill color-blue"></div></div></div>
+                <div class="stat-row"><span class="icon">⚡</span><div class="stat-bar"><div id="bar-energy" class="stat-fill color-yellow"></div></div></div>
+                <div class="stat-row"><span class="icon">🧼</span><div class="stat-bar"><div id="bar-hygiene" class="stat-fill color-cyan"></div></div></div>
+                <div class="stat-row"><span class="icon">❤️</span><div class="stat-bar"><div id="bar-health" class="stat-fill color-red"></div></div></div>
+            </div>
+
+            <!-- Bottom Action Dock -->
+            <div class="bottom-dock">
+                <button class="dock-btn" id="btn-shop" aria-label="Shop">
+                    <div class="btn-icon">🛒</div>
+                    <span>Shop</span>
+                </button>
+                <button class="dock-btn" id="btn-food" aria-label="Food">
+                    <div class="btn-icon">🍖</div>
+                    <span>Feed</span>
+                </button>
+                <button class="dock-btn" id="btn-clean" aria-label="Clean">
+                    <div class="btn-icon">🧼</div>
+                    <span>Clean</span>
+                </button>
+                <button class="dock-btn" id="btn-play" aria-label="Play">
+                    <div class="btn-icon">🎾</div>
+                    <span>Play</span>
+                </button>
+                <button class="dock-btn" id="btn-sleep" aria-label="Sleep">
+                    <div class="btn-icon">🌙</div>
+                    <span>Sleep</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Sliding Menus (Shop / Inventory) -->
+        <div id="modal-overlay" class="hidden" onclick="closePanels()"></div>
+        <div id="shop-panel" class="side-panel">
+            <div class="panel-header">
+                <h2>Pet Shop 🛒</h2>
+                <button class="close-btn" onclick="closePanels()">✖</button>
+            </div>
+            <div class="panel-content" id="shop-items">
+                <!-- Shop items injected via JS -->
+            </div>
+        </div>
+
+        <div id="inventory-panel" class="side-panel">
+            <div class="panel-header">
+                <h2>Your Items 🎒</h2>
+                <button class="close-btn" onclick="closePanels()">✖</button>
+            </div>
+            <div class="panel-content" id="inventory-items">
+                <!-- Inventory items injected via JS -->
+            </div>
+        </div>
+
+        <!-- Floating Action Area (for drag-and-drop interactions like soap or food) -->
+        <div id="interaction-layer" class="hidden">
+            <div id="draggable-item" class="hidden"></div>
+            <p id="interaction-hint" class="hidden">Drag to Pet!</p>
+        </div>
+
+        <!-- Tutorial / Start Screen -->
+        <div id="tutorial-screen" class="overlay">
+            <div class="premium-card">
+                <h1 class="title-3d">Digital Pet Simulator</h1>
+                <p>Advanced Care Edition</p>
+                <ul class="instructions">
+                    <li>🍖 <strong>Feed</strong> & 🎾 <strong>Play</strong> to earn XP and Coins.</li>
+                    <li>🛒 <strong>Shop</strong> to buy premium food, toys, and medicine.</li>
+                    <li>🧼 <strong>Clean</strong> your pet so it doesn't get sick!</li>
+                    <li>❤️ Maintain <strong>Health</strong> for bonus rewards!</li>
+                </ul>
+                <button id="btn-start" class="btn-3d">Adopt & Play</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

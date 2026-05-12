@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blade Spin Arena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.png">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div class="score-container">SCORE: <span id="score">0</span></div>
+                <div class="combo-container" id="combo-container" style="opacity: 0;">COMBO <span id="combo">x1</span>!</div>
+            </div>
+            
+            <div id="health-bar-container">
+                <div id="health-bar"></div>
+            </div>
+
+            <button id="sound-toggle" class="btn icon-btn">🔊</button>
+            <button id="pause-btn" class="btn icon-btn">⏸</button>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <img src="assets/icons/icon.png" alt="Blade Spin Arena" class="game-logo">
+            <h1>BLADE SPIN ARENA</h1>
+            <p class="subtitle">Survive the Neon Onslaught</p>
+            <button id="start-btn" class="btn primary-btn">START SYSTEM</button>
+            <button id="instructions-btn" class="btn secondary-btn">HOW TO PLAY</button>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="screen">
+            <h2>OPERATING MANUAL</h2>
+            <div class="instruction-content">
+                <p>👆 <strong>MOVE:</strong> Drag anywhere or use mouse to control the blade.</p>
+                <p>⚔️ <strong>COMBAT:</strong> The spinning edges destroy enemies. Do not let them reach your core!</p>
+                <p>⚡ <strong>UPGRADES:</strong> Collect glowing orbs for Faster Spin, Shields, and Multi-Hit.</p>
+                <p>🔥 <strong>COMBOS:</strong> Destroy enemies quickly to build your combo multiplier.</p>
+            </div>
+            <button id="back-btn" class="btn secondary-btn">BACK</button>
+        </div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen">
+            <h2>SYSTEM PAUSED</h2>
+            <button id="resume-btn" class="btn primary-btn">RESUME</button>
+            <button id="quit-btn" class="btn secondary-btn">QUIT</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2>SYSTEM FAILURE</h2>
+            <p class="final-score">FINAL SCORE: <span id="final-score-value">0</span></p>
+            <p class="best-score">BEST: <span id="best-score-value">0</span></p>
+            <button id="retry-btn" class="btn primary-btn">REBOOT</button>
+        </div>
+    </div>
+
+    <!-- Audio Synthesizer (No external sound files needed) -->
+    <script src="js/script.js"></script>
+</body>
+</html>

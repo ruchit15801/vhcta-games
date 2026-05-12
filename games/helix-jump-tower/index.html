@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Helix Jump - Premium Edition</title>
+    <link rel="icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4757;
+            --secondary: #2f3542;
+            --accent: #ff9f43;
+            --bg: #0f0c29;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            color: #fff;
+        }
+
+        #splash {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1e1e2e, #000);
+            z-index: 100;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s;
+        }
+
+        #splash.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        #splash img.thumb {
+            width: min(300px, 80vw);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 71, 87, 0.3);
+            margin-bottom: 30px;
+            animation: floatY 4s ease-in-out infinite;
+        }
+
+        #splash h1 {
+            font-size: clamp(32px, 10vw, 56px);
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 0%, #ff4757 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .guide-text {
+            font-size: 14px;
+            opacity: 0.6;
+            margin-bottom: 25px;
+            text-align: center;
+            max-width: 250px;
+            line-height: 1.4;
+        }
+
+        .instruction-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .ins-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ins-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .ins-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: #fff;
+            border: none;
+            padding: 18px 60px;
+            border-radius: 40px;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.4), inset 0 -5px 0 rgba(0,0,0,0.2);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 71, 87, 0.5);
+        }
+
+        #gameUI {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: env(safe-area-inset-top, 20px) 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 10px 20px;
+            border-radius: 18px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, #ff9f43, #ff4757);
+            border-radius: 6px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+        }
+
+        #ingameGuide {
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+            pointer-events: none;
+            transition: 0.5s;
+            z-index: 5;
+        }
+
+        .hand-anim {
+            font-size: 40px;
+            animation: swipeHand 2s infinite;
+        }
+
+        @keyframes swipeHand {
+            0%, 100% { transform: translateX(-40px) rotate(-10deg); }
+            50% { transform: translateX(40px) rotate(10deg); }
+        }
+
+        #ingameGuide.fade { opacity: 0; }
+
+        canvas {
+            display: block;
+            touch-action: none;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+        }
+
+        #overlay.show {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+
+        #overlay h2 {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #ff4757, #ff9f43);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .final-score {
+            font-size: 24px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .combo-text {
+            position: fixed;
+            pointer-events: none;
+            font-size: 40px;
+            font-weight: 900;
+            color: #ff9f43;
+            text-shadow: 0 0 20px rgba(255,159,67,0.5);
+            z-index: 20;
+            animation: comboPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes comboPop {
+            0% { transform: scale(0.5) translateY(0); opacity: 0; }
+            50% { transform: scale(1.2) translateY(-50px); opacity: 1; }
+            100% { transform: scale(1) translateY(-100px); opacity: 0; }
+        }
+
+        .fever-meter {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #feverBar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, #ff9f43, #ff4757);
+            box-shadow: 0 0 10px #ff4757;
+            transition: 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="splash">
+        <img class="thumb" src="thumbnail.png" alt="Helix Jump">
+        <h1>Helix Jump<br>Ultra</h1>
+        <p class="guide-text">Bounce through the tower gaps. Avoid the dark danger spots!</p>
+        
+        <div class="instruction-box">
+            <div class="ins-item">
+                <div class="ins-icon">↔️</div>
+                <div class="ins-label">Rotate</div>
+            </div>
+            <div class="ins-item">
+                <div class="ins-icon">🚀</div>
+                <div class="ins-label">Fever</div>
+            </div>
+            <div class="ins-item">
+                <div class="ins-icon">⚠️</div>
+                <div class="ins-label">Avoid</div>
+            </div>
+        </div>
+
+        <button id="btnPlay" class="btn-premium">Play Now</button>
+    </div>
+
+    <div id="ingameGuide">
+        <div class="hand-anim">👆</div>
+        <div style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px;">Swipe to Rotate</div>
+    </div>
+
+    <div id="gameUI">
+        <div class="top-row">
+            <div class="stat-card">
+                <span class="stat-label">Score</span>
+                <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Best</span>
+                <span id="best" class="stat-value">0</span>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div id="progressBar"></div>
+        </div>
+        <div style="text-align: center; font-weight: 800; font-size: 18px; color: var(--accent);">
+            Level <span id="level">1</span>
+        </div>
+    </div>
+
+    <div class="fever-meter" id="feverMeter">
+        <div id="feverBar"></div>
+    </div>
+
+    <canvas id="c"></canvas>
+
+    <div id="overlay">
+        <h2 id="ovTitle">CRASHED!</h2>
+        <div class="final-score">Your Score: <span id="finalScore">0</span></div>
+        <button class="btn-premium" onclick="resetGame()">Retry</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const bestEl = document.getElementById('best');
+        const levelEl = document.getElementById('level');
+        const progressEl = document.getElementById('progressBar');
+        const overlay = document.getElementById('overlay');
+        const finalScoreEl = document.getElementById('finalScore');
+        const feverMeter = document.getElementById('feverMeter');
+        const feverBar = document.getElementById('feverBar');
+
+        let W, H;
+        let score = 0, best = localStorage.getItem('helix_best') || 0;
+        let level = 1, gameActive = false;
+        let towerAngle = 0;
+        let combo = 0;
+        let shake = 0;
+        let isFever = false, feverPoints = 0;
+
+        // Constants
+        const platformSpacing = 180;
+        const cylinderRadius = 45;
+        const platformRadius = 150;
+        const platformThickness = 20;
+        const ballRadius = 14;
+        const gravity = 0.55;
+        const jumpForce = -11.5;
+
+        let ball = {
+            y: 200,
+            vy: 0,
+            r: ballRadius,
+            scaleX: 1,
+            scaleY: 1,
+            color: '#ff4757',
+            targetColor: '#ff4757',
+            trail: []
+        };
+
+        let platforms = [];
+        let particles = [];
+        let splashes = [];
+
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            ctx.scale(dpr, dpr);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+        bestEl.innerText = best;
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 8;
+                this.vy = (Math.random() - 0.5) * 8;
+                this.size = Math.random() * 6 + 2;
+                this.life = 1.0;
+                this.color = color;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.2;
+                this.life -= 0.02;
+                this.size *= 0.98;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        class Splash {
+            constructor(p, angle, color) {
+                this.p = p; // Platform reference
+                this.angle = angle;
+                this.color = color;
+                this.life = 1.0;
+                this.size = Math.random() * 15 + 10;
+            }
+            update() {
+                this.life -= 0.015;
+            }
+            draw(relY) {
+                ctx.save();
+                ctx.translate(W/2, relY);
+                ctx.rotate(towerAngle + this.angle);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life * 0.6;
+                ctx.beginPath();
+                ctx.ellipse(platformRadius * 0.7, 0, this.size, this.size * 1.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createLevel() {
+            platforms = [];
+            const count = 10 + level * 2;
+            for (let i = 0; i < count; i++) {
+                let isLast = i === count - 1;
+                let gapSize = Math.max(0.7, 1.2 - level * 0.02);
+                let gapStart = Math.random() * Math.PI * 2;
+                
+                let dangerSpots = [];
+                if (i > 0 && !isLast) {
+                    let spotCount = Math.min(4, Math.floor(level / 3) + 1);
+                    for(let j=0; j<spotCount; j++) {
+                        dangerSpots.push(Math.random() * Math.PI * 2);
+                    }
+                }
+
+                platforms.push({
+                    y: i * platformSpacing + 500,
+                    gapStart,
+                    gapSize,
+                    dangerSpots,
+                    color: isLast ? '#00ff88' : `hsl(${(level * 40 + i * 20) % 360}, 75%, 55%)`,
+                    sideColor: isLast ? '#00cc66' : `hsl(${(level * 40 + i * 20) % 360}, 75%, 35%)`,
+                    passed: false,
+                    isLast
+                });
+            }
+            ball.y = 200;
+            ball.vy = 0;
+            combo = 0;
+        }
+
+        function drawDisc(ox, oy, gs, gsize, radius) {
+            ctx.beginPath();
+            ctx.arc(ox, oy, radius, towerAngle + gs + gsize, towerAngle + gs, false);
+            ctx.arc(ox, oy, cylinderRadius, towerAngle + gs, towerAngle + gs + gsize, true);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawTower() {
+            // Metallic Cylinder
+            let grad = ctx.createLinearGradient(W/2 - cylinderRadius, 0, W/2 + cylinderRadius, 0);
+            grad.addColorStop(0, '#0a0a0a');
+            grad.addColorStop(0.3, '#333');
+            grad.addColorStop(0.5, '#444');
+            grad.addColorStop(0.7, '#333');
+            grad.addColorStop(1, '#0a0a0a');
+            ctx.fillStyle = grad;
+            ctx.fillRect(W/2 - cylinderRadius, 0, cylinderRadius * 2, H);
+
+            // Draw shadow for cylinder
+            ctx.fillStyle = 'rgba(0,0,0,0.3)';
+            ctx.fillRect(W/2 + cylinderRadius, 0, 20, H);
+
+            platforms.forEach(p => {
+                if (p.y < -200 || p.y > H + 200) return;
+
+                ctx.save();
+                ctx.translate(W/2, p.y);
+                
+                // 3D Effect / Sides
+                ctx.fillStyle = p.sideColor;
+                drawDisc(0, platformThickness, p.gapStart, p.gapSize, platformRadius);
+
+                // Top Surface
+                ctx.fillStyle = p.color;
+                drawDisc(0, 0, p.gapStart, p.gapSize, platformRadius);
+
+                // Gap Highlight Beam (subtle guidance)
+                if (!p.passed) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, platformRadius, towerAngle + p.gapStart, towerAngle + p.gapStart + p.gapSize);
+                    ctx.arc(0, 0, cylinderRadius, towerAngle + p.gapStart + p.gapSize, towerAngle + p.gapStart, true);
+                    ctx.fill();
+                }
+
+                // Danger Spots
+                p.dangerSpots.forEach(ds => {
+                    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, platformRadius, towerAngle + ds, towerAngle + ds + 0.4);
+                    ctx.arc(0, 0, cylinderRadius, towerAngle + ds + 0.4, towerAngle + ds, true);
+                    ctx.fill();
+                });
+
+                ctx.restore();
+
+                // Splashes on this platform
+                splashes.filter(s => s.p === p).forEach(s => s.draw(p.y));
+            });
+        }
+
+        function drawBall() {
+            // Trail
+            ball.trail.forEach((t, i) => {
+                ctx.globalAlpha = i / ball.trail.length * 0.4;
+                ctx.fillStyle = isFever ? '#ff9f43' : ball.color;
+                ctx.beginPath();
+                ctx.arc(W/2, t.y, ball.r * (i / ball.trail.length), 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+
+            ctx.save();
+            ctx.translate(W/2, ball.y);
+            ctx.scale(ball.scaleX, ball.scaleY);
+            
+            // Sphere look
+            let grad = ctx.createRadialGradient(-ball.r*0.3, -ball.r*0.3, ball.r*0.1, 0, 0, ball.r);
+            if (isFever) {
+                grad.addColorStop(0, '#fff');
+                grad.addColorStop(0.5, '#ff9f43');
+                grad.addColorStop(1, '#ff4757');
+            } else {
+                grad.addColorStop(0, '#fff');
+                grad.addColorStop(1, ball.color);
+            }
+            
+            ctx.fillStyle = grad;
+            
+            // Glow if fever
+            if (isFever) {
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = '#ff4757';
+            }
+
+            ctx.beginPath();
+            ctx.arc(0, 0, ball.r, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0; // reset
+            
+            // Reflection
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.ellipse(-ball.r*0.4, -ball.r*0.4, ball.r*0.3, ball.r*0.2, Math.PI/4, 0, Math.PI*2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function spawnComboText(text) {
+            const div = document.createElement('div');
+            div.className = 'combo-text';
+            div.style.left = (W/2 + 20) + 'px';
+            div.style.top = (H/2 - 50) + 'px';
+            div.innerText = text;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 600);
+        }
+
+        function update() {
+            if (!gameActive) return;
+
+            ball.vy += gravity;
+            ball.y += ball.vy;
+
+            // Squash & Stretch Logic
+            if (ball.vy > 2) {
+                ball.scaleY = 1.2;
+                ball.scaleX = 0.8;
+            } else if (ball.vy < -2) {
+                ball.scaleY = 1.1;
+                ball.scaleX = 0.9;
+            } else {
+                ball.scaleX += (1 - ball.scaleX) * 0.2;
+                ball.scaleY += (1 - ball.scaleY) * 0.2;
+            }
+
+            // Trail
+            ball.trail.push({y: ball.y});
+            if (ball.trail.length > 10) ball.trail.shift();
+
+            // Camera Smoothing
+            let targetCam = H * 0.45;
+            if (ball.y > targetCam) {
+                let diff = ball.y - targetCam;
+                ball.y = targetCam;
+                platforms.forEach(p => p.y -= diff);
+            }
+
+            // Progress
+            let firstY = platforms[0].y;
+            let lastY = platforms[platforms.length-1].y;
+            let progress = Math.min(100, Math.max(0, (ball.y - lastY) / (firstY - lastY) * 100));
+            progressEl.style.width = (100 - progress) + '%';
+
+            // Collisions
+            platforms.forEach((p, idx) => {
+                if (!p.passed && ball.vy > 0 && Math.abs(ball.y + ball.r - p.y) < 15) {
+                    // Normalize angle
+                    let angle = (Math.PI / 2 - towerAngle - p.gapStart + Math.PI * 10) % (Math.PI * 2);
+                    let inGap = angle > 0 && angle < p.gapSize;
+
+                    if (inGap || isFever) {
+                        p.passed = true;
+                        combo++;
+                        feverPoints += 20;
+                        if (feverPoints >= 100 && !isFever) {
+                            isFever = true;
+                            feverMeter.style.display = 'block';
+                        }
+                        
+                        score += 10 * combo * (isFever ? 2 : 1);
+                        scoreEl.innerText = score;
+                        if(combo > 2) spawnComboText(isFever ? 'FIRE!' : 'x' + combo);
+                        
+                        // Burst particles
+                        for(let i=0; i<15; i++) particles.push(new Particle(W/2, p.y, p.color));
+                        
+                        // Change ball color to next platform color slowly
+                        if (platforms[idx + 1]) {
+                            ball.targetColor = platforms[idx + 1].color;
+                        }
+
+                        if(p.isLast) levelComplete();
+                    } else {
+                        // Check Danger
+                        let isDanger = false;
+                        p.dangerSpots.forEach(ds => {
+                            let da = (ds + towerAngle + Math.PI * 10) % (Math.PI * 2);
+                            if (Math.abs(da - Math.PI/2) < 0.28) isDanger = true;
+                        });
+
+                        if (isDanger) {
+                            gameOver();
+                        } else {
+                            ball.vy = jumpForce;
+                            ball.y = p.y - ball.r - 2;
+                            ball.scaleY = 0.6; // Squash
+                            ball.scaleX = 1.4;
+                            combo = 0;
+                            feverPoints = Math.max(0, feverPoints - 10);
+                            shake = 10;
+                            
+                            // Splash effect
+                            splashes.push(new Splash(p, -towerAngle + Math.PI/2, p.color));
+                        }
+                    }
+                }
+            });
+
+            // Fever logic
+            if (isFever) {
+                feverPoints -= 0.5;
+                feverBar.style.width = feverPoints + '%';
+                if (feverPoints <= 0) {
+                    isFever = false;
+                    feverMeter.style.display = 'none';
+                }
+            } else {
+                feverBar.style.width = feverPoints + '%';
+            }
+
+            // Smooth ball color transition
+            let c1 = hexToRgb(ball.color);
+            let c2 = hslToRgb(ball.targetColor);
+            if (c2) {
+                ball.color = `rgb(${lerp(c1.r, c2.r, 0.1)}, ${lerp(c1.g, c2.g, 0.1)}, ${lerp(c1.b, c2.b, 0.1)})`;
+            }
+
+            // Update entities
+            particles.forEach((p, i) => {
+                p.update();
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            splashes.forEach((s, i) => {
+                s.update();
+                if (s.life <= 0) splashes.splice(i, 1);
+            });
+
+            if (shake > 0) shake *= 0.9;
+        }
+
+        // Helpers
+        function lerp(a, b, t) { return a + (b - a) * t; }
+        function hexToRgb(hex) {
+            if (hex.startsWith('rgb')) {
+                let parts = hex.match(/\d+/g);
+                return { r: parseInt(parts[0]), g: parseInt(parts[1]), b: parseInt(parts[2]) };
+            }
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : {r:255,g:71,b:87};
+        }
+        function hslToRgb(hslStr) {
+            if (!hslStr.includes('hsl')) return hexToRgb(hslStr);
+            let [h, s, l] = hslStr.match(/\d+/g).map(Number);
+            s /= 100; l /= 100;
+            let c = (1 - Math.abs(2 * l - 1)) * s;
+            let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            let m = l - c / 2;
+            let r = 0, g = 0, b = 0;
+            if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+            else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+            else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+            else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+            else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+            else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+            return { r: Math.round((r + m) * 255), g: Math.round((g + m) * 255), b: Math.round((b + m) * 255) };
+        }
+
+        function loop() {
+            ctx.save();
+            if (shake > 1) ctx.translate((Math.random()-0.5)*shake, (Math.random()-0.5)*shake);
+            
+            // Dark Gradient BG
+            let bg = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W);
+            bg.addColorStop(0, '#1a1a2e');
+            bg.addColorStop(1, '#0a0a12');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, W, H);
+
+            drawTower();
+            drawBall();
+            particles.forEach(p => p.draw());
+            
+            ctx.restore();
+            update();
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            gameActive = false;
+            overlay.classList.add('show');
+            document.getElementById('ovTitle').innerText = 'CRASHED!';
+            finalScoreEl.innerText = score;
+            if (score > best) {
+                best = score;
+                localStorage.setItem('helix_best', best);
+                bestEl.innerText = best;
+            }
+        }
+
+        function levelComplete() {
+            gameActive = false;
+            overlay.classList.add('show');
+            document.getElementById('ovTitle').innerText = 'LEVEL UP!';
+            finalScoreEl.innerText = score;
+            level++;
+            levelEl.innerText = level;
+        }
+
+        function resetGame() {
+            if (document.getElementById('ovTitle').innerText === 'CRASHED!') {
+                score = 0;
+                scoreEl.innerText = 0;
+            }
+            overlay.classList.remove('show');
+            createLevel();
+            gameActive = true;
+        }
+
+        // Input
+        let isDragging = false, lastX = 0;
+        const handleStart = (x) => { isDragging = true; lastX = x; };
+        const handleMove = (x) => {
+            if (!isDragging) return;
+            towerAngle += (x - lastX) * 0.015;
+            lastX = x;
+        };
+        const handleEnd = () => { isDragging = false; };
+
+        canvas.addEventListener('mousedown', e => handleStart(e.clientX));
+        window.addEventListener('mousemove', e => handleMove(e.clientX));
+        window.addEventListener('mouseup', handleEnd);
+
+        canvas.addEventListener('touchstart', e => handleStart(e.touches[0].clientX));
+        window.addEventListener('touchmove', e => handleMove(e.touches[0].clientX));
+        window.addEventListener('touchend', handleEnd);
+
+        document.getElementById('btnPlay').onclick = () => {
+            document.getElementById('splash').classList.add('hidden');
+            gameActive = true;
+            createLevel();
+            loop();
+            
+            // Hide ingame guide after first move or 3 seconds
+            setTimeout(() => {
+                document.getElementById('ingameGuide').classList.add('fade');
+            }, 3000);
+        };
+
+        // Hide guide on first interaction
+        window.addEventListener('touchstart', () => {
+            document.getElementById('ingameGuide').classList.add('fade');
+        }, {once: true});
+        window.addEventListener('mousedown', () => {
+            document.getElementById('ingameGuide').classList.add('fade');
+        }, {once: true});
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1a1c1d">
+    <title>Battle Royale Mini Arena</title>
+    <meta name="description" content="Premium Battle Royale HTML5 Game - Survive the shrink!">
+    <link rel="icon" href="assets/icons/icon.png">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+        <div id="damage-overlay"></div>
+
+        <!-- Dynamic Game HUD -->
+        <div id="hud" class="hidden">
+            <!-- Top HUD -->
+            <div id="hud-top">
+                <div id="level-indicator" style="background: var(--hud-bg); border: 1px solid var(--hud-border); padding: 10px 20px; border-radius: 4px; backdrop-filter: blur(5px); display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); margin-right: 15px;">
+                    <span class="hud-label">LEVEL</span>
+                    <span id="level-val" style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--text-main); line-height: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5);">1</span>
+                </div>
+                <div id="player-count">
+                    <span class="hud-label">ALIVE</span>
+                    <span id="alive-val">10</span>
+                </div>
+            </div>
+            <!-- Mini-map Top Right -->
+                <div id="minimap-container">
+                    <canvas id="minimapCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Bottom Left HUD (Health & Status) -->
+            <div id="hud-bottom-left">
+                <div id="health-bar-container">
+                    <div id="health-fill"></div>
+                </div>
+                <div class="hud-stats">
+                    <span id="hp-val">100 / 100</span>
+                    <span class="hud-kills">KILLS <span id="kill-val">0</span></span>
+                </div>
+            </div>
+
+            <!-- Bottom Right HUD (Weapon & Ammo) -->
+            <div id="hud-bottom-right">
+                <div id="weapon-info">
+                    <div id="weapon-name">M4 RIFLE</div>
+                    <div id="ammo-count"><span id="ammo-val">30</span><span id="ammo-max">/90</span></div>
+                </div>
+                <div id="weapon-icon">🔫</div>
+            </div>
+            
+            <!-- Warning / Alert Text -->
+            <div id="zone-warning">THE ZONE IS SHRINKING</div>
+        </div>
+
+        <!-- Mobile Controls Overlay -->
+        <div id="mobile-controls" class="hidden">
+            <!-- Left Thumbstick -->
+            <div id="joystick-left" class="joystick-base">
+                <div class="joystick-knob"></div>
+            </div>
+            <!-- Right Touch Area / Action Buttons -->
+            <div id="action-buttons">
+                <button id="btn-shoot" class="action-btn">FIRE</button>
+            </div>
+        </div>
+
+        <!-- UI Screens Overlay -->
+        <div id="ui-layer">
+            
+            <!-- Main Menu -->
+            <div id="main-menu" class="screen active">
+                <div class="menu-bg-blur"></div>
+                <!-- Thumbnail loaded dynamically or in CSS -->
+                <div class="branding">
+                    <img src="assets/icons/icon.png" alt="Game Icon" class="game-icon">
+                    <h1>BATTLE <span>ROYALE</span><br><small>MINI ARENA</small></h1>
+                </div>
+                <div class="menu-actions">
+                    <button id="btn-play" class="premium-btn">DROP IN NOW</button>
+                    <button id="btn-instructions" class="secondary-btn">HOW TO PLAY</button>
+                </div>
+            </div>
+
+            <!-- Instructions Screen -->
+            <div id="instructions-screen" class="screen hidden">
+                <div class="panel">
+                    <h2>SURVIVAL GUIDE</h2>
+                    <div class="guide-content">
+                        <div class="guide-item">
+                            <span class="icon">🕹️</span>
+                            <p><strong>Move & Shoot:</strong> Desktop (WASD + Mouse click) / Mobile (Virtual Joystick + Fire btn)</p>
+                        </div>
+                        <div class="guide-item">
+                            <span class="icon">🔫</span>
+                            <p><strong>Loot up:</strong> Walk over weapons and health packs to survive.</p>
+                        </div>
+                        <div class="guide-item">
+                            <span class="icon">⚠️</span>
+                            <p><strong>The Blue Zone:</strong> Stay inside the white circle. The blue zone hurts you!</p>
+                        </div>
+                    </div>
+                    <button id="btn-close-instructions" class="premium-btn">GOT IT</button>
+                </div>
+            </div>
+
+            <!-- Game Over / End Screen -->
+            <div id="end-screen" class="screen hidden">
+                <h2 id="end-title" class="glitch-text">MATCH FINISHED</h2>
+                <div class="stats-panel">
+                    <p>Rank: <span id="end-rank">#10</span></p>
+                    <p>Kills: <span id="end-kills">0</span></p>
+                    <p>Time Survived: <span id="end-time">00:00</span></p>
+                </div>
+                <button id="btn-restart" class="premium-btn">PLAY AGAIN</button>
+            </div>
+
+            <!-- Loading overlay -->
+            <div id="loading" class="screen hidden">
+                <div class="spinner"></div>
+                <p>MATCHMAKING...</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/audio.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

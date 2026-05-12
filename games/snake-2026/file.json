@@ -1,0 +1,12 @@
+{
+  "game": {
+    "gameName": "Snake 2026",
+    "description": "Swipe to control the classic Snake, collect food, and grow longer with every bite. Avoid walls and your own tail",
+    "size": {
+      "width": 1080,
+      "height": 1920,
+      "orientation": "Portrait"
+    },
+    "tags": ["arcade", "casual", "snake", "swipe", "skill", "html5"]
+  }
+}

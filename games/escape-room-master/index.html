@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Escape Room Master</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/icons/icon.png?v=2">
+    <link rel="apple-touch-icon" href="assets/icons/icon.png?v=2">
+</head>
+<body>
+    <!-- Main Game Container -->
+    <div id="game-container">
+        
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen active">
+            <div class="loader-content">
+                <h1 class="game-title">ESCAPE ROOM MASTER</h1>
+                <div class="spinner"></div>
+                <p id="loading-text">Loading Assets...</p>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="main-menu" class="screen">
+            <div class="menu-bg"></div>
+            <div class="menu-content">
+                <img src="assets/icons/icon.png?v=2" alt="Icon" class="menu-icon" id="menu-icon-img">
+                <h1 class="game-title glow-text">ESCAPE ROOM MASTER</h1>
+                <div class="menu-buttons">
+                    <button class="btn primary ui-sound" id="btn-play">ENTER</button>
+                    <button class="btn secondary ui-sound" id="btn-levels">ROOMS</button>
+                    <button class="btn secondary ui-sound" id="btn-settings">SETTINGS</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial / Guide Screen -->
+        <div id="tutorial-screen" class="screen">
+            <div class="tutorial-box panel-3d">
+                <h2>HOW TO PLAY</h2>
+                <div class="tutorial-steps">
+                    <div class="step">
+                        <span class="icon">👆</span>
+                        <p>Tap on objects to inspect or collect them.</p>
+                    </div>
+                    <div class="step">
+                        <span class="icon">🔍</span>
+                        <p>Find clues to solve puzzles & unlock secrets.</p>
+                    </div>
+                    <div class="step">
+                        <span class="icon">🎒</span>
+                        <p>Use items from your inventory to interact.</p>
+                    </div>
+                    <div class="step">
+                        <span class="icon">🚪</span>
+                        <p>Solve all puzzles to ESCAPE THE ROOM.</p>
+                    </div>
+                </div>
+                <button class="btn primary ui-sound" id="btn-start-game">START ESCAPE</button>
+            </div>
+        </div>
+
+        <!-- Gameplay Screen -->
+        <div id="game-screen" class="screen">
+            <!-- 3D Environment Layer -->
+            <div id="environment-container">
+                <img src="" id="bg-image" alt="Room Environment">
+                <!-- Objects dynamically injected here -->
+                <div id="objects-layer"></div>
+                <!-- Particle / Light Effects -->
+                <canvas id="fx-canvas"></canvas>
+            </div>
+
+            <!-- UI Overlay -->
+            <div id="game-ui">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <div class="level-info">ROOM <span id="current-room-text">1</span></div>
+                    <div class="top-buttons">
+                        <button class="icon-btn ui-sound" id="btn-hint" title="Hint">💡</button>
+                        <button class="icon-btn ui-sound" id="btn-pause" title="Pause">⏸</button>
+                    </div>
+                </div>
+
+                <!-- Inspect View Panel (Hidden by default) -->
+                <div id="inspect-panel" class="overlay-panel hidden">
+                    <div class="inspect-content panel-3d">
+                        <button class="close-btn ui-sound" id="btn-close-inspect">✖</button>
+                        <h3 id="inspect-title">Item Name</h3>
+                        <div class="inspect-view">
+                            <img src="" id="inspect-image" alt="Inspected Object" style="display:none;">
+                            <span id="inspect-emoji" style="display:none; font-size:clamp(80px, 15vw, 120px); filter: drop-shadow(0 0 15px rgba(212,175,55,0.5));">🔮</span>
+                        </div>
+                        <p id="inspect-desc">Description of the item...</p>
+                        <!-- Numpad / Puzzle Interaction Area inside inspect -->
+                        <div id="puzzle-interaction-area" class="hidden">
+                             <!-- Dynamically injected puzzle UI -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialog / Message Box -->
+                <div id="dialog-box" class="hidden">
+                    <p id="dialog-text">The door is locked...</p>
+                </div>
+
+                <!-- Inventory Bar -->
+                <div class="inventory-bar panel-3d">
+                    <div class="inventory-slots" id="inventory-container">
+                        <!-- Slots dynamic -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Levels Menu -->
+        <div id="levels-screen" class="screen">
+            <div class="panel-3d big-panel">
+                <h2>SELECT ROOM</h2>
+                <div class="levels-grid" id="levels-grid">
+                    <!-- level buttons injected -->
+                </div>
+                <button class="btn secondary ui-sound mt-20" id="btn-back-levels">BACK</button>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen">
+            <div class="panel-3d big-panel">
+                <h2>SETTINGS</h2>
+                <div class="setting-row">
+                    <span>Sound Effects</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-sfx" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <span>Music</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-music" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button class="btn secondary ui-sound mt-20" id="btn-back-settings">BACK</button>
+            </div>
+        </div>
+        
+        <!-- Victory Screen -->
+        <div id="victory-screen" class="screen">
+            <div class="victory-content panel-3d">
+                <h2 class="glow-text">ESCAPED!</h2>
+                <p>You have successfully escaped Room <span id="victory-room-num">1</span>.</p>
+                <div class="victory-stats">
+                    <div>Time: <span id="victory-time">00:00</span></div>
+                    <div>Hints used: <span id="victory-hints">0</span></div>
+                </div>
+                <button class="btn primary ui-sound mt-20" id="btn-next-room">NEXT ROOM</button>
+            </div>
+        </div>
+
+    </div>
+
+    <audio id="sfx-hover" src="" preload="auto"></audio>
+    <audio id="sfx-click" src="" preload="auto"></audio>
+    <audio id="sfx-unlock" src="" preload="auto"></audio>
+    <audio id="sfx-error" src="" preload="auto"></audio>
+    <audio id="sfx-bgm" src="" loop preload="auto"></audio>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
