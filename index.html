@@ -35,7 +35,7 @@
         gtag('config', 'G-B0TNF7TQW3');
     </script>
     <!-- Content Protection -->
-    <script src="js/security.js"></script>
+    <script src="js/security.js?v=8"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="VHCTA Games | Best Free Online Games">
@@ -67,11 +67,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Preload critical CSS -->
-    <link rel="preload" href="/css/style.css" as="style">
+    <link rel="preload" href="css/style.css?v=8" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" as="style">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=7">
+    <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 
 <body>
@@ -228,8 +228,8 @@
     </div>
 
     <!-- Scripts at bottom of body for guaranteed execution order without race conditions -->
-    <script src="/js/games.js?v=7"></script>
-    <script src="/js/main.js?v=7"></script>
+    <script src="js/games.js?v=8"></script>
+    <script src="js/main.js?v=8"></script>
     <script>
         // Unregister any stuck service workers that are breaking the local experience
         if ('serviceWorker' in navigator) {
@@ -239,7 +239,7 @@
                 }
             });
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js?v=7')
+                navigator.serviceWorker.register('sw.js?v=8')
                     .then(() => console.log('PWA: SW registered.'))
                     .catch(err => console.log('PWA: SW failed.', err));
             });

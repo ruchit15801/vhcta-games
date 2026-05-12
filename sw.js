@@ -1,7 +1,7 @@
-/* ─── VHCTA Games — Performance Service Worker v7 ─── */
-const CACHE_NAME    = 'vhcta-v7';
-const FONT_CACHE    = 'vhcta-fonts-v7';
-const IMG_CACHE     = 'vhcta-images-v7';
+/* ─── VHCTA Games — Performance Service Worker v8 ─── */
+const CACHE_NAME    = 'vhcta-v8';
+const FONT_CACHE    = 'vhcta-fonts-v8';
+const IMG_CACHE     = 'vhcta-images-v8';
 
 // Core shell — always cache-first
 const SHELL_ASSETS = [

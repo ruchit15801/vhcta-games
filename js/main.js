@@ -111,7 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Core render ──
     function renderGames() {
-        if (!window.GAMES || !gameGrid) return;
+        if (!gameGrid) return;
+
+        if (!window.GAMES || !Array.isArray(window.GAMES) || window.GAMES.length === 0) {
+            gameGrid.innerHTML = '<div class="loader">Games list failed to load. If you opened this file directly from disk, use a local server instead (for example: <code>npx serve .</code>) or refresh the page.</div>';
+            if (paginationControls) paginationControls.style.display = 'none';
+            return;
+        }
 
         let filtered = window.GAMES;
 
