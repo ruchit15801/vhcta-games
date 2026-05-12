@@ -12,38 +12,7 @@
         // console.log('%c Security Alert: Right-click is disabled to protect game assets.', 'color: red; font-weight: bold; font-size: 14px;');
     });
 
-    // 2. Disable Common Developer Shortcuts
-    document.addEventListener('keydown', function(e) {
-        // Prevent F12
-        if (e.keyCode === 123) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Prevent Ctrl+Shift+I (Chrome/Edge/Brave)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Prevent Ctrl+Shift+J (Console)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Prevent Ctrl+U (View Source)
-        if (e.ctrlKey && e.keyCode === 85) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Prevent Ctrl+S (Save Page)
-        if (e.ctrlKey && e.keyCode === 83) {
-            e.preventDefault();
-            return false;
-        }
-    });
+    // 2. Optional: do not block DevTools shortcuts so you can press F12 / Ctrl+Shift+I to debug.
 
     // 3. Disable Text Selection (redundant with CSS but good for safety)
     document.addEventListener('selectstart', function(e) {

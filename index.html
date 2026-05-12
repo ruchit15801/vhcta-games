@@ -35,7 +35,7 @@
         gtag('config', 'G-B0TNF7TQW3');
     </script>
     <!-- Content Protection -->
-    <script src="js/security.js?v=8"></script>
+    <script src="js/security.js?v=9"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="VHCTA Games | Best Free Online Games">
@@ -67,11 +67,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Preload critical CSS -->
-    <link rel="preload" href="css/style.css?v=8" as="style">
+    <link rel="preload" href="css/style.css?v=9" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" as="style">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=8">
+    <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 
 <body>
@@ -228,8 +228,33 @@
     </div>
 
     <!-- Scripts at bottom of body for guaranteed execution order without race conditions -->
-    <script src="js/games.js?v=8"></script>
-    <script src="js/main.js?v=8"></script>
+    <script>
+        (function () {
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+            }
+            window.__VHCTA_showGamesLoadError = function (title, detail) {
+                console.error('[VHCTA Games]', title, detail || '');
+                var el = document.getElementById('game-grid');
+                if (!el) return;
+                el.innerHTML =
+                    '<div class="loader"><strong>' + esc(title) + '</strong><p style="margin:.75rem 0">' + esc(detail || '') + '</p>' +
+                    '<p style="font-size:.88rem;opacity:.92;line-height:1.5">Inspect: <kbd>F12</kbd> → <strong>Console</strong> (red lines) → <strong>Network</strong> tab → reload → click <code>games.js</code> (must be <strong>200</strong>, not blocked).</p>' +
+                    '<p style="font-size:.82rem;opacity:.85;margin-top:.5rem">Page: <code style="word-break:break-all">' + esc(location.href) + '</code></p></div>';
+            };
+            window.addEventListener('error', function (ev) {
+                var f = ev.filename || (ev.target && ev.target.src) || '';
+                if (String(f).indexOf('games.js') === -1) return;
+                if (ev.error == null && ev.message === 'Script error.') return;
+                window.__VHCTA_showGamesLoadError(
+                    'Error inside games.js (syntax or runtime)',
+                    (ev.message || 'unknown') + (ev.lineno ? ' — line ' + ev.lineno : '')
+                );
+            }, true);
+        })();
+    </script>
+    <script src="js/games.js?v=9" onerror="window.__VHCTA_showGamesLoadError('games.js did not load (404, blocked, or wrong folder).','Serve this folder with a local server, e.g. npx serve . then open http://127.0.0.1:3000')"></script>
+    <script src="js/main.js?v=9"></script>
     <script>
         // Unregister any stuck service workers that are breaking the local experience
         if ('serviceWorker' in navigator) {
@@ -239,7 +264,7 @@
                 }
             });
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=8')
+                navigator.serviceWorker.register('sw.js?v=9')
                     .then(() => console.log('PWA: SW registered.'))
                     .catch(err => console.log('PWA: SW failed.', err));
             });
